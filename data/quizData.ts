@@ -7,7 +7,8 @@ export interface QuizQuestion {
   explanation?: string;
 }
 
-export const quizData: QuizQuestion[] = [
+// Expanded quiz question pool
+export const quizQuestionPool: QuizQuestion[] = [
   {
     id: "q1",
     question: "What are the three branches of the U.S. government?",
@@ -298,4 +299,76 @@ export const quizData: QuizQuestion[] = [
     explanation:
       "Serving on a jury is a responsibility only for U.S. citizens. Jury duty is an important part of the justice system.",
   },
+  {
+    id: "q26",
+    question: "How many years does a President serve in one term?",
+    options: ["2 years", "4 years", "6 years", "8 years"],
+    correctIndex: 1,
+    explanation:
+      "A President serves a four-year term. A President can serve a maximum of two terms.",
+  },
+  {
+    id: "q27",
+    question: "In what month do we vote for President?",
+    options: ["January", "November", "September", "December"],
+    correctIndex: 1,
+    explanation:
+      "We vote for President in November. Presidential elections are held on the first Tuesday after the first Monday in November.",
+  },
+  {
+    id: "q28",
+    question: "What is the capital of the United States?",
+    options: ["New York City", "Washington, D.C.", "Philadelphia", "Boston"],
+    correctIndex: 1,
+    explanation:
+      "Washington, D.C. is the capital of the United States. It is not part of any state.",
+  },
+  {
+    id: "q29",
+    question: "Who wrote the Declaration of Independence?",
+    options: [
+      "George Washington",
+      "Thomas Jefferson",
+      "Benjamin Franklin",
+      "John Adams",
+    ],
+    correctIndex: 1,
+    explanation:
+      "Thomas Jefferson wrote the Declaration of Independence. He was the third President of the United States.",
+  },
+  {
+    id: "q30",
+    question: "When was the Constitution written?",
+    options: ["1776", "1787", "1791", "1800"],
+    correctIndex: 1,
+    explanation:
+      "The Constitution was written in 1787 at the Constitutional Convention in Philadelphia.",
+  },
 ];
+
+/**
+ * Generates a randomized quiz with a specified number of questions
+ */
+export function generateRandomQuiz(numQuestions: number = 10): QuizQuestion[] {
+  // Shuffle the question pool
+  const shuffled = [...quizQuestionPool].sort(() => Math.random() - 0.5);
+  
+  // Take the first numQuestions
+  const selectedQuestions = shuffled.slice(0, Math.min(numQuestions, shuffled.length));
+  
+  // Randomize the options for each question
+  return selectedQuestions.map(question => {
+    const correctOption = question.options[question.correctIndex];
+    const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+    const newCorrectIndex = shuffledOptions.indexOf(correctOption);
+    
+    return {
+      ...question,
+      options: shuffledOptions,
+      correctIndex: newCorrectIndex,
+    };
+  });
+}
+
+// For backwards compatibility, export a default quiz
+export const quizData = generateRandomQuiz(25);

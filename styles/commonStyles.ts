@@ -1,26 +1,28 @@
 
-import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 
+// Light Mode Colors
 export const colors = {
-  background: '#F5F7FA',
-  text: '#1A1A1A',
-  textSecondary: '#6B7280',
-  primary: '#1E3A8A',
-  secondary: '#93C5FD',
+  background: '#FFFFFF',
+  text: '#2C2C2C',
+  textSecondary: '#8B8B8B',
+  primary: '#D4AF37',
+  secondary: '#C0C0C0',
   accent: '#DC2626',
   card: '#FFFFFF',
-  highlight: '#DBEAFE',
+  highlight: '#F5F5F0',
 };
 
+// Dark Mode Colors
 export const darkColors = {
-  background: '#0F172A',
-  text: '#F8FAFC',
-  textSecondary: '#94A3B8',
-  primary: '#3B82F6',
-  secondary: '#1E40AF',
+  background: '#1A1A1A',
+  text: '#F5F5F5',
+  textSecondary: '#C0C0C0',
+  primary: '#D4AF37',
+  secondary: '#8B8B8B',
   accent: '#EF4444',
-  card: '#1E293B',
-  highlight: '#1E3A8A',
+  card: '#2C2C2C',
+  highlight: '#3A3A3A',
 };
 
 export const buttonStyles = StyleSheet.create({
@@ -84,11 +86,11 @@ export const commonStyles = StyleSheet.create({
     backgroundColor: colors.card,
     borderColor: colors.secondary,
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 12,
     padding: 16,
     marginVertical: 8,
     width: '100%',
-    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.08)',
     elevation: 2,
   },
   icon: {

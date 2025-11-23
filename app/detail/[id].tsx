@@ -93,6 +93,7 @@ export default function DetailScreen() {
             headerShown: true,
             headerStyle: { backgroundColor: colors.card },
             headerTintColor: colors.text,
+            headerBackTitle: "Back",
           }}
         />
         <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -237,7 +238,7 @@ export default function DetailScreen() {
         {isFoundingDoc ? (
           <>
             {/* Overview */}
-            <View style={[styles.card, { backgroundColor: colors.card }]}>
+            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
               <Text
                 style={[styles.sectionLabel, { color: colors.textSecondary }]}
               >
@@ -260,7 +261,7 @@ export default function DetailScreen() {
 
             {/* Full Text */}
             {hasFullText && (
-              <View style={[styles.card, { backgroundColor: colors.card }]}>
+              <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
                 <Text
                   style={[styles.sectionLabel, { color: colors.textSecondary }]}
                 >
@@ -284,7 +285,7 @@ export default function DetailScreen() {
 
             {/* Historical Context */}
             {hasContext && (
-              <View style={[styles.card, { backgroundColor: colors.card }]}>
+              <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
                 <Text
                   style={[styles.sectionLabel, { color: colors.textSecondary }]}
                 >
@@ -299,7 +300,7 @@ export default function DetailScreen() {
         ) : (
           <>
             {/* Description */}
-            <View style={[styles.card, { backgroundColor: colors.card }]}>
+            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
               <Text
                 style={[styles.sectionLabel, { color: colors.textSecondary }]}
               >
@@ -322,7 +323,7 @@ export default function DetailScreen() {
 
             {/* Additional Information */}
             {hasExtraDetails && (
-              <View style={[styles.card, { backgroundColor: colors.card }]}>
+              <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
                 <Text
                   style={[styles.sectionLabel, { color: colors.textSecondary }]}
                 >
@@ -385,6 +386,7 @@ const styles = StyleSheet.create({
   card: {
     padding: 20,
     borderRadius: 12,
+    borderWidth: 1,
     marginBottom: 16,
     shadowColor: "#000",
     shadowOpacity: 0.08,

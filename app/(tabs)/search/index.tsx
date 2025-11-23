@@ -14,7 +14,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { IconSymbol } from '@/components/IconSymbol';
 import { AppFooter } from '@/components/AppFooter';
 import { contentData } from '@/data/contentData';
-import { findItemById, getItemRoute } from '@/utils/findItemById';
+import { getItemRoute } from '@/utils/findItemById';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RECENT_SEARCHES_KEY = 'recent_searches';
@@ -26,6 +26,7 @@ interface SearchResult {
   title: string;
   breadcrumb: string;
   snippet: string;
+  relevanceScore: number;
 }
 
 export default function SearchScreen() {
@@ -100,27 +101,57 @@ export default function SearchScreen() {
     setIsSearching(true);
     const lowerQuery = query.toLowerCase();
     const foundResults: SearchResult[] = [];
+    const seenIds = new Set<string>();
 
     for (const mainSection of contentData) {
       for (const section of mainSection.sections) {
         for (const subsection of section.subsections) {
-          const titleMatch = subsection.title.toLowerCase().includes(lowerQuery);
-          const contentMatch = subsection.content.toLowerCase().includes(lowerQuery);
-          const descriptionMatch = subsection.fullText?.toLowerCase().includes(lowerQuery);
+          // Skip duplicates
+          if (seenIds.has(subsection.id)) continue;
 
-          if (titleMatch || contentMatch || descriptionMatch) {
+          const title = subsection.title.toLowerCase();
+          const content = subsection.content.toLowerCase();
+          const fullText = subsection.fullText?.toLowerCase() || '';
+
+          // Calculate relevance score
+          let relevanceScore = 0;
+
+          // Exact title match gets highest score
+          if (title === lowerQuery) {
+            relevanceScore = 1000;
+          }
+          // Title starts with query
+          else if (title.startsWith(lowerQuery)) {
+            relevanceScore = 500;
+          }
+          // Title contains query
+          else if (title.includes(lowerQuery)) {
+            relevanceScore = 300;
+          }
+          // Content starts with query
+          else if (content.startsWith(lowerQuery)) {
+            relevanceScore = 200;
+          }
+          // Content contains query
+          else if (content.includes(lowerQuery)) {
+            relevanceScore = 100;
+          }
+          // Full text contains query
+          else if (fullText.includes(lowerQuery)) {
+            relevanceScore = 50;
+          }
+
+          if (relevanceScore > 0) {
             // Create snippet
             let snippet = '';
-            const content = subsection.content || '';
-            const lowerContent = content.toLowerCase();
-            const matchIndex = lowerContent.indexOf(lowerQuery);
+            const matchIndex = content.indexOf(lowerQuery);
 
             if (matchIndex !== -1) {
               const start = Math.max(0, matchIndex - 40);
-              const end = Math.min(content.length, matchIndex + lowerQuery.length + 40);
-              snippet = (start > 0 ? '...' : '') + content.slice(start, end) + (end < content.length ? '...' : '');
+              const end = Math.min(subsection.content.length, matchIndex + lowerQuery.length + 40);
+              snippet = (start > 0 ? '...' : '') + subsection.content.slice(start, end) + (end < subsection.content.length ? '...' : '');
             } else {
-              snippet = content.slice(0, 100) + (content.length > 100 ? '...' : '');
+              snippet = subsection.content.slice(0, 100) + (subsection.content.length > 100 ? '...' : '');
             }
 
             foundResults.push({
@@ -128,11 +159,17 @@ export default function SearchScreen() {
               title: subsection.title,
               breadcrumb: `${mainSection.title} › ${section.title}`,
               snippet,
+              relevanceScore,
             });
+
+            seenIds.add(subsection.id);
           }
         }
       }
     }
+
+    // Sort by relevance score (highest first)
+    foundResults.sort((a, b) => b.relevanceScore - a.relevanceScore);
 
     setResults(foundResults);
     setIsSearching(false);
@@ -169,7 +206,7 @@ export default function SearchScreen() {
       />
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         {/* Search Bar */}
-        <View style={[styles.searchBar, { backgroundColor: colors.card }]}>
+        <View style={[styles.searchBar, { backgroundColor: colors.card, borderColor: colors.primary + "20" }]}>
           <IconSymbol
             ios_icon_name="magnifyingglass"
             android_material_icon_name="search"
@@ -229,7 +266,7 @@ export default function SearchScreen() {
               {recentSearches.map((query, index) => (
                 <TouchableOpacity
                   key={index}
-                  style={[styles.recentItem, { backgroundColor: colors.card }]}
+                  style={[styles.recentItem, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}
                   onPress={() => handleRecentSearchPress(query)}
                   accessibilityLabel={`Search for ${query}`}
                   accessibilityRole="button"
@@ -293,7 +330,7 @@ export default function SearchScreen() {
               {results.map((result, index) => (
                 <TouchableOpacity
                   key={index}
-                  style={[styles.resultCard, { backgroundColor: colors.card }]}
+                  style={[styles.resultCard, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}
                   onPress={() => handleResultPress(result.id)}
                   accessibilityLabel={`Open ${result.title}`}
                   accessibilityRole="button"
@@ -331,6 +368,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
+    borderWidth: 1,
     gap: 12,
     shadowColor: '#000',
     shadowOpacity: 0.08,
@@ -381,6 +419,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     borderRadius: 12,
+    borderWidth: 1,
     marginBottom: 8,
     gap: 12,
     shadowColor: '#000',
@@ -425,6 +464,7 @@ const styles = StyleSheet.create({
   resultCard: {
     padding: 16,
     borderRadius: 12,
+    borderWidth: 1,
     marginBottom: 12,
     shadowColor: '#000',
     shadowOpacity: 0.08,

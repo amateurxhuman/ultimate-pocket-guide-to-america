@@ -131,22 +131,22 @@ export default function FloatingTabBar({
     blurContainer: {
       ...styles.blurContainer,
       borderWidth: 1.2,
-      borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+      borderColor: isDark ? 'rgba(212, 175, 55, 0.2)' : 'rgba(212, 175, 55, 0.3)',
       ...Platform.select({
         ios: {
           backgroundColor: isDark
-            ? 'rgba(28, 28, 30, 0.8)'
-            : 'rgba(255, 255, 255, 0.6)',
+            ? 'rgba(28, 28, 30, 0.9)'
+            : 'rgba(255, 255, 255, 0.9)',
         },
         android: {
           backgroundColor: isDark
             ? 'rgba(28, 28, 30, 0.95)'
-            : 'rgba(255, 255, 255, 0.6)',
+            : 'rgba(255, 255, 255, 0.95)',
         },
         web: {
           backgroundColor: isDark
             ? 'rgba(28, 28, 30, 0.95)'
-            : 'rgba(255, 255, 255, 0.6)',
+            : 'rgba(255, 255, 255, 0.95)',
           backdropFilter: 'blur(10px)',
         },
       }),
@@ -157,8 +157,8 @@ export default function FloatingTabBar({
     indicator: {
       ...styles.indicator,
       backgroundColor: isDark
-        ? 'rgba(255, 255, 255, 0.08)'
-        : 'rgba(0, 0, 0, 0.04)',
+        ? 'rgba(212, 175, 55, 0.15)'
+        : 'rgba(212, 175, 55, 0.12)',
       width: tabWidth - 4,
     },
   };
@@ -185,14 +185,14 @@ export default function FloatingTabBar({
                   <IconSymbol
                     android_material_icon_name={tab.icon}
                     ios_icon_name={tab.icon}
-                    size={24}
+                    size={26}
                     color={isActive ? colors.primary : colors.textSecondary}
                   />
                   <Text
                     style={[
                       styles.tabLabel,
                       { color: colors.textSecondary },
-                      isActive && { color: colors.primary, fontWeight: '600' },
+                      isActive && { color: colors.primary, fontWeight: '700' },
                     ]}
                   >
                     {tab.label}
@@ -247,14 +247,14 @@ export default function FloatingTabBar({
                           <IconSymbol
                             android_material_icon_name={tab.icon}
                             ios_icon_name={tab.icon}
-                            size={24}
+                            size={26}
                             color={isActive ? colors.primary : colors.textSecondary}
                           />
                           <Text
                             style={[
                               styles.tabLabel,
                               { color: colors.textSecondary },
-                              isActive && { color: colors.primary, fontWeight: '600' },
+                              isActive && { color: colors.primary, fontWeight: '700' },
                             ]}
                           >
                             {tab.label}
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
   },
   tabsContainer: {
     flexDirection: 'row',
-    height: 60,
+    height: 64,
     alignItems: 'center',
     paddingHorizontal: 4,
   },
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
   scrollView: {
-    height: 60,
+    height: 64,
   },
   scrollContent: {
     alignItems: 'center',
@@ -326,12 +326,12 @@ const styles = StyleSheet.create({
   tabContent: {
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 2,
+    gap: 3,
   },
   tabLabel: {
-    fontSize: 9,
-    fontWeight: '500',
+    fontSize: 10,
+    fontWeight: '600',
     marginTop: 2,
-    lineHeight: 13.05,
+    lineHeight: 14.5,
   },
 });

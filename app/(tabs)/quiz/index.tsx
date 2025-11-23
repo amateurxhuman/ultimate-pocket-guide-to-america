@@ -9,7 +9,7 @@ import {
   Pressable,
 } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
-import { quizData } from "@/data/quizData";
+import { generateRandomQuiz, QuizQuestion } from "@/data/quizData";
 import { IconSymbol } from "@/components/IconSymbol";
 import { AppFooter } from "@/components/AppFooter";
 import Animated, {
@@ -20,14 +20,15 @@ import Animated, {
 
 export default function QuizScreen() {
   const { colors } = useTheme();
+  const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>(() => generateRandomQuiz(10));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [score, setScore] = useState(0);
   const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
 
-  const currentQuestion = quizData[currentQuestionIndex];
-  const isQuizComplete = currentQuestionIndex >= quizData.length;
+  const currentQuestion = quizQuestions[currentQuestionIndex];
+  const isQuizComplete = currentQuestionIndex >= quizQuestions.length;
 
   const handleAnswerSelect = (index: number) => {
     if (selectedAnswer !== null) return;
@@ -49,6 +50,7 @@ export default function QuizScreen() {
   };
 
   const handleRestart = () => {
+    setQuizQuestions(generateRandomQuiz(10));
     setCurrentQuestionIndex(0);
     setSelectedAnswer(null);
     setShowExplanation(false);
@@ -79,7 +81,7 @@ export default function QuizScreen() {
               <Text
                 style={[styles.scoreTotalText, { color: colors.primary }]}
               >
-                {quizData.length}
+                {quizQuestions.length}
               </Text>
             </View>
 
@@ -92,13 +94,13 @@ export default function QuizScreen() {
                 { color: colors.textSecondary },
               ]}
             >
-              You answered {score} out of {quizData.length} questions correctly.
+              You answered {score} out of {quizQuestions.length} questions correctly.
             </Text>
 
             <TouchableOpacity
               style={[styles.restartButton, { backgroundColor: colors.primary }]}
               onPress={handleRestart}
-              accessibilityLabel="Restart quiz"
+              accessibilityLabel="Restart quiz with new questions"
               accessibilityRole="button"
             >
               <IconSymbol
@@ -107,7 +109,7 @@ export default function QuizScreen() {
                 size={20}
                 color="#FFFFFF"
               />
-              <Text style={styles.restartButtonText}>Restart Quiz</Text>
+              <Text style={styles.restartButtonText}>New Quiz</Text>
             </TouchableOpacity>
           </View>
 
@@ -132,7 +134,7 @@ export default function QuizScreen() {
           </Text>
           <View style={styles.progressContainer}>
             <Text style={[styles.progressText, { color: colors.textSecondary }]}>
-              Question {currentQuestionIndex + 1} of {quizData.length}
+              Question {currentQuestionIndex + 1} of {quizQuestions.length}
             </Text>
             <View
               style={[
@@ -146,7 +148,7 @@ export default function QuizScreen() {
                   {
                     backgroundColor: colors.primary,
                     width: `${
-                      ((currentQuestionIndex + 1) / quizData.length) * 100
+                      ((currentQuestionIndex + 1) / quizQuestions.length) * 100
                     }%`,
                   },
                 ]}
@@ -160,7 +162,7 @@ export default function QuizScreen() {
             styles.questionCard,
             {
               backgroundColor: colors.card,
-              borderColor: "rgba(255, 255, 255, 0.06)",
+              borderColor: colors.primary + "15",
             },
           ]}
         >
@@ -302,7 +304,7 @@ function OptionButton({
   const showResult = selectedAnswer !== null;
 
   let backgroundColor = colors.card;
-  let borderColor = "rgba(255, 255, 255, 0.06)";
+  let borderColor = colors.primary + "15";
 
   if (showResult) {
     if (isSelected && isCorrect) {

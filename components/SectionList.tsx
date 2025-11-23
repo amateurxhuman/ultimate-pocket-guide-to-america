@@ -10,12 +10,26 @@ interface SectionListProps {
   mainSection: MainSection;
 }
 
+// Define which subsections are founding documents
+const FOUNDING_DOCUMENTS = [
+  "declaration",
+  "articles",
+  "constitution",
+  "bill-of-rights",
+  "federalist-papers",
+];
+
 export function SectionList({ mainSection }: SectionListProps) {
   const { colors } = useTheme();
   const router = useRouter();
 
-  const navigateToSection = (sectionId: string) => {
-    router.push(`/(tabs)/${mainSection.id}/${sectionId}` as any);
+  const navigateToItem = (subsectionId: string) => {
+    // Check if this is a founding document
+    if (FOUNDING_DOCUMENTS.includes(subsectionId)) {
+      router.push(`/document/${subsectionId}` as any);
+    } else {
+      router.push(`/detail/${subsectionId}` as any);
+    }
   };
 
   return (
@@ -34,39 +48,53 @@ export function SectionList({ mainSection }: SectionListProps) {
         </View>
 
         <View style={styles.sectionsContainer}>
-          {mainSection.sections.map((section, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[styles.sectionCard, { backgroundColor: colors.card }]}
-              onPress={() => navigateToSection(section.id)}
-              activeOpacity={0.7}
-            >
-              <View style={styles.cardContent}>
+          {mainSection.sections.map((section, sectionIndex) => (
+            <View key={sectionIndex} style={styles.sectionGroup}>
+              <View style={styles.sectionHeader}>
                 <Text style={[styles.sectionTitle, { color: colors.text }]}>
                   {section.title}
                 </Text>
                 <Text style={[styles.sectionDescription, { color: colors.textSecondary }]}>
                   {section.description}
                 </Text>
-                <View style={styles.subsectionCount}>
-                  <IconSymbol
-                    ios_icon_name="doc.text.fill"
-                    android_material_icon_name="description"
-                    size={16}
-                    color={colors.textSecondary}
-                  />
-                  <Text style={[styles.countText, { color: colors.textSecondary }]}>
-                    {section.subsections.length} {section.subsections.length === 1 ? 'topic' : 'topics'}
-                  </Text>
-                </View>
               </View>
-              <IconSymbol
-                ios_icon_name="chevron.right"
-                android_material_icon_name="chevron_right"
-                size={24}
-                color={colors.textSecondary}
-              />
-            </TouchableOpacity>
+
+              <View style={styles.subsectionsContainer}>
+                {section.subsections.map((subsection, subsectionIndex) => {
+                  const isDocument = FOUNDING_DOCUMENTS.includes(subsection.id);
+                  return (
+                    <TouchableOpacity
+                      key={subsectionIndex}
+                      style={[styles.subsectionCard, { backgroundColor: colors.card }]}
+                      onPress={() => navigateToItem(subsection.id)}
+                      activeOpacity={0.7}
+                    >
+                      <View style={styles.subsectionContent}>
+                        {isDocument && (
+                          <View style={[styles.documentBadge, { backgroundColor: colors.primary + "20" }]}>
+                            <IconSymbol
+                              ios_icon_name="doc.text.fill"
+                              android_material_icon_name="description"
+                              size={12}
+                              color={colors.primary}
+                            />
+                          </View>
+                        )}
+                        <Text style={[styles.subsectionTitle, { color: colors.text }]}>
+                          {subsection.title}
+                        </Text>
+                      </View>
+                      <IconSymbol
+                        ios_icon_name="chevron.right"
+                        android_material_icon_name="chevron_right"
+                        size={20}
+                        color={colors.textSecondary}
+                      />
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </View>
           ))}
         </View>
       </ScrollView>
@@ -96,9 +124,27 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   sectionsContainer: {
-    gap: 12,
+    gap: 24,
   },
-  sectionCard: {
+  sectionGroup: {
+    marginBottom: 8,
+  },
+  sectionHeader: {
+    marginBottom: 12,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "600",
+    marginBottom: 4,
+  },
+  sectionDescription: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  subsectionsContainer: {
+    gap: 8,
+  },
+  subsectionCard: {
     flexDirection: "row",
     padding: 16,
     borderRadius: 12,
@@ -106,26 +152,22 @@ const styles = StyleSheet.create({
     boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
     elevation: 3,
   },
-  cardContent: {
+  subsectionContent: {
     flex: 1,
-    marginRight: 12,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginBottom: 4,
-  },
-  sectionDescription: {
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 8,
-  },
-  subsectionCount: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+    gap: 8,
   },
-  countText: {
-    fontSize: 12,
+  documentBadge: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  subsectionTitle: {
+    fontSize: 16,
+    fontWeight: "500",
+    flex: 1,
   },
 });

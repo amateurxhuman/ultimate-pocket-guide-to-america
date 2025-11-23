@@ -93,6 +93,20 @@ export default function RootLayout() {
                   {/* Main app with tabs */}
                   <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
+                  {/* Detail and Document screens */}
+                  <Stack.Screen
+                    name="detail/[id]"
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="document/[id]"
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+
                   {/* Modal Demo Screens */}
                   <Stack.Screen
                     name="modal"

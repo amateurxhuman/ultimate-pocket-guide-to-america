@@ -29,6 +29,18 @@ export default function TabLayout() {
         <Icon sf="globe.americas.fill" />
         <Label>Land</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger key="search" name="search">
+        <Icon sf="magnifyingglass" />
+        <Label>Search</Label>
+      </NativeTabs.Trigger>
+      <NativeTabs.Trigger key="glossary" name="glossary">
+        <Icon sf="book.fill" />
+        <Label>Glossary</Label>
+      </NativeTabs.Trigger>
+      <NativeTabs.Trigger key="favorites" name="favorites">
+        <Icon sf="star.fill" />
+        <Label>Favorites</Label>
+      </NativeTabs.Trigger>
     </NativeTabs>
   );
 }

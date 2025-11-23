@@ -42,6 +42,24 @@ export default function TabLayout() {
       icon: 'public',
       label: 'Land',
     },
+    {
+      name: 'search',
+      route: '/(tabs)/search/',
+      icon: 'search',
+      label: 'Search',
+    },
+    {
+      name: 'glossary',
+      route: '/(tabs)/glossary/',
+      icon: 'menu_book',
+      label: 'Glossary',
+    },
+    {
+      name: 'favorites',
+      route: '/(tabs)/favorites/',
+      icon: 'star',
+      label: 'Favorites',
+    },
   ];
 
   // For Android and Web, use Stack navigation with custom floating tab bar
@@ -59,6 +77,9 @@ export default function TabLayout() {
         <Stack.Screen key="political-landscape" name="political-landscape" />
         <Stack.Screen key="principles-practice" name="principles-practice" />
         <Stack.Screen key="land-life" name="land-life" />
+        <Stack.Screen key="search" name="search" />
+        <Stack.Screen key="glossary" name="glossary" />
+        <Stack.Screen key="favorites" name="favorites" />
       </Stack>
       <FloatingTabBar tabs={tabs} />
     </>

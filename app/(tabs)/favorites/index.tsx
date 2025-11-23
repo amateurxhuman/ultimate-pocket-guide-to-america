@@ -1,0 +1,287 @@
+
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Platform,
+  Alert,
+} from 'react-native';
+import { useRouter, Stack, useFocusEffect } from 'expo-router';
+import { useTheme } from '@/contexts/ThemeContext';
+import { IconSymbol } from '@/components/IconSymbol';
+import { AppFooter } from '@/components/AppFooter';
+import { findItemById, getItemRoute } from '@/utils/findItemById';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const FAVORITES_KEY = 'favorites';
+
+interface FavoriteItem {
+  id: string;
+  title: string;
+  breadcrumb: string;
+  snippet: string;
+}
+
+export default function FavoritesScreen() {
+  const { colors } = useTheme();
+  const router = useRouter();
+  const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Reload favorites when screen comes into focus
+  useFocusEffect(
+    React.useCallback(() => {
+      loadFavorites();
+    }, [])
+  );
+
+  const loadFavorites = async () => {
+    try {
+      setIsLoading(true);
+      const stored = await AsyncStorage.getItem(FAVORITES_KEY);
+      if (stored) {
+        const favoriteIds: string[] = JSON.parse(stored);
+        const items: FavoriteItem[] = [];
+
+        for (const id of favoriteIds) {
+          const result = findItemById(id);
+          if (result) {
+            const snippet = result.item.content.slice(0, 100) + (result.item.content.length > 100 ? '...' : '');
+            items.push({
+              id,
+              title: result.item.title,
+              breadcrumb: `${result.mainSection.title} › ${result.section.title}`,
+              snippet,
+            });
+          }
+        }
+
+        // Sort alphabetically by title
+        items.sort((a, b) => a.title.localeCompare(b.title));
+        setFavorites(items);
+      } else {
+        setFavorites([]);
+      }
+    } catch (error) {
+      console.log('Error loading favorites:', error);
+      setFavorites([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRemoveFavorite = async (id: string) => {
+    try {
+      const stored = await AsyncStorage.getItem(FAVORITES_KEY);
+      if (stored) {
+        const favoriteIds: string[] = JSON.parse(stored);
+        const updated = favoriteIds.filter((fid) => fid !== id);
+        await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(updated));
+        loadFavorites();
+      }
+    } catch (error) {
+      console.log('Error removing favorite:', error);
+    }
+  };
+
+  const handleItemPress = (id: string) => {
+    const route = getItemRoute(id);
+    router.push(route as any);
+  };
+
+  const confirmRemove = (id: string, title: string) => {
+    if (Platform.OS === 'web') {
+      if (confirm(`Remove "${title}" from favorites?`)) {
+        handleRemoveFavorite(id);
+      }
+    } else {
+      Alert.alert(
+        'Remove Favorite',
+        `Remove "${title}" from favorites?`,
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Remove', style: 'destructive', onPress: () => handleRemoveFavorite(id) },
+        ]
+      );
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <>
+        <Stack.Screen
+          options={{
+            title: 'Favorites',
+            headerShown: true,
+            headerStyle: { backgroundColor: colors.card },
+            headerTintColor: colors.text,
+          }}
+        />
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
+          <View style={styles.emptyState}>
+            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+              Loading...
+            </Text>
+          </View>
+        </View>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Stack.Screen
+        options={{
+          title: 'Favorites',
+          headerShown: true,
+          headerStyle: { backgroundColor: colors.card },
+          headerTintColor: colors.text,
+        }}
+      />
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollContent}
+        >
+          {favorites.length === 0 ? (
+            <View style={styles.emptyState}>
+              <IconSymbol
+                ios_icon_name="star"
+                android_material_icon_name="star_border"
+                size={64}
+                color={colors.textSecondary}
+              />
+              <Text style={[styles.emptyTitle, { color: colors.text }]}>
+                No favorites yet
+              </Text>
+              <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+                Tap the star icon on any topic to save it here
+              </Text>
+            </View>
+          ) : (
+            <>
+              <Text style={[styles.count, { color: colors.textSecondary }]}>
+                {favorites.length} {favorites.length === 1 ? 'favorite' : 'favorites'}
+              </Text>
+              {favorites.map((item, index) => (
+                <View key={index} style={[styles.itemCard, { backgroundColor: colors.card }]}>
+                  <TouchableOpacity
+                    style={styles.itemContent}
+                    onPress={() => handleItemPress(item.id)}
+                    accessibilityLabel={`Open ${item.title}`}
+                    accessibilityRole="button"
+                  >
+                    <Text style={[styles.itemTitle, { color: colors.text }]}>
+                      {item.title}
+                    </Text>
+                    <Text style={[styles.itemBreadcrumb, { color: colors.textSecondary }]}>
+                      {item.breadcrumb}
+                    </Text>
+                    <Text style={[styles.itemSnippet, { color: colors.textSecondary }]}>
+                      {item.snippet}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.removeButton}
+                    onPress={() => confirmRemove(item.id, item.title)}
+                    accessibilityLabel={`Remove ${item.title} from favorites`}
+                    accessibilityRole="button"
+                  >
+                    <IconSymbol
+                      ios_icon_name="trash"
+                      android_material_icon_name="delete"
+                      size={20}
+                      color={colors.accent}
+                    />
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </>
+          )}
+
+          <AppFooter />
+        </ScrollView>
+      </View>
+    </>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingHorizontal: 16,
+    paddingTop: Platform.OS === 'android' ? 24 : 16,
+    paddingBottom: 120,
+  },
+  emptyState: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 80,
+    paddingHorizontal: 32,
+  },
+  emptyTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginTop: 16,
+    marginBottom: 8,
+    lineHeight: 29,
+  },
+  emptyText: {
+    fontSize: 16,
+    textAlign: 'center',
+    lineHeight: 23.2,
+  },
+  count: {
+    fontSize: 13,
+    fontWeight: '600',
+    marginBottom: 12,
+    textTransform: 'uppercase',
+    letterSpacing: 1.2,
+    lineHeight: 18.85,
+  },
+  itemCard: {
+    flexDirection: 'row',
+    borderRadius: 12,
+    marginBottom: 12,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
+  itemContent: {
+    flex: 1,
+    padding: 16,
+  },
+  itemTitle: {
+    fontSize: 17,
+    fontWeight: '600',
+    marginBottom: 6,
+    lineHeight: 24.65,
+  },
+  itemBreadcrumb: {
+    fontSize: 13,
+    marginBottom: 8,
+    lineHeight: 18.85,
+  },
+  itemSnippet: {
+    fontSize: 14,
+    lineHeight: 20.3,
+  },
+  removeButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    minWidth: 44,
+    minHeight: 44,
+  },
+});

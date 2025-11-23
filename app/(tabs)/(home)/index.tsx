@@ -19,7 +19,6 @@ import QuickAccessGrid from "@/components/QuickAccessGrid";
 const HERO_FLAG_URL =
   "https://i0.wp.com/thehumanconservative.com/wp-content/uploads/2025/10/image.png?w=1024&ssl=1";
 
-// Expanded pool of 100+ American facts
 const AMERICAN_FACTS: string[] = [
   "The United States Constitution is the oldest written national constitution still in use.",
   "Yellowstone, established in 1872, is widely considered the first national park in the world.",
@@ -147,7 +146,6 @@ export default function HomeScreen() {
     router.push(`/(tabs)/${sectionId}` as any);
   };
 
-  // Pick a random fact once per mount
   const [fact, setFact] = React.useState(() => {
     const idx = Math.floor(Math.random() * AMERICAN_FACTS.length);
     return AMERICAN_FACTS[idx];
@@ -164,23 +162,25 @@ export default function HomeScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* HERO CARD */}
+        {/* HERO CARD WITH GOLD BORDER */}
         <View style={styles.header}>
-          <ImageBackground
-            source={{ uri: HERO_FLAG_URL }}
-            style={styles.heroCard}
-            imageStyle={styles.heroImage}
-          >
-            <View style={styles.heroOverlay}>
-              <Text style={[styles.title, { color: "#FFFFFF" }]}>
-                Ultimate Pocket Guide to America
-              </Text>
-              <Text style={[styles.subtitle, { color: "#E5E7EB" }]}>
-                Your pocket guide to the principles, foundations, and story of
-                the American Republic.
-              </Text>
-            </View>
-          </ImageBackground>
+          <View style={[styles.flagBorder, { borderColor: colors.primary }]}>
+            <ImageBackground
+              source={{ uri: HERO_FLAG_URL }}
+              style={styles.heroCard}
+              imageStyle={styles.heroImage}
+            >
+              <View style={styles.heroOverlay}>
+                <Text style={styles.title}>
+                  Ultimate Pocket Guide to America
+                </Text>
+                <Text style={styles.subtitle}>
+                  Your pocket guide to the principles, foundations, and story of
+                  the American Republic.
+                </Text>
+              </View>
+            </ImageBackground>
+          </View>
         </View>
 
         {/* RANDOM FACT CARD */}
@@ -263,7 +263,7 @@ export default function HomeScreen() {
           })}
         </View>
 
-        {/* QUICK ACCESS GRID - MOVED BELOW SECTIONS */}
+        {/* QUICK ACCESS GRID */}
         <QuickAccessGrid />
 
         <AppFooter />
@@ -281,20 +281,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 120,
   },
-
-  /* HERO */
   header: {
     marginBottom: 16,
   },
+  flagBorder: {
+    borderWidth: 2,
+    borderRadius: 16,
+    padding: 0,
+  },
   heroCard: {
     width: "100%",
-    borderRadius: 16,
+    borderRadius: 14,
     overflow: "hidden",
-    shadowColor: "#000",
-    shadowOpacity: 0.25,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 5,
   },
   heroImage: {
     resizeMode: "cover",
@@ -305,19 +303,23 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.55)",
   },
   title: {
-    fontSize: 22,
-    fontWeight: "800",
+    fontSize: 26,
+    fontWeight: "700",
     textAlign: "left",
     marginBottom: 8,
-    lineHeight: 31.9,
+    lineHeight: 34,
+    letterSpacing: 0.5,
+    color: "#FFFFFF",
+    textShadowColor: "rgba(0, 0, 0, 0.3)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   subtitle: {
     fontSize: 14,
     lineHeight: 20.3,
     textAlign: "left",
+    color: "#E5E7EB",
   },
-
-  /* FACT CARD */
   factCard: {
     marginBottom: 20,
     padding: 16,
@@ -353,8 +355,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20.3,
   },
-
-  /* SECTIONS */
   sectionsHeaderRow: {
     marginBottom: 12,
     paddingHorizontal: 4,

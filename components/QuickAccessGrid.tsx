@@ -1,23 +1,22 @@
 
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   Platform,
-} from 'react-native';
+  Pressable,
+} from "react-native";
 import { useRouter } from 'expo-router';
 import { useTheme } from '@/contexts/ThemeContext';
 import { IconSymbol } from '@/components/IconSymbol';
 import * as Haptics from 'expo-haptics';
 
 export default function QuickAccessGrid() {
-  const { colors, toggleTheme, isDark } = useTheme();
+  const { colors, toggleTheme } = useTheme();
   const router = useRouter();
 
   const handlePress = (action: string) => {
-    // Haptic feedback
     if (Platform.OS === 'ios') {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
@@ -88,18 +87,19 @@ export default function QuickAccessGrid() {
       <View style={styles.grid}>
         {buttons.map((button, index) => (
           <React.Fragment key={index}>
-            <TouchableOpacity
-              style={[
+            <Pressable
+              onPress={() => handlePress(button.id)}
+              accessibilityLabel={`${button.label} button`}
+              accessibilityRole="button"
+              style={({ pressed }) => [
                 styles.button,
                 {
                   backgroundColor: colors.card,
-                  borderColor: colors.primary + '15',
+                  borderColor: colors.primary + "15",
+                  transform: pressed ? [{ scale: 0.97 }] : [{ scale: 1 }],
+                  opacity: pressed ? 0.85 : 1,
                 },
               ]}
-              onPress={() => handlePress(button.id)}
-              activeOpacity={0.7}
-              accessibilityLabel={`${button.label} button`}
-              accessibilityRole="button"
             >
               <IconSymbol
                 ios_icon_name={button.iosIcon}
@@ -110,7 +110,7 @@ export default function QuickAccessGrid() {
               <Text style={[styles.buttonLabel, { color: colors.text }]}>
                 {button.label}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </React.Fragment>
         ))}
       </View>

@@ -315,8 +315,8 @@ export default function SearchScreen() {
                 Search the Guide
               </Text>
               <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-                Try &apos;Constitution&apos; or &apos;voting&apos;
-              </Text>
+  Try searching for &apos;Constitution&apos;, &apos;federalism&apos;, or &apos;founders&apos;
+</Text>
             </View>
           )}
 

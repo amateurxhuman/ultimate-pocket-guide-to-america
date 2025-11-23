@@ -141,8 +141,8 @@ export default function GlossaryScreen() {
                 color={colors.textSecondary}
               />
               <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-                No terms found
-              </Text>
+  No terms match your search. Try a different word or clear the search box.
+</Text>
             </View>
           ) : (
             <>

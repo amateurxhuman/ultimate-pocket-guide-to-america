@@ -47,7 +47,6 @@ export function FavoriteToggle({ itemId, size = 26 }: FavoriteToggleProps) {
       await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
       setIsFavorite(!isFavorite);
 
-      // Haptic feedback
       if (Platform.OS === 'ios') {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       }

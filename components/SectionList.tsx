@@ -16,7 +16,6 @@ interface SectionListProps {
   mainSection: MainSection;
 }
 
-// Define which subsections are founding documents
 const FOUNDING_DOCUMENTS = [
   "declaration",
   "articles",
@@ -30,7 +29,6 @@ export function SectionList({ mainSection }: SectionListProps) {
   const router = useRouter();
 
   const navigateToItem = (subsectionId: string) => {
-    // Check if this is a founding document
     if (FOUNDING_DOCUMENTS.includes(subsectionId)) {
       router.push(`/document/${subsectionId}` as any);
     } else {
@@ -86,7 +84,6 @@ export function SectionList({ mainSection }: SectionListProps) {
           ))}
         </View>
 
-        {/* FOOTER */}
         <AppFooter />
       </ScrollView>
     </View>

@@ -19,15 +19,14 @@ export function AppFooter() {
         Ultimate Pocket Guide to America • v1.0.0
       </Text>
       <TouchableOpacity
-        onPress={handleLinkPress}
-        activeOpacity={0.7}
-        accessibilityLabel="Visit The Human Conservative website"
-        accessibilityRole="link"
-      >
-        <Text style={[styles.footerLink, { color: colors.primary }]}>
-          thehumanconservative.com
-        </Text>
-      </TouchableOpacity>
+  onPress={handleLinkPress}
+  accessibilityRole="link"
+  accessibilityLabel="Open The Human Conservative website in your browser"
+>
+  <Text style={[styles.footerLink, { color: colors.primary }]}>
+    Visit thehumanconservative.com
+  </Text>
+</TouchableOpacity>
     </View>
   );
 }

@@ -52,34 +52,24 @@ export default function FloatingTabBar({
   const animatedValue = useSharedValue(0);
   const scrollViewRef = React.useRef<ScrollView>(null);
 
-  // Calculate dynamic width based on number of tabs
   const calculatedWidth = containerWidth || (tabs.length > 4 ? screenWidth - 40 : screenWidth / 2.5);
   const needsScroll = tabs.length > 4;
   const tabWidth = needsScroll ? 85 : (calculatedWidth - 8) / tabs.length;
 
-  // Improved active tab detection with better path matching
   const activeTabIndex = React.useMemo(() => {
-    // Find the best matching tab based on the current pathname
     let bestMatch = -1;
     let bestMatchScore = 0;
 
     tabs.forEach((tab, index) => {
       let score = 0;
 
-      // Exact route match gets highest score
       if (pathname === tab.route) {
         score = 100;
-      }
-      // Check if pathname starts with tab route (for nested routes)
-      else if (pathname.startsWith(tab.route as string)) {
+      } else if (pathname.startsWith(tab.route as string)) {
         score = 80;
-      }
-      // Check if pathname contains the tab name
-      else if (pathname.includes(tab.name)) {
+      } else if (pathname.includes(tab.name)) {
         score = 60;
-      }
-      // Check for partial matches in the route
-      else if (tab.route.includes('/(tabs)/') && pathname.includes(tab.route.split('/(tabs)/')[1])) {
+      } else if (tab.route.includes('/(tabs)/') && pathname.includes(tab.route.split('/(tabs)/')[1])) {
         score = 40;
       }
 
@@ -89,7 +79,6 @@ export default function FloatingTabBar({
       }
     });
 
-    // Default to first tab if no match found
     return bestMatch >= 0 ? bestMatch : 0;
   }, [pathname, tabs]);
 
@@ -101,7 +90,6 @@ export default function FloatingTabBar({
         mass: 1,
       });
 
-      // Scroll to active tab if needed
       if (needsScroll && scrollViewRef.current) {
         const scrollX = activeTabIndex * tabWidth - (calculatedWidth / 2) + (tabWidth / 2);
         scrollViewRef.current.scrollTo({ x: Math.max(0, scrollX), animated: true });
@@ -127,7 +115,6 @@ export default function FloatingTabBar({
     };
   });
 
-  // Dynamic styles based on theme
   const dynamicStyles = {
     blurContainer: {
       ...styles.blurContainer,

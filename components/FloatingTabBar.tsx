@@ -29,6 +29,7 @@ export interface TabBarItem {
   name: string;
   route: Href;
   icon: keyof typeof MaterialIcons.glyphMap;
+  iosIcon?: string;
   label: string;
 }
 
@@ -54,7 +55,7 @@ export default function FloatingTabBar({
   // Calculate dynamic width based on number of tabs
   const calculatedWidth = containerWidth || (tabs.length > 4 ? screenWidth - 40 : screenWidth / 2.5);
   const needsScroll = tabs.length > 4;
-  const tabWidth = needsScroll ? 80 : (calculatedWidth - 8) / tabs.length;
+  const tabWidth = needsScroll ? 85 : (calculatedWidth - 8) / tabs.length;
 
   // Improved active tab detection with better path matching
   const activeTabIndex = React.useMemo(() => {
@@ -184,8 +185,8 @@ export default function FloatingTabBar({
                 <View style={styles.tabContent}>
                   <IconSymbol
                     android_material_icon_name={tab.icon}
-                    ios_icon_name={tab.icon}
-                    size={28}
+                    ios_icon_name={tab.iosIcon || tab.icon}
+                    size={30}
                     color={isActive ? colors.primary : colors.textSecondary}
                   />
                   <Text
@@ -246,8 +247,8 @@ export default function FloatingTabBar({
                         <View style={styles.tabContent}>
                           <IconSymbol
                             android_material_icon_name={tab.icon}
-                            ios_icon_name={tab.icon}
-                            size={28}
+                            ios_icon_name={tab.iosIcon || tab.icon}
+                            size={30}
                             color={isActive ? colors.primary : colors.textSecondary}
                           />
                           <Text
@@ -303,7 +304,7 @@ const styles = StyleSheet.create({
   },
   tabsContainer: {
     flexDirection: 'row',
-    height: 68,
+    height: 72,
     alignItems: 'center',
     paddingHorizontal: 4,
   },
@@ -311,7 +312,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
   scrollView: {
-    height: 68,
+    height: 72,
   },
   scrollContent: {
     alignItems: 'center',
@@ -329,9 +330,9 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   tabLabel: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: '600',
     marginTop: 2,
-    lineHeight: 15.95,
+    lineHeight: 17.4,
   },
 });

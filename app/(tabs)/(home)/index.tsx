@@ -14,6 +14,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { contentData } from "@/data/contentData";
 import { IconSymbol } from "@/components/IconSymbol";
 import { AppFooter } from "@/components/AppFooter";
+import QuickAccessGrid from "@/components/QuickAccessGrid";
 
 const HERO_FLAG_URL =
   "https://i0.wp.com/thehumanconservative.com/wp-content/uploads/2025/10/image.png?w=1024&ssl=1";
@@ -210,13 +211,17 @@ export default function HomeScreen() {
           <Text style={[styles.factText, { color: colors.text }]}>{fact}</Text>
         </View>
 
-        {/* SECTIONS */}
+        {/* SECTIONS HEADER */}
         <View style={styles.sectionsHeaderRow}>
           <Text style={[styles.sectionsHeaderText, { color: colors.textSecondary }]}>
             Explore the guide
           </Text>
         </View>
 
+        {/* QUICK ACCESS GRID */}
+        <QuickAccessGrid />
+
+        {/* SECTIONS */}
         <View style={styles.sectionsContainer}>
           {contentData.map((section, index) => {
             const icons = getIconName(section.icon);
@@ -297,7 +302,7 @@ const styles = StyleSheet.create({
   heroOverlay: {
     paddingHorizontal: 20,
     paddingVertical: 24,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.55)",
   },
   title: {
     fontSize: 22,

@@ -4,20 +4,23 @@ import { useColorScheme } from 'react-native';
 import { colors, darkColors } from '@/styles/commonStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type ThemeMode = 'light' | 'dark' | 'auto';
+type Theme = 'light' | 'dark';
 
 interface ThemeContextType {
-  themeMode: ThemeMode;
-  setThemeMode: (mode: ThemeMode) => void;
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+  toggleTheme: () => void;
   colors: typeof colors;
   isDark: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+const THEME_STORAGE_KEY = 'app_theme_preference';
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const systemColorScheme = useColorScheme();
-  const [themeMode, setThemeModeState] = useState<ThemeMode>('auto');
+  const [theme, setThemeState] = useState<Theme>('dark');
 
   useEffect(() => {
     loadThemePreference();
@@ -25,29 +28,37 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const loadThemePreference = async () => {
     try {
-      const savedTheme = await AsyncStorage.getItem('themeMode');
-      if (savedTheme) {
-        setThemeModeState(savedTheme as ThemeMode);
+      const savedTheme = await AsyncStorage.getItem(THEME_STORAGE_KEY);
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        setThemeState(savedTheme);
+      } else {
+        // Default to dark theme
+        setThemeState('dark');
       }
     } catch (error) {
       console.log('Error loading theme preference:', error);
     }
   };
 
-  const setThemeMode = async (mode: ThemeMode) => {
+  const setTheme = async (newTheme: Theme) => {
     try {
-      await AsyncStorage.setItem('themeMode', mode);
-      setThemeModeState(mode);
+      await AsyncStorage.setItem(THEME_STORAGE_KEY, newTheme);
+      setThemeState(newTheme);
     } catch (error) {
       console.log('Error saving theme preference:', error);
     }
   };
 
-  const isDark = themeMode === 'dark' || (themeMode === 'auto' && systemColorScheme === 'dark');
+  const toggleTheme = async () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    await setTheme(newTheme);
+  };
+
+  const isDark = theme === 'dark';
   const currentColors = isDark ? darkColors : colors;
 
   return (
-    <ThemeContext.Provider value={{ themeMode, setThemeMode, colors: currentColors, isDark }}>
+    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, colors: currentColors, isDark }}>
       {children}
     </ThemeContext.Provider>
   );

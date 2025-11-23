@@ -86,7 +86,7 @@ export default function DocumentScreen() {
       await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
       setIsFavorite(!isFavorite);
 
-      // Haptic feedback on iOS
+      // Haptic feedback
       if (Platform.OS === 'ios') {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       }
@@ -159,7 +159,7 @@ export default function DocumentScreen() {
               <IconSymbol
                 ios_icon_name={isFavorite ? "star.fill" : "star"}
                 android_material_icon_name={isFavorite ? "star" : "star_border"}
-                size={24}
+                size={26}
                 color={isFavorite ? colors.primary : colors.text}
               />
             </TouchableOpacity>

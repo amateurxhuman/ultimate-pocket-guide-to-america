@@ -14,39 +14,39 @@ export default function TabLayout() {
         }}
       />
       
-      {/* Main section pages (not in tab bar, but still need to be defined) */}
+      {/* Section pages - hidden from tab bar but still accessible via navigation */}
       <NativeTabs.Screen
         name="foundations"
         options={{
-          href: null, // Hide from tab bar
+          href: null,
         }}
       />
       <NativeTabs.Screen
         name="civic-literacy"
         options={{
-          href: null, // Hide from tab bar
+          href: null,
         }}
       />
       <NativeTabs.Screen
         name="political-landscape"
         options={{
-          href: null, // Hide from tab bar
+          href: null,
         }}
       />
       <NativeTabs.Screen
         name="principles-practice"
         options={{
-          href: null, // Hide from tab bar
+          href: null,
         }}
       />
       <NativeTabs.Screen
         name="land-life"
         options={{
-          href: null, // Hide from tab bar
+          href: null,
         }}
       />
       
-      {/* Utility tabs (visible in tab bar) */}
+      {/* Map tab */}
       <NativeTabs.Screen
         name="map"
         options={{
@@ -54,13 +54,17 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => <Icon name="map.fill" color={color} size={size} />,
         }}
       />
+      
+      {/* Quiz tab */}
       <NativeTabs.Screen
         name="quiz"
         options={{
           title: 'Quiz',
-          tabBarIcon: ({ color, size }) => <Icon name="questionmark.diamond.fill" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => <Icon name="questionmark.circle.fill" color={color} size={size} />,
         }}
       />
+      
+      {/* Search tab */}
       <NativeTabs.Screen
         name="search"
         options={{
@@ -68,6 +72,8 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => <Icon name="magnifyingglass" color={color} size={size} />,
         }}
       />
+      
+      {/* Glossary tab */}
       <NativeTabs.Screen
         name="glossary"
         options={{
@@ -75,6 +81,8 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => <Icon name="book.fill" color={color} size={size} />,
         }}
       />
+      
+      {/* Favorites tab */}
       <NativeTabs.Screen
         name="favorites"
         options={{

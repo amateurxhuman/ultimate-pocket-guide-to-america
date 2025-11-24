@@ -1,3 +1,4 @@
+
 // components/IconSymbol.tsx
 // Unified image-based icon component using your THC icon pack.
 // Works across web, iOS, and Android with the same API as before.
@@ -16,7 +17,7 @@ type IconSymbolProps = {
   android_material_icon_name?: string;    // primary key for icon mapping
   name?: string;                          // fallback key (used in ListItem "trash.fill")
   size?: number;
-  color?: string | OpaqueColorValue;      // ignored for now, icons are pre-colored gold
+  color?: string | OpaqueColorValue;      // color prop (currently ignored for image icons)
   style?: StyleProp<ViewStyle>;
 };
 
@@ -72,6 +73,9 @@ const ICON_IMAGE_URLS: Record<string, string> = {
 
   // ListItem uses name="trash.fill" → route that to delete icon
   "trash.fill": "https://thehumanconservative.com/wp-content/uploads/2025/11/Delete1.png",
+  
+  // Additional icon mappings for trash
+  trash: "https://thehumanconservative.com/wp-content/uploads/2025/11/Delete1.png",
 };
 
 export function IconSymbol(props: IconSymbolProps) {
@@ -81,6 +85,7 @@ export function IconSymbol(props: IconSymbolProps) {
     name,
     size = 24,
     style,
+    color, // Accept color prop but don't use it for now (images are pre-colored)
   } = props;
 
   // Priority: android_material_icon_name → name → ios_icon_name
@@ -94,6 +99,7 @@ export function IconSymbol(props: IconSymbolProps) {
 
   if (!src) {
     // Graceful fallback: keep layout but show nothing obvious
+    console.log(`IconSymbol: No icon found for key "${key}"`);
     return <View style={[{ width: size, height: size }, style]} />;
   }
 

@@ -18,9 +18,16 @@ export default function TabLayout() {
           backgroundColor: colors.background,
           borderTopColor: colors.highlight,
           borderTopWidth: 1,
+          height: 65,
+          paddingBottom: 8,
+          paddingTop: 8,
         },
         tabBarLabelStyle: {
-          fontSize: 11,
+          fontSize: 12,
+          fontWeight: "600",
+        },
+        tabBarItemStyle: {
+          paddingVertical: 4,
         },
       }}
     >
@@ -29,11 +36,12 @@ export default function TabLayout() {
         name="(home)"
         options={{
           title: "Home",
-          tabBarIcon: ({ size }) => (
+          tabBarIcon: ({ color, size }) => (
             <IconSymbol
               android_material_icon_name="home"
               ios_icon_name="house.fill"
               size={size ?? 24}
+              color={color}
             />
           ),
         }}
@@ -76,11 +84,12 @@ export default function TabLayout() {
         name="map"
         options={{
           title: "Map",
-          tabBarIcon: ({ size }) => (
+          tabBarIcon: ({ color, size }) => (
             <IconSymbol
               android_material_icon_name="map"
               ios_icon_name="map.fill"
               size={size ?? 24}
+              color={color}
             />
           ),
         }}
@@ -91,11 +100,12 @@ export default function TabLayout() {
         name="quiz"
         options={{
           title: "Quiz",
-          tabBarIcon: ({ size }) => (
+          tabBarIcon: ({ color, size }) => (
             <IconSymbol
               android_material_icon_name="help"
               ios_icon_name="questionmark.circle.fill"
               size={size ?? 24}
+              color={color}
             />
           ),
         }}
@@ -106,11 +116,12 @@ export default function TabLayout() {
         name="search"
         options={{
           title: "Search",
-          tabBarIcon: ({ size }) => (
+          tabBarIcon: ({ color, size }) => (
             <IconSymbol
               android_material_icon_name="search"
               ios_icon_name="magnifyingglass"
               size={size ?? 24}
+              color={color}
             />
           ),
         }}
@@ -121,11 +132,12 @@ export default function TabLayout() {
         name="glossary"
         options={{
           title: "Glossary",
-          tabBarIcon: ({ size }) => (
+          tabBarIcon: ({ color, size }) => (
             <IconSymbol
               android_material_icon_name="menu_book"
               ios_icon_name="book.fill"
               size={size ?? 24}
+              color={color}
             />
           ),
         }}
@@ -136,11 +148,12 @@ export default function TabLayout() {
         name="favorites"
         options={{
           title: "Favorites",
-          tabBarIcon: ({ size }) => (
+          tabBarIcon: ({ color, size }) => (
             <IconSymbol
               android_material_icon_name="star"
               ios_icon_name="star.fill"
               size={size ?? 24}
+              color={color}
             />
           ),
         }}

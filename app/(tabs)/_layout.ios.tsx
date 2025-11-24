@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { NativeTabs, Icon } from 'expo-router/unstable-native-tabs';
+import { NativeTabs, Icon, Label } from 'expo-router/unstable-native-tabs';
 
 export default function TabLayout() {
   return (
@@ -10,9 +10,11 @@ export default function TabLayout() {
         name="(home)"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, size }) => <Icon name="house.fill" color={color} size={size} />,
         }}
-      />
+      >
+        <Label>Home</Label>
+        <Icon name="house.fill" />
+      </NativeTabs.Screen>
       
       {/* Section pages - hidden from tab bar but still accessible via navigation */}
       <NativeTabs.Screen
@@ -51,45 +53,55 @@ export default function TabLayout() {
         name="map"
         options={{
           title: 'Map',
-          tabBarIcon: ({ color, size }) => <Icon name="map.fill" color={color} size={size} />,
         }}
-      />
+      >
+        <Label>Map</Label>
+        <Icon name="map.fill" />
+      </NativeTabs.Screen>
       
       {/* Quiz tab */}
       <NativeTabs.Screen
         name="quiz"
         options={{
           title: 'Quiz',
-          tabBarIcon: ({ color, size }) => <Icon name="questionmark.circle.fill" color={color} size={size} />,
         }}
-      />
+      >
+        <Label>Quiz</Label>
+        <Icon name="questionmark.circle.fill" />
+      </NativeTabs.Screen>
       
       {/* Search tab */}
       <NativeTabs.Screen
         name="search"
         options={{
           title: 'Search',
-          tabBarIcon: ({ color, size }) => <Icon name="magnifyingglass" color={color} size={size} />,
         }}
-      />
+      >
+        <Label>Search</Label>
+        <Icon name="magnifyingglass" />
+      </NativeTabs.Screen>
       
       {/* Glossary tab */}
       <NativeTabs.Screen
         name="glossary"
         options={{
           title: 'Glossary',
-          tabBarIcon: ({ color, size }) => <Icon name="book.fill" color={color} size={size} />,
         }}
-      />
+      >
+        <Label>Glossary</Label>
+        <Icon name="book.fill" />
+      </NativeTabs.Screen>
       
       {/* Favorites tab */}
       <NativeTabs.Screen
         name="favorites"
         options={{
           title: 'Favorites',
-          tabBarIcon: ({ color, size }) => <Icon name="star.fill" color={color} size={size} />,
         }}
-      />
+      >
+        <Label>Favorites</Label>
+        <Icon name="star.fill" />
+      </NativeTabs.Screen>
     </NativeTabs>
   );
 }

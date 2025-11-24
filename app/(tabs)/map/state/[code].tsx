@@ -1,141 +1,77 @@
-
 import React from "react";
 import {
-  ScrollView,
-  StyleSheet,
   View,
   Text,
-  TouchableOpacity,
-  Platform,
+  StyleSheet,
+  ScrollView,
 } from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
-import { useTheme } from "@/contexts/ThemeContext";
-import { mapData } from "@/data/mapData";
-import { IconSymbol } from "@/components/IconSymbol";
-import { AppFooter } from "@/components/AppFooter";
+import { useLocalSearchParams, Stack } from "expo-router";
+import { mapData, State } from "@/data/mapData";
 
+/**
+ * State detail screen for the American Map Explorer.
+ * - Looks up the state by its two-letter code (e.g., "NY", "TX").
+ * - Uses `state.content` if present; falls back to `state.blurb` otherwise.
+ * - Splits the long text on "\n\n" and renders each as a separate paragraph.
+ */
 export default function StateDetailScreen() {
-  const { colors } = useTheme();
-  const router = useRouter();
-  const { code } = useLocalSearchParams();
+  const params = useLocalSearchParams();
+  const rawCode = params.code as string | string[] | undefined;
 
-  let state = null;
-  let region = null;
+  // Handle param variations safely
+  const stateCode = (Array.isArray(rawCode) ? rawCode[0] : rawCode || "")
+    .toUpperCase();
 
-  for (const r of mapData) {
-    const foundState = r.states.find(
-      (s) => s.code.toLowerCase() === (code as string).toLowerCase()
-    );
-    if (foundState) {
-      state = foundState;
-      region = r;
+  // Find the matching state in any region
+  let foundState: State | undefined;
+  for (const region of mapData) {
+    const match = region.states.find((s) => s.code === stateCode);
+    if (match) {
+      foundState = match;
       break;
     }
   }
 
-  if (!state || !region) {
+  if (!foundState) {
     return (
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <View style={styles.errorContainer}>
-          <IconSymbol
-            ios_icon_name="exclamationmark.triangle.fill"
-            android_material_icon_name="error"
-            size={64}
-            color={colors.textSecondary}
-          />
-          <Text style={[styles.errorText, { color: colors.text }]}>
-            State not found
+      <View style={styles.container}>
+        <Stack.Screen options={{ title: "State" }} />
+        <View style={styles.inner}>
+          <Text style={styles.errorTitle}>State not found</Text>
+          <Text style={styles.errorText}>
+            The state you tried to open could not be located. Please go back to
+            the map and try again.
           </Text>
-          <TouchableOpacity
-            style={[styles.backButton, { backgroundColor: colors.primary }]}
-            onPress={() => router.back()}
-            accessibilityLabel="Go back"
-            accessibilityRole="button"
-          >
-            <Text style={styles.backButtonText}>Go Back</Text>
-          </TouchableOpacity>
         </View>
       </View>
     );
   }
 
+  const longText =
+    (foundState.content && foundState.content.trim().length > 0
+      ? foundState.content
+      : foundState.blurb) || "";
+
+  const paragraphs = longText.split("\n\n");
+
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        <TouchableOpacity
-          style={styles.backButtonTop}
-          onPress={() => router.back()}
-          accessibilityLabel="Go back"
-          accessibilityRole="button"
-        >
-          <IconSymbol
-            ios_icon_name="chevron.left"
-            android_material_icon_name="chevron_left"
-            size={24}
-            color={colors.primary}
-          />
-          <Text style={[styles.backButtonTopText, { color: colors.primary }]}>
-            Back to {region.name}
-          </Text>
-        </TouchableOpacity>
+    <View style={styles.container}>
+      <Stack.Screen
+  options={{
+    title: foundState.name,
+    headerShown: true,
+    headerBackVisible: true,
+  }}
+/>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <Text style={styles.title}>{foundState.name}</Text>
+        <Text style={styles.subtitle}>{foundState.code}</Text>
 
-        <View style={styles.header}>
-          <View
-            style={[
-              styles.stateCodeBadge,
-              { backgroundColor: colors.highlight },
-            ]}
-          >
-            <Text style={[styles.stateCode, { color: colors.primary }]}>
-              {state.code}
-            </Text>
+        {paragraphs.map((para, index) => (
+          <View key={index} style={styles.card}>
+            <Text style={styles.paragraph}>{para}</Text>
           </View>
-          <Text
-            style={[styles.title, { color: colors.text }]}
-            accessibilityRole="header"
-          >
-            {state.name}
-          </Text>
-        </View>
-
-        <View
-          style={[
-            styles.infoCard,
-            {
-              backgroundColor: colors.card,
-              borderColor: colors.primary + "10",
-            },
-          ]}
-        >
-          <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>
-            About {state.name}
-          </Text>
-          <Text style={[styles.infoText, { color: colors.text }]}>
-            {state.blurb}
-          </Text>
-        </View>
-
-        <View
-          style={[
-            styles.infoCard,
-            {
-              backgroundColor: colors.card,
-              borderColor: colors.primary + "10",
-            },
-          ]}
-        >
-          <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>
-            Region
-          </Text>
-          <Text style={[styles.infoText, { color: colors.text }]}>
-            {region.name}
-          </Text>
-        </View>
-
-        <AppFooter />
+        ))}
       </ScrollView>
     </View>
   );
@@ -144,92 +80,49 @@ export default function StateDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#050509", // dark background to match the rest of the app
+  },
+  inner: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 40,
   },
   scrollContent: {
-    paddingTop: Platform.OS === 'android' ? 48 : 32,
-    paddingHorizontal: 16,
-    paddingBottom: 120,
-  },
-  backButtonTop: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 16,
-    gap: 4,
-    minHeight: 44,
-  },
-  backButtonTopText: {
-    fontSize: 16,
-    fontWeight: "500",
-    lineHeight: 23.2,
-  },
-  header: {
-    alignItems: "center",
-    marginBottom: 28,
-  },
-  stateCodeBadge: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  stateCode: {
-    fontSize: 28,
-    fontWeight: "700",
-    lineHeight: 40.6,
-  },
+  paddingHorizontal: 20,
+  paddingTop: 24,
+  paddingBottom: 120,
+},
   title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    lineHeight: 43.5,
+    fontSize: 24,
+    fontWeight: "700",
+    color: "#f5f5f5",
+    marginBottom: 4,
   },
-  infoCard: {
+  subtitle: {
+    fontSize: 14,
+    color: "#a1a1aa",
+    marginBottom: 16,
+  },
+  card: {
+    backgroundColor: "#18181b",
+    borderRadius: 18,
     padding: 16,
-    borderRadius: 12,
-    borderWidth: 1,
     marginBottom: 12,
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
   },
-  infoLabel: {
-    fontSize: 12,
-    fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: 1.2,
-    marginBottom: 8,
-    lineHeight: 17.4,
-  },
-  infoText: {
+  paragraph: {
     fontSize: 15,
-    lineHeight: 21.75,
+    lineHeight: 22,
+    color: "#e4e4e7",
   },
-  errorContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
+  errorTitle: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#f97373",
+    marginBottom: 8,
   },
   errorText: {
-    fontSize: 18,
-    marginTop: 16,
-    marginBottom: 20,
-    lineHeight: 26.1,
-  },
-  backButton: {
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 8,
-    minHeight: 44,
-  },
-  backButtonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "600",
-    lineHeight: 23.2,
+    fontSize: 15,
+    lineHeight: 22,
+    color: "#e4e4e7",
   },
 });

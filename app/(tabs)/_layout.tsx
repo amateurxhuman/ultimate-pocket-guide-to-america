@@ -1,111 +1,169 @@
+// app/(tabs)/_layout.tsx
+import React from "react";
+import { Tabs } from "expo-router";
+import { useTheme } from "@/contexts/ThemeContext";
+import { IconSymbol } from "@/components/IconSymbol";
 
-import React from 'react';
-import { Stack } from 'expo-router';
-import FloatingTabBar, { TabBarItem } from '@/components/FloatingTabBar';
-
-export default function TabLayout() {
-  // Define the tabs configuration
-  const tabs: TabBarItem[] = [
-    {
-      name: '(home)',
-      route: '/(tabs)/(home)/',
-      icon: 'home',
-      iosIcon: 'house.fill',
-      label: 'Home',
-    },
-    {
-      name: 'foundations',
-      route: '/(tabs)/foundations',
-      icon: 'book',
-      iosIcon: 'book.fill',
-      label: 'Foundations',
-    },
-    {
-      name: 'civic-literacy',
-      route: '/(tabs)/civic-literacy',
-      icon: 'school',
-      iosIcon: 'graduationcap.fill',
-      label: 'Civic',
-    },
-    {
-      name: 'political-landscape',
-      route: '/(tabs)/political-landscape',
-      icon: 'flag',
-      iosIcon: 'flag.fill',
-      label: 'Political',
-    },
-    {
-      name: 'principles-practice',
-      route: '/(tabs)/principles-practice',
-      icon: 'balance',
-      iosIcon: 'scale.3d',
-      label: 'Principles',
-    },
-    {
-      name: 'land-life',
-      route: '/(tabs)/land-life',
-      icon: 'public',
-      iosIcon: 'globe.americas.fill',
-      label: 'Land',
-    },
-    {
-      name: 'map',
-      route: '/(tabs)/map/',
-      icon: 'map',
-      iosIcon: 'map.fill',
-      label: 'Map',
-    },
-    {
-      name: 'quiz',
-      route: '/(tabs)/quiz/',
-      icon: 'help',
-      iosIcon: 'questionmark.circle.fill',
-      label: 'Quiz',
-    },
-    {
-      name: 'search',
-      route: '/(tabs)/search/',
-      icon: 'search',
-      iosIcon: 'magnifyingglass',
-      label: 'Search',
-    },
-    {
-      name: 'glossary',
-      route: '/(tabs)/glossary/',
-      icon: 'menu_book',
-      iosIcon: 'book.fill',
-      label: 'Glossary',
-    },
-    {
-      name: 'favorites',
-      route: '/(tabs)/favorites/',
-      icon: 'star',
-      iosIcon: 'star.fill',
-      label: 'Favorites',
-    },
-  ];
+export default function TabsLayout() {
+  const { colors } = useTheme();
 
   return (
-    <>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          animation: 'fade',
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.textSecondary,
+        tabBarStyle: {
+          backgroundColor: colors.background,
+          borderTopColor: colors.highlight,
+        },
+      }}
+    >
+      {/* HOME GROUP */}
+      <Tabs.Screen
+        name="(home)"
+        options={{
+          title: "Home",
+          tabBarIcon: ({ size }) => (
+            <IconSymbol
+              android_material_icon_name="home"
+              size={size ?? 24}
+            />
+          ),
         }}
-      >
-        <Stack.Screen key="home" name="(home)" />
-        <Stack.Screen key="foundations" name="foundations" />
-        <Stack.Screen key="civic-literacy" name="civic-literacy" />
-        <Stack.Screen key="political-landscape" name="political-landscape" />
-        <Stack.Screen key="principles-practice" name="principles-practice" />
-        <Stack.Screen key="land-life" name="land-life" />
-        <Stack.Screen key="map" name="map" />
-        <Stack.Screen key="quiz" name="quiz" />
-        <Stack.Screen key="search" name="search" />
-        <Stack.Screen key="glossary" name="glossary" />
-        <Stack.Screen key="favorites" name="favorites" />
-      </Stack>
-      <FloatingTabBar tabs={tabs} />
-    </>
+      />
+
+      {/* MAIN SECTIONS */}
+      <Tabs.Screen
+        name="foundations"
+        options={{
+          title: "Foundations",
+          tabBarIcon: ({ size }) => (
+            <IconSymbol
+              android_material_icon_name="book"
+              size={size ?? 24}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="civic-literacy"
+        options={{
+          title: "Civic Literacy",
+          tabBarIcon: ({ size }) => (
+            <IconSymbol
+              android_material_icon_name="school"
+              size={size ?? 24}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="political-landscape"
+        options={{
+          title: "Political Landscape",
+          tabBarIcon: ({ size }) => (
+            <IconSymbol
+              android_material_icon_name="flag"
+              size={size ?? 24}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="principles-practice"
+        options={{
+          title: "Principles in Practice",
+          tabBarIcon: ({ size }) => (
+            <IconSymbol
+              android_material_icon_name="balance"
+              size={size ?? 24}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="land-life"
+        options={{
+          title: "Land and Life",
+          tabBarIcon: ({ size }) => (
+            <IconSymbol
+              android_material_icon_name="public"
+              size={size ?? 24}
+            />
+          ),
+        }}
+      />
+
+      {/* UTILITIES */}
+      <Tabs.Screen
+        name="glossary"
+        options={{
+          title: "Glossary",
+          tabBarIcon: ({ size }) => (
+            <IconSymbol
+              android_material_icon_name="menu_book"
+              size={size ?? 24}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="favorites"
+        options={{
+          title: "Favorites",
+          tabBarIcon: ({ size }) => (
+            <IconSymbol
+              android_material_icon_name="star"
+              size={size ?? 24}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="map"
+        options={{
+          title: "Map",
+          tabBarIcon: ({ size }) => (
+            <IconSymbol
+              android_material_icon_name="map"
+              size={size ?? 24}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="quiz"
+        options={{
+          title: "Quiz",
+          tabBarIcon: ({ size }) => (
+            <IconSymbol
+              android_material_icon_name="help"
+              size={size ?? 24}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="search"
+        options={{
+          title: "Search",
+          tabBarIcon: ({ size }) => (
+            <IconSymbol
+              android_material_icon_name="search"
+              size={size ?? 24}
+            />
+          ),
+        }}
+      />
+    </Tabs>
   );
 }

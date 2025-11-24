@@ -46,19 +46,19 @@ export const contentData: MainSection[] = [
             id: "democracy",
             title: "Democracy",
             content:
-              "Democracy is a system of government where power ultimately rests with the people. In the United States this happens through elections, public debate, and the ability of citizens to organize and be heard. When people vote, contact their representatives, or speak out on issues, they are exercising democratic power in everyday life. A healthy democracy relies on informed citizens, peaceful transfers of power, and a shared respect for the rules of the game even when we disagree.",
+              "Democracy is a system of government where power ultimately rests with the people. Citizens are not just subjects of law but the source of authority that creates and shapes those laws. At its core, democracy is a statement of trust that ordinary people, when informed and engaged, can guide the direction of their own country.\n\nIn the United States this trust shows up through elections, public debate, and the ability of citizens to organize and be heard. People vote for leaders, support causes, attend meetings, contact their representatives, and speak out in the public square. Each of these actions is a way of sharing in the work of self government rather than waiting for someone else to decide everything.\n\nA healthy democracy depends on more than ballots. It relies on honesty in elections, a free press, access to reliable information, and a shared agreement that the rules apply even when our preferred side loses. When citizens accept peaceful transfers of power and commit to persuasion rather than force, they protect the system that protects their voice.\n\nDemocracy is never finished. It can grow stronger when more people participate with good will, and it can weaken when citizens become careless, cynical, or divided into permanent camps. Understanding democracy as both a privilege and a responsibility helps each person see that their choices either strengthen or erode the foundation of self rule.",
           },
           {
             id: "republicanism",
             title: "Republicanism",
             content:
-              "Republicanism emphasizes representative government, where citizens choose leaders who are expected to serve the public good. Instead of everyone voting on every law, people select representatives who have the time and responsibility to study issues in depth. This system blends the will of the people with stability and long term thinking. At its best, republicanism protects minority rights, prevents hasty decisions, and encourages leaders to act as stewards rather than rulers.",
+              "Republicanism emphasizes representative government, where citizens choose leaders who are expected to serve the public good. Instead of everyone voting on every law, people select representatives who have the time and responsibility to study complex issues in detail. This approach recognizes that modern societies need both popular consent and steady, thoughtful leadership.\n\nIn a republic, elections are not simply popularity contests. They are opportunities for citizens to judge the character, judgment, and record of those who wish to serve. Once in office, representatives are expected to listen to their constituents, deliberate with colleagues, and make decisions that look beyond short term emotion or narrow interest.\n\nAt its best, republicanism protects minority rights and helps prevent hasty swings in policy. Because representatives serve for fixed terms and can be replaced, they must weigh both current opinion and long range consequences. The hope is that this structure encourages leaders to act as stewards rather than rulers, remembering that they hold power only in trust.\n\nWhen citizens follow how their representatives vote, ask questions, and hold them accountable at the next election, republican government functions as intended. When people tune out, or when representatives stop seeing themselves as servants of the public, the republican ideal is weakened and the distance between the people and their government grows.",
           },
           {
             id: "federalism",
             title: "Federalism",
             content:
-              "Federalism divides power between the national government and the states. Some responsibilities, such as national defense and foreign policy, belong to the federal level, while others, like education or local policing, are largely handled by states and communities. This arrangement allows different regions to reflect their own character and priorities while still belonging to a single united nation. Federalism also creates multiple layers of protection for individual rights, since power is never concentrated in just one place.",
+              "Federalism divides power between the national government and the states. Some responsibilities, such as national defense and foreign policy, belong mainly to the federal level, while others, like education, policing, and many everyday services, are largely handled by state and local governments. This arrangement reflects the belief that not every problem should be solved from a distant capital.\n\nBy spreading authority across different levels, federalism allows regions to reflect their own character, needs, and priorities. Laws in a large rural state may look different from those in a small coastal state, even though both share the same national Constitution. Citizens can often see the impact of their participation more clearly in local and state decisions, where the distance between voter and official is much smaller.\n\nFederalism also creates multiple layers of protection for individual rights. If one level of government oversteps its bounds, another level can sometimes push back or provide an alternative path. Courts often serve as referees when state and federal powers appear to clash, interpreting the Constitution to decide which level has legitimate authority.\n\nThis system is not always neat or simple. Disagreements over where state power ends and federal power begins have appeared throughout American history, from debates over civil rights to questions about health care and environmental regulation. Yet the ongoing negotiation between these levels of government is part of what keeps power from concentrating in just one place.",
           },
         ],
       },
@@ -71,19 +71,19 @@ export const contentData: MainSection[] = [
             id: "life-liberty",
             title: "Life, Liberty, and the Pursuit of Happiness",
             content:
-              "The promise of life, liberty, and the pursuit of happiness stands at the center of the American story. These rights affirm that every person has a basic claim to safety, personal freedom, and the chance to build a meaningful life. They do not guarantee a particular outcome but they do protect the space in which people can work, worship, create, and dream. When Americans argue about laws and policies, they are often asking whether those choices honor or weaken this original promise.",
+              "The promise of life, liberty, and the pursuit of happiness stands at the center of the American story. These words from the Declaration of Independence affirm that every person has God given rights that do not come from kings, parties, or majorities. They do not guarantee a particular outcome, but they protect the space in which people can build a meaningful life.\n\nThe right to life means more than physical survival. It implies a basic claim to safety under the law, protection from arbitrary violence, and systems of justice that respect the dignity of every person. Liberty includes freedoms of movement, conscience, expression, and association, so long as one does not trample the equal rights of others.\n\nThe pursuit of happiness is not simply about comfort or entertainment. It points to the ability to seek vocation, family life, worship, creativity, and service in ways that honor conscience and responsibility. People will choose different paths, but the ideal is that each person has room to follow the calling they believe is right.\n\nWhen Americans argue about laws and policies, they are often asking whether those choices honor or weaken this original promise. Questions about safety, opportunity, and justice all trace back to how well the nation protects life, safeguards liberty, and leaves room for people to seek their own vision of a good life.",
           },
           {
             id: "freedom-speech",
             title: "Freedom of Speech",
             content:
-              "Freedom of speech protects the right to share ideas, beliefs, and criticism without fear of government punishment. This includes unpopular or controversial opinions, political arguments, and peaceful protest. The Supreme Court has held that this freedom is strongest in matters of public concern, especially when citizens are evaluating their leaders. While there are narrow limits, such as direct incitement to violence, the overall direction of American law has been to give speech wide protection so that truth can emerge from open debate.",
+              "Freedom of speech protects the right to share ideas, beliefs, and criticism without fear of government punishment. This includes popular opinions, unpopular views, political arguments, satire, and peaceful protest. The protection is not given because every statement is wise, but because open discussion is the best way to separate truth from error.\n\nIn the United States, courts have treated speech about public affairs as especially important. Citizens must be able to question leaders, challenge policies, and discuss the direction of the country without worrying that they will be silenced by those in power. This protection extends to speech that is uncomfortable, offensive, or deeply controversial, as long as it does not cross narrow legal lines such as direct incitement to violence.\n\nFreedom of speech also carries responsibilities. It invites people to speak with honesty, to check facts, and to avoid using words as tools of intimidation. It encourages listeners to answer bad arguments with better ones rather than to demand that opposing voices be shut down.\n\nThe overall pattern of American law has been to give speech wide protection so that truth can emerge from open debate. When citizens defend this principle for others, even for those they strongly disagree with, they help preserve it for themselves and for future generations.",
           },
           {
             id: "freedom-religion",
             title: "Freedom of Religion",
             content:
-              "Freedom of religion means the government may neither force a particular faith on people nor interfere with sincere religious practice. Americans are free to attend worship services, observe holy days, wear religious symbols, or choose to embrace no religion at all. This protection is paired with a ban on establishing an official national church. The result is a landscape where many traditions live side by side, and where people are encouraged to follow their conscience while respecting the equal rights of their neighbors.",
+              "Freedom of religion means the government may neither force a particular faith on people nor interfere lightly with sincere religious practice. Americans are free to attend worship services, observe holy days, wear religious symbols, share their beliefs, or choose to embrace no religion at all. This freedom applies in private life and, within reasonable limits, in public life as well.\n\nThe Constitution pairs this protection with a ban on establishing an official national church. That arrangement guards against state control of religion and protects citizens from being compelled to support beliefs they do not share. It creates a public square where many traditions can speak, contribute, and serve.\n\nIn daily life, freedom of religion has inspired schools, hospitals, charities, disaster relief, and countless acts of quiet service. People of faith and people who do not identify with any faith often work side by side on shared concerns such as poverty, education, and community care.\n\nConflicts sometimes arise when religious convictions and other laws or rights appear to pull in different directions. Courts and legislatures must then decide how to honor conscience while preserving equal treatment under the law. Handling these tensions with patience and respect is part of the ongoing work of a diverse nation committed to genuine religious liberty.",
           },
         ],
       },
@@ -96,62 +96,56 @@ export const contentData: MainSection[] = [
             id: "separation-powers",
             title: "Separation of Powers",
             content:
-              "Separation of powers means that lawmaking, law enforcement, and legal interpretation are divided among three distinct branches. Congress writes the laws, the President carries them out, and the federal courts explain what they mean in particular cases. Each branch has its own tools, duties, and limits. By preventing any single institution from holding all authority, the founders hoped to guard against tyranny and encourage the branches to cooperate, argue, and correct one another.",
+              "Separation of powers means that lawmaking, law enforcement, and legal interpretation are divided among three distinct branches. Congress writes the laws, the President carries them out, and the federal courts explain what those laws mean in particular cases. Each branch has its own tools, duties, and limits written into the Constitution.\n\nThe founders believed that concentrating all power in one set of hands, even well intentioned hands, was dangerous. By assigning different tasks to different branches, they hoped to prevent any single person or institution from controlling every part of government. The idea was that ambition would counter ambition, and that each branch would defend its role.\n\nIn practice this separation creates both friction and stability. There are moments when branches disagree sharply about policy, appointments, or the meaning of the law, and the system can seem slow or messy. Yet that very slowness often prevents sudden swings driven by anger or fear, giving citizens time to react and to make their voices heard.\n\nUnderstanding which branch is responsible for which function helps citizens know where to direct their concerns. It also reminds everyone that no leader, however powerful, stands above the structure that the Constitution sets in place.",
           },
           {
             id: "checks-balances",
             title: "Checks and Balances",
             content:
-              "Checks and balances are the practical ways that the three branches of government keep each other from overreaching. The President can veto bills, but Congress can override that veto. Courts can strike down unconstitutional laws, but judges must be nominated by the President and confirmed by the Senate. These overlapping powers can be frustrating in times of sharp disagreement, yet they are designed to slow down drastic change and force conversation before decisions become final.",
+              "Checks and balances are the practical ways that the three branches of government limit one another. The President can veto bills passed by Congress, but Congress can override that veto with a strong enough vote. Courts can strike down laws or actions that violate the Constitution, but judges are nominated by the President and confirmed by the Senate.\n\nThese overlapping powers can be frustrating in times of sharp disagreement. A policy that seems urgently needed to some may be slowed, revised, or blocked entirely by another branch. Yet this design is intentional. It forces different institutions to negotiate, justify their actions, and consider the perspectives of others before major changes become permanent.\n\nChecks and balances also protect individuals from sudden abuses of authority. If one branch overreaches, another can push back, investigate, or refuse to cooperate. Even when institutions fall short of their highest duties, the presence of separate powers gives citizens more than one avenue to seek redress.\n\nWhen people understand and value this system, they are less likely to place blind hope in a single office or party. Instead, they can appreciate that liberty is guarded not by perfection in any one leader, but by a network of limits that no leader is supposed to cross.",
           },
           {
             id: "rule-of-law",
             title: "Rule of Law",
             content:
-              "The rule of law is the idea that laws, not individuals, ultimately govern the country. Presidents, members of Congress, judges, and ordinary citizens are all subject to the same basic rules. When the rule of law is strong, people can plan their lives with confidence that contracts, court orders, and rights will be honored. When it is weak, power can slip into the hands of those willing to ignore the rules. Protecting the rule of law is one of the most important responsibilities of any free society.",
+              "The rule of law is the idea that laws, not individual whims, ultimately govern the country. Presidents, members of Congress, judges, and ordinary citizens are all subject to the same basic rules. No one is supposed to be above the law or beneath its protection.\n\nWhen the rule of law is strong, people can plan their lives with confidence that contracts will be honored, courts will hear disputes, and rights will be taken seriously. Businesses can invest, families can build, and communities can resolve conflicts without resorting to private force. Even when outcomes are imperfect, the existence of stable rules provides a framework for correction and appeal.\n\nWhen the rule of law is weak, power can slip into the hands of those willing to ignore or twist the rules for personal gain. Corruption, selective enforcement, and disrespect for court decisions can quickly undermine trust. Citizens begin to feel that outcomes depend more on connections or intimidation than on fairness.\n\nProtecting the rule of law is one of the most important responsibilities of any free society. It requires honest lawmaking, transparent enforcement, independent courts, and a public that insists leaders play by the same rules as everyone else. In this sense, the rule of law is not only a legal principle but a shared civic commitment.",
           },
         ],
       },
     ],
   },
-
 {
-    id: "civic-literacy",
-    title: "Civic Literacy",
-    icon: "school",
-    description:
-      "Understanding American government, founding documents, and civic responsibility",
-    sections: [
-      {
-        id: "branches-government",
-        title: "Branches of Government",
-        description: "The three branches that make up the federal government",
-        subsections: [
-          {
-            id: "legislative",
-            title: "Legislative Branch",
-            content:
-              "The Legislative Branch is the lawmaking engine of the federal government. Through the Senate and the House of Representatives, citizens from every state send voices to Congress to debate national problems and craft solutions. Members hold hearings, draft bills, negotiate compromises, and must answer to voters on a regular schedule. Beyond writing laws, Congress controls federal spending, declares war, and has the power to investigate and check the other branches when necessary. The decisions made in Congress shape everyday life in direct ways, including how much people pay in taxes, what support is available for veterans and families, how schools and highways are funded, and what rules businesses must follow. When citizens watch the news about a new law or a budget battle, they are seeing the Legislative Branch at work.",
-          },
-          {
-            id: "executive",
-            title: "Executive Branch",
-            content:
-              "The Executive Branch is responsible for carrying out and enforcing the laws that Congress passes. The President leads the branch, but millions of civilian and military employees help implement policies on everything from transportation to national security. Agencies write regulations, oversee programs, and deliver services that affect daily life. The President also sets priorities through speeches, executive actions, and budget proposals, and appoints leaders to run major departments and agencies. Their choices influence how strictly laws are enforced, what information the public receives, and how the country responds to crises at home and abroad. From airport security rules and disaster relief to student loan policies and environmental protections, the actions of the Executive Branch reach into the daily experiences of most Americans. Because this branch is large and powerful, the Constitution requires the President to take an oath to preserve, protect, and defend the Constitution itself.",
-          },
-          {
-            id: "judicial",
-            title: "Judicial Branch",
-            content:
-              "The Judicial Branch interprets the meaning of laws and decides how the Constitution applies in real disputes. At the top sits the Supreme Court, supported by lower federal courts spread across the country. Judges do not make policy in the same way legislators do, but their rulings can shape how rights are understood and how far government power reaches. Life tenure for federal judges is intended to shield them from political pressure so they can decide cases fairly and according to law. Court decisions influence questions such as what police may do during an arrest, how elections are run, what counts as protected speech, and how far religious freedom extends in public life. Many of these rulings set long lasting precedents that apply to every person and community in the nation, meaning that a case brought by a single individual can quietly change the rules for millions of Americans.",
-          },
-        ],
-      },
-
-      //
-      // 🔹 FOUNDING DOCUMENTS SECTION – UPDATED
-      //
-      {
+  id: "civic-literacy",
+  title: "Civic Literacy",
+  icon: "school",
+  description: "Understanding American government, founding documents, and civic responsibility",
+  sections: [
+    {
+      id: "branches-government",
+      title: "Branches of Government",
+      description: "The three branches that make up the federal government",
+      subsections: [
+        {
+          id: "legislative",
+          title: "Legislative Branch",
+          content:
+            "The Legislative Branch is the portion of the federal government responsible for creating the laws that guide national life. Through the House of Representatives and the Senate, citizens from every state send leaders to Congress to speak for them, debate the issues of the day, and help shape the direction of the country. This branch reflects the belief that laws should rise from the people themselves through elected representatives who live among them and answer directly to them.\n\nThe House and Senate each bring a different rhythm and perspective to lawmaking. Members of the House represent smaller districts and face reelection every two years, which keeps them close to the daily concerns of their communities. Senators serve longer terms and represent entire states, which allows them to approach issues with a wider lens and a steadier pace. When a bill must pass through both chambers, it ensures that laws are tested by differing viewpoints and levels of scrutiny.\n\nBeyond crafting legislation, the Legislative Branch holds important tools for balancing power. Congress oversees federal agencies, manages national spending, confirms or rejects presidential appointments, and carries the authority to investigate matters that affect the integrity of the republic. It can even override a presidential veto with enough support, reinforcing that no part of government stands above the others.\n\nThe strength of the Legislative Branch depends on citizens who follow events, stay informed, and communicate with their representatives. When the public participates with clarity and intention, Congress becomes more responsive, more grounded, and better aligned with the real needs of the country. Representative government works only when the people it represents remain engaged.",
+        },
+        {
+          id: "executive",
+          title: "Executive Branch",
+          content:
+            "The Executive Branch is responsible for enforcing the laws passed by Congress and managing the day to day operation of the federal government. Led by the President, this branch includes the Vice President, the Cabinet, and numerous agencies that handle everything from national defense to public health and transportation. While Congress writes the law, the Executive ensures those laws are carried out faithfully and effectively.\n\nThe President serves as both head of state and commander in chief, representing the nation on the world stage while also overseeing the military. Presidents make decisions that require both strategic thinking and moral judgment, whether they are negotiating treaties, responding to crises, or guiding national policy. The Cabinet and federal agencies help translate broad laws into practical actions by drafting regulations, coordinating programs, and addressing emerging challenges.\n\nThe Executive Branch also plays a vital role in balancing power. The President can veto legislation, nominate judges and officials, and set administrative priorities that influence how laws are interpreted and applied. Yet these powers come with limits. Congress controls funding and oversight, and the courts can overturn actions that violate the Constitution. This tension keeps the Executive from overshadowing the other branches.\n\nA healthy Executive Branch depends on leaders who act with discipline and a nation that pays attention to how power is used. When the public remains aware, asks questions, and expects accountability, the Executive is guided not by personal ambition but by the responsibilities of service.",
+        },
+        {
+          id: "judicial",
+          title: "Judicial Branch",
+          content:
+            "The Judicial Branch interprets the laws of the United States and ensures that government actions remain within the boundaries of the Constitution. Federal courts handle disputes that involve constitutional questions, federal statutes, and conflicts between states. At the top sits the Supreme Court, which resolves the most significant legal disagreements and delivers decisions that shape the meaning of American law for generations.\n\nJudges do not write laws or enforce them. Instead they examine cases, weigh arguments from both sides, and determine how the law applies to real situations. This requires careful study of the Constitution, legal precedent, and the facts of each case. The goal is to reach decisions rooted in principle rather than political pressure, which is why federal judges are appointed for life. Their independence protects the rule of law from shifting moods or temporary majorities.\n\nThe Judicial Branch also serves as a guardian against government overreach. Courts can strike down actions by Congress or the Executive if those actions violate constitutional protections. This power, known as judicial review, ensures that no branch stands above the law. By keeping all parts of government accountable to the same set of rules, the judiciary strengthens public trust and ensures fairness.\n\nThe courts operate quietly compared to other branches, but their influence is deep and long lasting. When the judicial system functions with transparency, integrity, and patience, it helps secure the rights of every person and preserves the constitutional order that supports a free society.",
+        },
+      ],
+    },
+  {
         id: "founding-documents",
         title: "Founding Documents",
         description: "The essential texts that established American government",
@@ -832,224 +826,148 @@ Federalist No. 10 explains how a large republic can control the dangers of facti
           },
         ],
       },
-
-      //
-      // 🔹 Rest of your Civic Literacy sections unchanged
-      //
-      {
-        id: "citizenship",
-        title: "Citizenship and Civic Duty",
-        description: "The rights and responsibilities of American citizens",
-        subsections: [
-          {
-            id: "voting",
-            title: "Voting Rights and Responsibilities",
-            content:
-              "Voting is one of the clearest ways citizens shape their government. Ballots decide who will write laws, enforce them, and appoint judges who interpret them. With that power comes responsibility: to learn about candidates and issues, to understand how different offices affect daily life, and to respect the results even when our preferred side loses. Strong voter participation sends a message that people are paying attention and that leaders are accountable.",
-          },
-          {
-            id: "jury-duty",
-            title: "Jury Duty",
-            content:
-              "Jury duty asks ordinary citizens to help decide questions of guilt, innocence, and legal responsibility. This shared service keeps the justice system from being controlled by a small circle of officials. Jurors bring common sense, community values, and diverse experiences into the courtroom. While serving can be inconvenient, it is one of the most direct opportunities citizens have to protect fair trials and ensure that the law is applied impartially.",
-          },
-          {
-            id: "civic-participation",
-            title: "Civic Participation",
-            content:
-              "Civic participation goes far beyond Election Day. It includes volunteering, attending local meetings, speaking with representatives, joining community groups, and working with neighbors to solve local problems. When citizens stay engaged between elections, they help keep public institutions responsive and grounded in real needs. A culture of civic participation turns democracy from a distant system into a shared project.",
-          },
-        ],
-      },
-      {
-        id: "media-literacy",
-        title: "Media and Information Literacy",
-        description: "Understanding and evaluating information sources",
-        subsections: [
-          {
-            id: "critical-thinking",
-            title: "Critical Thinking",
-            content:
-              "Critical thinking is the habit of slowing down, asking questions, and testing claims before accepting them as true. It means looking for evidence, considering alternative explanations, and recognizing when emotions are being used to cloud judgment. In a world filled with headlines, posts, and notifications, critical thinking gives citizens a filter so they are less likely to be misled and more likely to reach thoughtful conclusions.",
-          },
-          {
-            id: "news-sources",
-            title: "Evaluating News Sources",
-            content:
-              "Evaluating news sources involves paying attention to where information comes from, how it is presented, and whether it can be confirmed by other outlets. Credible sources identify their writers, explain their methods, and correct mistakes when they occur. Learning to spot clickbait, misleading images, or one sided stories helps citizens stay grounded in reality instead of rumor. Good information is the fuel of a healthy democracy.",
-          },
-          {
-            id: "digital-citizenship",
-            title: "Digital Citizenship",
-            content:
-              "Digital citizenship describes how we behave and communicate in online spaces. It includes protecting personal privacy, treating others with respect, and taking responsibility for what we choose to share. Algorithms can shape what we see, but individuals still decide what they amplify. Practicing wise digital citizenship means using technology in ways that build trust, spread accurate information, and strengthen rather than weaken community life.",
-          },
-        ],
-      },
-{
-        id: "symbols",
-        title: "American Symbols and Their Meaning",
-        description: "The symbols that represent American values and history",
-        subsections: [
-          {
-            id: "flag",
-            title: "The American Flag",
-            content:
-              "The American flag, often called the Stars and Stripes, has changed as the nation has grown but has always stood for unity and shared purpose. Each added star marks the admission of a new state, while the thirteen stripes recall the original colonies that declared independence. People display the flag at homes, schools, and public events to honor service, sacrifice, and the hope that the country can keep moving closer to its ideals.",
-            imageUrl:
-              "https://i0.wp.com/thehumanconservative.com/wp-content/uploads/2025/10/image.png?w=1024&ssl=1",
-          },
-          {
-            id: "eagle",
-            title: "The Bald Eagle",
-            content:
-              "The bald eagle was chosen as the national bird for its strength, long life, and striking appearance. It appears on the Great Seal of the United States clutching arrows and an olive branch, representing readiness for defense and the desire for peace. Seeing the eagle on government buildings, documents, and currency is a reminder that the nation aims to stand firm, free, and self governing.",
-            imageUrl:
-              "https://i0.wp.com/thehumanconservative.com/wp-content/uploads/2025/10/image-1.png?w=1024&ssl=1",
-          },
-          {
-            id: "liberty-bell",
-            title: "The Liberty Bell",
-            content:
-              "The Liberty Bell, with its famous crack, has become a symbol of freedom that rings far beyond its original use. Once a working bell in Philadelphia, it later came to represent the struggle for independence and, later still, movements to expand liberty to all Americans. Its inscription about proclaiming liberty throughout the land has made it an enduring image for those who seek to live up to the promises of the founding.",
-            imageUrl:
-              "https://i0.wp.com/thehumanconservative.com/wp-content/uploads/2025/10/image-3.png?resize=300%2C300&ssl=1",
-          },
-          {
-            id: "statue-of-liberty",
-            title: "The Statue of Liberty",
-            content:
-              "The Statue of Liberty stands in New York Harbor as a welcome to those arriving by sea and as a reminder of the nation’s ideals. A gift from France, it represents liberty enlightening the world, with a torch held high and a broken chain at her feet. For many immigrants, the first glimpse of the statue became a symbol of hope, new beginnings, and the promise of freedom under law.",
-            imageUrl:
-              "https://i0.wp.com/thehumanconservative.com/wp-content/uploads/2025/10/image-4.png?resize=300%2C300&ssl=1",
-          },
-          {
-            id: "great-seal",
-            title: "The Great Seal of the United States",
-            content:
-              "The Great Seal of the United States appears on official documents, passports, and currency as a formal emblem of national authority. Its imagery includes the bald eagle holding arrows and an olive branch, a shield representing the states joined together, and the motto E Pluribus Unum, meaning out of many, one. The seal captures the idea of a republic that seeks both strength and peace while uniting many states into a single nation.",
-            imageUrl:
-              "https://i0.wp.com/thehumanconservative.com/wp-content/uploads/2025/10/image-2.png?resize=300%2C300&ssl=1",
-          },
-        ],
-      },
-{
-  id: "hymns",
-  title: "American Hymns and Heritage",
-  description: "Songs and traditions that celebrate American identity",
-  subsections: [
     {
-      id: "national-anthem",
-      title: "The Star-Spangled Banner",
-      content:
-        "The Star Spangled Banner grew out of a moment when the outcome of a battle and the future of a young nation were uncertain. Watching the American flag still flying over Fort McHenry after a night of bombardment, Francis Scott Key wrote words that captured relief, gratitude, and defiance. Today the anthem is sung at public events as a way to remember the cost of defending the country and to honor those who continue that work.",
-      fullText: `
-O say can you see, by the dawn’s early light,
-What so proudly we hailed at the twilight’s last gleaming,
-Whose broad stripes and bright stars through the perilous fight,
-O’er the ramparts we watched, were so gallantly streaming?
-And the rockets’ red glare, the bombs bursting in air,
-Gave proof through the night that our flag was still there;
-O say does that star-spangled banner yet wave
-O’er the land of the free and the home of the brave?
-
-On the shore dimly seen through the mists of the deep,
-Where the foe’s haughty host in dread silence reposes,
-What is that which the breeze, o’er the towering steep,
-As it fitfully blows, half conceals, half discloses?
-Now it catches the gleam of the morning’s first beam,
-In full glory reflected now shines in the stream:
-’Tis the star-spangled banner, O long may it wave
-O’er the land of the free and the home of the brave.
-
-And where is that band who so vauntingly swore
-That the havoc of war and the battle’s confusion,
-A home and a country should leave us no more?
-Their blood has washed out their foul footsteps’ pollution.
-No refuge could save the hireling and slave
-From the terror of flight or the gloom of the grave:
-And the star-spangled banner in triumph doth wave
-O’er the land of the free and the home of the brave.
-
-O thus be it ever, when freemen shall stand
-Between their loved homes and the war’s desolation.
-Blest with vict’ry and peace, may the Heav’n rescued land
-Praise the Power that hath made and preserved us a nation!
-Then conquer we must, when our cause it is just,
-And this be our motto: “In God is our trust.”
-And the star-spangled banner in triumph shall wave
-O’er the land of the free and the home of the brave.
-      `.trim(),
+      id: "citizenship",
+      title: "Citizenship",
+      description: "The responsibilities and privileges of citizenship",
+      subsections: [
+        {
+          id: "civic-responsibility",
+          title: "Civic Responsibility",
+          content:
+            "Civic responsibility refers to the duties citizens share in preserving a healthy republic. These responsibilities include voting, staying informed, obeying the law, paying taxes, and serving on juries when called. While citizens enjoy many freedoms, those freedoms are strengthened when people participate in the systems that protect them.\n\nA strong civic culture requires more than occasional involvement. It calls for a willingness to discuss issues respectfully, support community institutions, and hold leaders accountable with clarity and fairness. When citizens engage honestly with one another and with their government, they create a public environment where solutions emerge from cooperation rather than division.\n\nCivic responsibility also includes supporting the common good. This can mean volunteering, helping neighbors, participating in local events, or contributing to organizations that serve the community. Small acts of service build trust and reinforce the idea that a republic is a shared endeavor rather than a collection of isolated individuals.\n\nWhen citizens embrace their civic duties with intention, they strengthen the foundation of self government. A republic thrives when people recognize that their rights and responsibilities are connected and that each generation plays a role in preserving freedom.",
+        },
+        {
+          id: "naturalization",
+          title: "Naturalization",
+          content:
+            "Naturalization is the process through which immigrants become full citizens of the United States. The journey involves meeting residency requirements, demonstrating knowledge of English, and passing a test on American history, government, and civic values. This process reflects the belief that citizenship carries both privileges and responsibilities that must be understood before joining the civic family.\n\nThose who pursue naturalization often bring rich cultural backgrounds, personal stories, and unique perspectives that deepen the American experience. By choosing citizenship, they affirm the ideals of liberty and opportunity that have shaped the nation since its founding. This voluntary commitment strengthens the country by uniting people from diverse origins under shared principles.\n\nThe naturalization ceremony, where new citizens take the Oath of Allegiance, is a meaningful moment. It symbolizes a choice to uphold the Constitution, support the laws of the nation, and participate fully in civic life. Many who take the oath describe it as a milestone that confirms their place in the story of America.\n\nNaturalization reminds the nation that citizenship is not merely a status but a dedication. It affirms that America continues to grow through the contributions of those who embrace its ideals with intention and hope.",
+        },
+        {
+          id: "rights-responsibilities",
+          title: "Rights and Responsibilities",
+          content:
+            "Citizenship in the United States includes both the rights protected by the Constitution and the responsibilities necessary to maintain a free society. Rights such as speech, religion, assembly, and due process give people the space to live authentically and to shape their own paths. These freedoms reflect the belief that each person possesses inherent dignity that government must respect.\n\nYet rights exist alongside duties. Citizens must follow the law, pay taxes, serve on juries, and contribute to the safety and stability of their communities. These responsibilities ensure that the nation remains orderly, fair, and capable of protecting liberty for everyone. When citizens fulfill these duties, they help preserve the very structure that guarantees their rights.\n\nUnderstanding the balance between rights and responsibilities is essential for civic maturity. People cannot claim the benefits of freedom while ignoring the effort required to sustain it. True citizenship recognizes that liberty is a shared inheritance that must be guarded with care.\n\nA republic flourishes when citizens value both their freedoms and their role in safeguarding those freedoms. Through responsible engagement, each person becomes a steward of the nation’s principles.",
+        },
+      ],
     },
     {
-      id: "america-beautiful",
-      title: "America the Beautiful",
-      content:
-        "America the Beautiful is a hymn of gratitude for the land and for the people who have worked to preserve and improve it. Its verses move from amber waves of grain to calls for self control, mercy, and nobility in public life. The song connects natural beauty with moral responsibility, suggesting that a truly beautiful nation is one that pairs great landscapes with great character.",
+      id: "media-literacy",
+      title: "Media Literacy",
+      description: "Understanding how to evaluate news and information",
+      subsections: [
+        {
+          id: "identifying-bias",
+          title: "Identifying Bias",
+          content:
+            "Identifying bias is an essential skill for navigating modern information. Every source has a perspective shaped by its values, priorities, and assumptions. Bias does not always mean dishonesty, but it does influence how facts are selected, framed, or emphasized. Recognizing these patterns helps citizens form clearer judgments.\n\nBias can appear in subtle ways such as the choice of headlines, the placement of certain facts, or the tone used to describe events. It can also emerge through omission, when important context is left out. By comparing multiple sources, readers can see where stories align and where they diverge. Differences often highlight the underlying assumptions behind each source.\n\nLearning to identify bias protects citizens from being swept up in emotional narratives or one sided interpretations. It encourages critical thinking and helps people distinguish between reporting, commentary, and opinion. This awareness allows readers to evaluate information based on substance rather than presentation.\n\nThe goal is not to avoid all biased material, which is impossible, but to engage with information thoughtfully. When citizens approach media with discernment, they build a stronger understanding of events and a greater resistance to manipulation.",
+        },
+        {
+          id: "fact-checking",
+          title: "Fact Checking",
+          content:
+            "Fact checking is the practice of verifying whether claims, statistics, and statements reflect reality. In an age when information spreads rapidly, fact checking provides a vital safeguard against misunderstandings and misinformation. By confirming the accuracy of a claim, citizens ensure that their opinions rest on solid ground.\n\nEffective fact checking compares statements against reliable sources, including official documents, reputable research, and direct evidence. It also examines the context in which a claim is made, since information can be technically true but presented in a misleading way. Clear, honest evaluation helps reveal what the full story actually shows.\n\nFact checking also encourages humility in public conversation. It reminds people that strong opinions require strong foundations and that correcting errors is a sign of integrity rather than weakness. When citizens value accuracy over winning an argument, the quality of national dialogue improves.\n\nBy practicing regular fact checking, individuals strengthen their own understanding and contribute to a more informed society. Truth becomes easier to find when people insist on clarity, evidence, and honesty.",
+        },
+        {
+          id: "evaluating-sources",
+          title: "Evaluating Sources",
+          content:
+            "Evaluating sources means determining whether information comes from a trustworthy and well supported origin. Not all sources are created equal, and the reliability of a claim often depends on the credibility of the person or organization behind it. Understanding who produced the information, why it was created, and how it was verified is essential for forming solid conclusions.\n\nStrong sources are transparent about their methods, provide evidence for their claims, and distinguish clearly between fact and opinion. They update corrections when errors arise and avoid sensationalism or exaggeration. Weak sources may rely on rumors, emotional appeals, or vague assertions without supporting details.\n\nKnowing how to evaluate sources empowers citizens to sift through the overwhelming amount of material available today. Instead of accepting everything as equally valid, people can focus on information that is accurate, balanced, and grounded in verifiable evidence.\n\nSource evaluation not only strengthens individual judgment but also supports healthier public conversation. A society that values truth over convenience is better equipped to navigate challenges with clarity and purpose.",
+        },
+      ],
     },
     {
-      id: "god-bless-america",
-      title: "God Bless America",
-      content:
-        "God Bless America is both a prayer and a patriotic song. Written in the early twentieth century, it asks for divine guidance and protection over the land and its people. The simple words and memorable melody have made it a fixture at gatherings where citizens pause to reflect on the nation’s blessings and challenges. Singing it together can be a way of expressing gratitude and hope for the future.",
+      id: "national-symbols",
+      title: "National Symbols",
+      description: "Important symbols that reflect American identity",
+      subsections: [
+        {
+          id: "flag",
+          title: "United States Flag",
+          content:
+            "The flag of the United States symbolizes the shared history, sacrifice, and ideals that have shaped the nation. Each star represents a state, and each stripe represents one of the original thirteen colonies that declared independence. The colors red, white, and blue carry their own meaning, representing valor, purity, and justice. Over time the flag has become a powerful emblem of unity in moments of both triumph and struggle.\n\nThe flag has flown in distant battles, across oceans, and above places where Americans have worked, served, and sacrificed. It has been raised in celebration and lowered in mourning. In every setting it reminds citizens of the long chain of generations who protected freedom and carried the nation forward.\n\nRespect for the flag is not simply about ceremony. It reflects gratitude for the liberties that define American life. The traditions surrounding the flag encourage people to remember the principles that bind the nation together, even when opinions differ sharply.\n\nWhen citizens honor the flag, they honor the shared story of a country built on ideals rather than ancestry. The flag calls the nation to live in a way that is worthy of the sacrifices that shaped it.",
+        },
+        {
+          id: "eagle",
+          title: "Bald Eagle",
+          content:
+            "The bald eagle has been the national bird of the United States since 1782 and represents strength, freedom, and resilience. Its broad wings, sharp vision, and commanding presence made it a natural symbol for a nation determined to rise above hardship and protect its independence. The eagle appears on official seals, military insignia, currency, and government emblems, reminding Americans of the endurance required to preserve liberty.\n\nThe bird’s association with high places and open skies reflects the spirit of aspiration that runs through American culture. It suggests a people who value courage, possibility, and the will to soar beyond limitations. Many early Americans admired the eagle’s fierce independence and believed it embodied the character of a new republic.\n\nThe bald eagle also represents renewal. Once endangered, it recovered through conservation efforts and now thrives across much of the country. Its comeback mirrors the nation's belief that what is damaged can be restored and what is threatened can be protected through collective effort.\n\nAs a national symbol, the eagle reminds citizens that freedom requires strength and vigilance. Its enduring presence calls each generation to safeguard the ideals that give the nation its character.",
+        },
+        {
+          id: "liberty-bell",
+          title: "Liberty Bell",
+          content:
+            "The Liberty Bell is one of the most enduring symbols of American independence and the desire for freedom. Cast in the eighteenth century and located in Philadelphia, the bell is famous for its distinctive crack and the inscription proclaiming liberty throughout all the land. It has become a powerful reminder of the nation’s commitment to justice, equality, and self determination.\n\nOriginally used to call lawmakers to session, the bell later became associated with abolitionists who saw its inscription as a declaration that all people deserve freedom. Over time it evolved into a national icon visited by millions who seek to connect with the legacy of the founding era.\n\nThe crack in the Liberty Bell adds to its symbolic power. Instead of being hidden or repaired, it stands visible as a reminder that freedom itself carries scars. The imperfections tell a story of struggle, endurance, and the ongoing effort to improve the nation.\n\nToday the Liberty Bell continues to inspire reflection on the work still required to fulfill the promise of liberty. It calls citizens to remember that freedom must be both celebrated and defended.",
+        },
+      ],
+    },
+    {
+      id: "national-hymns",
+      title: "National Hymns",
+      description: "The songs that express national values and identity",
+      subsections: [
+        {
+          id: "anthem",
+          title: "National Anthem",
+          content:
+            "The Star Spangled Banner is the national anthem of the United States and reflects the courage and perseverance that marked the nation’s early history. Written during the War of 1812 by Francis Scott Key, the lyrics describe the sight of the American flag still flying over Fort McHenry after a long night of bombardment. The survival of the flag symbolized hope, endurance, and the belief that the young nation would stand.\n\nThe anthem captures not only a moment of military conflict but a deeper sense of gratitude for the freedoms protected by that struggle. The image of the flag lit by the dawn speaks to the idea that liberty endures through hardship. Each verse, though less commonly sung, continues this theme by celebrating courage, trust in God, and the desire for peace.\n\nSinging the anthem has become a shared tradition at public events, athletic competitions, and civic gatherings. The act of standing together, even among people with differing viewpoints, affirms the idea that a nation can remain united through respect for its principles.\n\nThe anthem invites reflection on the sacrifices made to preserve freedom. It reminds citizens that the story of the United States includes both conflict and resilience and that unity grows from remembering the values worth defending.",
+        },
+        {
+          id: "america-beautiful",
+          title: "America the Beautiful",
+          content:
+            "America the Beautiful is a hymn that celebrates the natural beauty, generosity, and aspirational spirit of the United States. Written by Katharine Lee Bates in the nineteenth century, the song reflects her awe at the landscapes she encountered during her travels, from spacious skies to majestic mountains. These images became powerful symbols of the nation’s vastness and promise.\n\nThe hymn also highlights moral qualities such as brotherhood, grace, and the pursuit of righteousness. It calls for a nation that balances prosperity with kindness, strength with humility, and freedom with self control. The repeated prayer for God to shed His grace on the country reflects a desire for both protection and refinement.\n\nAmerica the Beautiful has earned a place in the American songbook alongside the national anthem because it captures a different but equally important dimension of national identity. While the anthem speaks to conflict and resolve, this hymn speaks to hope, renewal, and shared purpose.\n\nIts lyrics encourage reflection on the ideals that guide the nation forward. The hymn reminds citizens that the beauty of the land is matched by the beauty of the values they strive to uphold.",
+        },
+        {
+          id: "god-bless-america",
+          title: "God Bless America",
+          content:
+            "God Bless America is a patriotic song written by Irving Berlin that expresses gratitude for the nation and a prayer for its protection. First introduced during times of rising global tension, the song quickly became a source of comfort and unity. Its simple plea for God to watch over the country reflects a belief that the nation’s strength rests not only in its institutions but also in its spiritual foundations.\n\nThe song has been performed at public gatherings, sporting events, and moments of national remembrance. Its message resonates across generations because it blends patriotism with humility. Rather than boasting, the lyrics ask for guidance and peace, acknowledging that the nation’s future depends on wisdom as much as power.\n\nGod Bless America highlights the importance of gratitude, especially during difficult times. The act of singing it together creates a sense of shared purpose and mutual support. It reminds citizens that they belong to a larger story and that they bear responsibility for the country they inherit.\n\nThe enduring appeal of the song reflects the deep connection many Americans feel between faith and national life. It serves as a reminder that blessings are not guaranteed and that unity grows when people seek the good of the whole nation.",
+        },
+      ],
+    },
+    {
+      id: "american-experiment",
+      title: "The American Experiment",
+      description: "The ideals and challenges of building a free society",
+      subsections: [
+        {
+          id: "self-government",
+          title: "Self Government",
+          content:
+            "Self government is the principle that people have the authority to shape their own political future. Rather than being ruled by kings or distant elites, Americans believe in a system where citizens elect leaders, influence laws, and participate directly in the life of the nation. This idea is the backbone of the republic and the foundation of American political culture.\n\nSelf government requires both freedom and responsibility. Citizens must have the liberty to speak, vote, organize, and advocate for their beliefs. They must also carry the responsibility of staying informed, respecting the rights of others, and working toward the common good. When these elements come together, the nation becomes stronger, more stable, and more just.\n\nThe principle of self government has inspired movements for greater rights and representation throughout American history. People have fought to expand access to the political process and to correct the gaps between national ideals and reality. Each step forward has strengthened the belief that citizens can refine their government and improve the nation.\n\nSelf government reminds Americans that freedom is not a gift handed down from leaders. It is a practice carried out by the people themselves. A republic lives or dies on the willingness of its citizens to uphold this responsibility.",
+        },
+        {
+          id: "american-identity",
+          title: "American Identity",
+          content:
+            "American identity is not based on ancestry, ethnicity, or lineage. It rests on shared ideals such as liberty, equality under the law, and the belief that individuals can shape their own destiny. These principles have drawn people from around the world, creating a nation defined by a commitment to freedom rather than by a single culture or background.\n\nThis identity has evolved through triumphs and challenges. Different waves of immigrants, regional cultures, and historic struggles have shaped the national character. From frontier resilience to industrial growth to the fight for civil rights, each era has added its own chapter to the American story. The nation continues to adapt while holding fast to its foundational principles.\n\nAmerican identity also reflects the value of civic participation. People contribute to the nation not only through work and family life but also by engaging in public affairs. Citizenship is active, not passive, and the national character grows stronger when people take responsibility for their communities and institutions.\n\nTo embrace American identity is to believe that the nation remains a work in progress. It is an invitation to build, refine, and continue the story of a country rooted in principles rather than bloodlines.",
+        },
+        {
+          id: "unity-diversity",
+          title: "Unity and Diversity",
+          content:
+            "Unity and diversity are twin pillars of the American experience. The nation includes people of many cultures, beliefs, and backgrounds, yet it seeks to unite them through shared principles rather than uniformity. The goal is not to erase differences but to create a society where varied perspectives can coexist and enrich national life.\n\nThis balance is not always easy. Differences can lead to misunderstanding or disagreement, especially during times of stress. Yet history shows that the nation is strongest when it chooses cooperation over conflict. Shared values such as fairness, opportunity, and respect for the rights of others create common ground that allows diversity to thrive without eroding unity.\n\nDiversity brings unique ideas, traditions, and strengths that enlarge the national imagination. Communities grow more resilient when they draw from multiple experiences and viewpoints. Unity provides the structure that helps these differences find purpose and harmony.\n\nThe American project is built on the idea that people can disagree sincerely while still recognizing one another as fellow citizens. This commitment to unity in the midst of diversity is one of the nation’s greatest achievements and an ideal worth protecting.",
+        },
+      ],
+    },
+    {
+      id: "to-be-american",
+      title: "To Be an American",
+      description: "A reflection on what it means to belong to this nation",
+      subsections: [
+        {
+          id: "identity",
+          title: "Identity",
+          content:
+            "To be an American is to belong to a nation formed not by ancestry but by shared conviction. It means believing in the dignity of the individual and the worth of freedom. It means trusting that people from different backgrounds can come together under principles that rise above personal history. American identity is a commitment to a way of life rooted in opportunity, responsibility, and respect for the rights of others.\n\nBeing American means carrying forward the legacy of those who came before. Soldiers who defended the nation, citizens who fought for greater justice, families who built communities, and leaders who shaped the republic all contribute to this inheritance. Their sacrifices remind us that freedom is costly and that each generation must protect what it has received.\n\nAmerican identity is also defined by optimism. Even in moments of division or uncertainty, Americans believe that tomorrow can be better than today. The nation renews itself when people work with courage, humility, and determination to strengthen their communities and institutions.\n\nIn the end, to be an American is to recognize that the nation is a living promise. It calls each person to uphold the principles that sustain freedom and to contribute to a shared future shaped by hope rather than despair.",
+        },
+      ],
     },
   ],
 },
 
-      {
-        id: "american-experiment",
-        title: "The American Experiment",
-        description: "Understanding America as an ongoing democratic project",
-        subsections: [
-          {
-            id: "self-governance",
-            title: "Self-Governance",
-            content:
-              "Self governance means that people are not ruled by distant kings or unchecked elites but by leaders they choose and can replace. The American experiment began with the daring claim that ordinary citizens, guided by wisdom and virtue, could manage their own public affairs. Every school board meeting, town election, or community decision is a small test of this idea. When people participate and take responsibility, the experiment continues.",
-          },
-          {
-            id: "progress",
-            title: "Progress and Reform",
-            content:
-              "Progress and reform describe the efforts each generation makes to bring laws and institutions closer to the country’s founding ideals. Movements to end slavery, secure voting rights, improve working conditions, or expand opportunity have all argued that the nation must live up to its promises. Not every proposed reform is wise, but the basic belief that wrongs can be corrected is part of what keeps the American story moving forward.",
-          },
-          {
-            id: "challenges",
-            title: "Challenges and Resilience",
-            content:
-              "From wars and economic downturns to political unrest and cultural division, the United States has faced repeated tests. At many points in history, it was not obvious that the nation would hold together. Yet Americans have repeatedly rebuilt, adjusted, and carried on, often emerging with stronger safeguards for liberty. Understanding past challenges can give perspective and courage when present problems feel overwhelming.",
-          },
-        ],
-      },
-      {
-        id: "to-be-american",
-        title: "To Be an American",
-        description: "What it means to be part of the American story",
-        subsections: [
-          {
-            id: "shared-values",
-            title: "Shared Values",
-            content:
-              "To be an American is less about birthplace and more about shared commitments. These include belief in human dignity, the rule of law, equality before the law, and the value of honest work. People may disagree sharply about policies, yet still be bound together by a sense that freedom, responsibility, and fairness matter. These shared values give strangers a common language and link newcomers with generations who came before.",
-          },
-          {
-            id: "diversity",
-            title: "Diversity and Unity",
-            content:
-              "America’s diversity includes many cultures, languages, and traditions woven into one national fabric. This variety can be a source of creativity and strength when people bring their gifts to the table and respect one another’s rights. Unity does not mean perfect agreement or sameness. It means choosing to work through differences as fellow citizens rather than as permanent enemies.",
-          },
-          {
-            id: "responsibility",
-            title: "Rights and Responsibilities",
-            content:
-              "Every right carries a matching responsibility. Freedom of speech involves listening as well as speaking. The right to vote assumes the duty to be informed. Protection under the law implies a responsibility to obey it and to help improve it when it falls short. When citizens claim their rights while taking their responsibilities seriously, they help the republic remain both free and stable.",
-          },
-        ],
-      },
-    ],
-  },
-
-  // ===== POLITICAL LANDSCAPE =====
+   // ===== POLITICAL LANDSCAPE =====
   {
     id: "political-landscape",
     title: "Political Landscape",
@@ -1065,19 +983,19 @@ O’er the land of the free and the home of the brave.
             id: "dem-history",
             title: "History",
             content:
-              "The Democratic Party traces its roots to the early nineteenth century and has changed shape many times. It has included rural populists, urban machines, Southern conservatives, and modern progressives. Over time the party moved from defending states’ rights and limited federal power to championing civil rights legislation and a larger national role in social programs. Understanding this history helps explain why party labels do not always mean the same thing in every era.",
+              "The Democratic Party traces its roots to the early nineteenth century, growing out of the movement that first rallied around Andrew Jackson. In its earliest years it stressed limited federal government and a strong belief in states' rights, especially in the agrarian South and frontier regions. Over time it became home to a wide coalition that included farmers, immigrants, and urban political machines.\n\nThe Civil War and Reconstruction reshaped the party but did not settle its internal divides. In the twentieth century Democratic leaders such as Woodrow Wilson and Franklin Roosevelt expanded the role of the federal government during war and economic crisis. The New Deal era associated the party with labor protections, social insurance, and new regulatory agencies.\n\nBeginning in the mid twentieth century the party underwent another major shift as it increasingly supported civil rights legislation and efforts to end legal segregation. This change altered its regional base of support, strengthening its ties to many urban areas and minority communities while weakening its hold on parts of the South.\n\nToday the Democratic Party remains a broad coalition that continues to evolve. Its history shows how party labels can change meaning over generations, and why understanding context is essential when comparing past and present positions.",
           },
           {
             id: "dem-values",
             title: "Core Values",
             content:
-              "Today the Democratic Party generally emphasizes equality of opportunity, social safety nets, and a belief that government can help address poverty, discrimination, and environmental harm. Supporters often stress the importance of public education, workers’ rights, and consumer protections. While there is wide debate within the party about how far government should go, many Democrats see collective action through law as an essential tool for promoting fairness.",
+              "Modern Democrats often emphasize equality of opportunity and the belief that government can help correct unfair disadvantages. Many supporters see a strong social safety net as a way to protect vulnerable people from falling into severe poverty or being left behind by economic change. They tend to favor public investment in education, health care, and infrastructure as tools for expanding opportunity.\n\nAnother recurring theme is the idea that government can act as a referee in the marketplace. Democrats frequently support regulations aimed at protecting consumers, workers, and the environment from abuses that they believe free markets alone will not correct. They typically argue that carefully written rules can support long term prosperity while limiting harmful behavior.\n\nOn social issues, many Democrats place high importance on individual choice and civil rights protections for a wide range of groups. They often support policies that broaden participation in public life and seek to reduce discrimination in employment, housing, and public services.\n\nBecause the party is diverse, there is regular debate inside Democratic circles about how far and how fast to pursue different goals. That internal argument is part of how the party refines its message and priorities from one generation to the next.",
           },
           {
             id: "dem-positions",
             title: "Policy Positions",
             content:
-              "Modern Democratic policy positions commonly include expanding access to health care, addressing climate change, raising or maintaining certain taxes to fund public services, and supporting regulations on business in areas like environmental protection and financial markets. The party tends to support protections for voting access and a more active federal role in civil rights enforcement. Positions vary by region and candidate, but these themes appear frequently in national platforms.",
+              "In national politics, Democrats commonly support expanding or preserving broad access to health insurance, sometimes through government managed programs and sometimes through regulations on private insurers. Many favor progressive tax systems in which higher income earners pay a larger share, arguing that this helps fund public services without overburdening lower income households.\n\nOn economic and environmental questions, Democratic platforms often call for stronger oversight of financial institutions, workplace standards, and environmental protections. Supporters see these measures as necessary to prevent crises, protect public health, and encourage cleaner forms of energy. Critics worry about the cost and complexity of such rules, which is why these debates remain active.\n\nIn the area of voting and elections, Democrats usually promote measures that they believe make it easier to cast a ballot, such as early voting options and expanded mail in voting. They also tend to support federal involvement in enforcing civil rights laws.\n\nPositions still vary by region, candidate, and moment in history, but these themes appear frequently in recent Democratic campaigns and national platforms.",
           },
         ],
       },
@@ -1090,19 +1008,19 @@ O’er the land of the free and the home of the brave.
             id: "rep-history",
             title: "History",
             content:
-              "The Republican Party was born in the 1850s out of opposition to the expansion of slavery into new territories. Under Abraham Lincoln it led the Union during the Civil War and supported constitutional amendments ending slavery and protecting equal rights. Over the decades the party evolved, championing business growth, anti communist policies during the Cold War, and various waves of tax and regulatory reform. Its history reflects ongoing debates about liberty, order, and the proper scope of government.",
+              "The Republican Party was founded in the 1850s in response to the expansion of slavery into new western territories. Drawing support from anti slavery Whigs, Free Soilers, and other reformers, it quickly became a major national force. Under Abraham Lincoln, Republicans led the Union during the Civil War and supported constitutional amendments that ended slavery and established equal legal protection.\n\nAfter the war, the party was closely associated with efforts to rebuild the South and secure rights for formerly enslaved people, although those efforts were uneven and ultimately undercut in later decades. In the late nineteenth and early twentieth centuries, Republicans often championed industrial growth, protective tariffs, and a strong national government that could support commerce and infrastructure.\n\nThe twentieth century saw new shifts. During the Cold War, Republican leaders placed heavy emphasis on confronting communism abroad and promoting free enterprise at home. Later movements inside the party stressed lower taxes, reduced federal regulation, and a renewed focus on constitutional limits.\n\nAcross these changes a common thread has been concern about concentrated government power and a belief in the importance of individual responsibility. The party’s evolution shows how principles are interpreted differently as conditions change, while still drawing from older themes of union, free labor, and ordered liberty.",
           },
           {
             id: "rep-values",
             title: "Core Values",
             content:
-              "Modern Republicans generally stress individual freedom, private enterprise, and skepticism of large centralized government. Many emphasize personal responsibility, strong national defense, and respect for traditional social institutions such as family and faith communities. The party often frames its approach as protecting space for individuals, families, and local organizations to solve problems without heavy federal control.",
+              "Modern Republicans generally emphasize personal freedom, private property, and limited federal government. Many supporters believe that individuals, families, churches, and local communities are better suited than distant agencies to solve many problems. This outlook leads to a preference for policies that leave more decisions in the hands of citizens and state or local authorities.\n\nRepublicans often stress the importance of strong national defense and the need to deter threats through readiness and resolve. They also tend to highlight traditional social institutions such as marriage, family, and religious communities, arguing that these provide moral grounding and social stability that law alone cannot supply.\n\nEconomic freedom is another central value. The party usually favors lower taxes, fewer regulations, and a business climate that it believes will encourage investment, innovation, and job creation. Many Republicans argue that a vibrant private sector is the best engine for raising living standards over time.\n\nAlthough there are significant differences between more populist and more establishment wings of the party, these broad themes of liberty, responsibility, and skepticism toward centralized control are common in Republican speeches and platforms.",
           },
           {
             id: "rep-positions",
             title: "Policy Positions",
             content:
-              "Common Republican policy positions include lowering or simplifying taxes, reducing federal regulations on businesses, supporting strong military spending, and defending Second Amendment rights. Many Republicans advocate for school choice options and seek to limit the size and cost of federal social programs. As with any large party, there is internal debate, but these themes frequently appear in national platforms and campaigns.",
+              "Republican policy agendas frequently call for reducing federal spending growth, cutting certain taxes, and simplifying the tax code. Supporters argue that this approach leaves more money in the hands of families and businesses, which they believe leads to stronger economic growth. Critics worry about the impact on social programs and federal revenues, and this tension shapes many budget debates.\n\nOn regulation, Republicans often seek to roll back rules they see as burdensome, especially in energy, agriculture, and small business. They tend to favor domestic production of oil, natural gas, and other resources, while also supporting private sector innovation in new technologies.\n\nThe party usually defends Second Amendment rights, supports measures that it believes secure elections, and advocates for law enforcement and border security as priorities for public safety and national sovereignty. Many Republicans favor school choice options such as charter schools and education savings programs, seeing competition as a way to improve outcomes.\n\nBecause the party includes a wide coalition, specific policy details can differ from one state or leader to another, but these positions are often seen in national platforms and campaigns.",
           },
         ],
       },
@@ -1115,19 +1033,19 @@ O’er the land of the free and the home of the brave.
             id: "lib-overview",
             title: "Overview",
             content:
-              "The Libertarian Party emerged in the early 1970s as a response to concerns about both big government and restrictions on personal freedom. It occupies a distinct space in American politics by combining strong support for free markets with an equally strong defense of civil liberties. Libertarians often argue that individuals, not the state, should decide how to live their lives as long as they do not harm others.",
+              "The Libertarian Party emerged in the early 1970s amid concerns about both rising government power and restrictions on personal choice. It presents itself as a consistent advocate for individual liberty in economic and social life alike. Rather than fitting neatly onto the usual left right spectrum, it combines support for free markets with strong civil liberties and skepticism toward foreign intervention.\n\nLibertarians argue that many functions currently handled by government can be better managed by voluntary cooperation, private enterprise, or local associations. They tend to measure policies by a simple test: whether they increase or decrease the freedom of peaceful individuals.\n\nBecause of this perspective, Libertarians sometimes agree with Republicans on economic issues and with Democrats on civil liberties, while differing sharply from both on questions like surveillance, military involvement, and drug policy.\n\nThe party remains smaller than the two major parties but has influenced public debate by pushing discussions about privacy, government spending, and personal autonomy into the spotlight.",
           },
           {
             id: "lib-principles",
             title: "Core Principles",
             content:
-              "Libertarian principles center on self ownership, voluntary exchange, and non aggression. In practice this means advocating for minimal government involvement in the economy and in private personal choices. Libertarians tend to oppose military interventions abroad, warrantless surveillance at home, and laws that regulate peaceful behavior between consenting adults. The guiding question is often whether a given law increases or decreases individual liberty.",
+              "Libertarian thought is anchored in the idea of self ownership, which holds that individuals have a natural right to control their own lives and property. From this flows the principle of voluntary exchange, where people are free to trade goods, services, and ideas so long as they respect the equal rights of others. Coercion is seen as justified only to prevent force or fraud.\n\nIn practice, these principles lead Libertarians to support minimal taxation, light regulation, and open competition in markets such as education, transportation, and currency. They usually oppose laws that criminalize personal behavior that does not directly violate the rights of others.\n\nCivil liberties are another central concern. Libertarians often oppose expansive surveillance programs, restrictions on speech, and government involvement in personal relationships. They argue that even well intended restrictions can set precedents that threaten freedom in the long run.\n\nBy applying the same standard of non aggression to both economic and social questions, Libertarians seek to offer a consistent framework for limited government and maximum personal choice.",
           },
           {
             id: "lib-positions",
             title: "Policy Positions",
             content:
-              "Policy positions associated with the Libertarian Party include significant reductions in federal spending and taxation, legalization or decriminalization of many currently banned substances, and sharp limits on government surveillance and regulation. Libertarians usually support broad free trade, open competition in currency and banking, and a foreign policy focused on defense rather than nation building.",
+              "Policy positions associated with the Libertarian Party commonly include cutting federal spending, simplifying or abolishing many taxes, and reducing the role of central banks in the economy. Libertarians often favor privatization or decentralization of services such as mail delivery, transportation infrastructure, and aspects of education.\n\nOn personal freedom, they typically support decriminalization or legalization of many currently banned substances, strong protections for freedom of speech and association, and a general presumption that adults should be free to make their own choices as long as they do not violate the rights of others. This can place them at odds with more socially conservative or socially progressive positions alike.\n\nIn foreign policy, Libertarians tend to favor a non interventionist approach. They support a strong national defense but oppose nation building ventures and prolonged overseas military commitments that are not directly tied to defending the country.\n\nWhile few Libertarian candidates win major offices, their proposals influence discussions about privacy, criminal justice reform, and the size and scope of federal authority.",
           },
         ],
       },
@@ -1140,19 +1058,19 @@ O’er the land of the free and the home of the brave.
             id: "green-overview",
             title: "Overview",
             content:
-              "The Green Party developed from environmental and peace movements that gained strength in the late twentieth century. It seeks to link ecological concerns with questions of economic fairness and grassroots democracy. Greens present themselves as an alternative to the two major parties, arguing that long term environmental health and local control should guide national priorities.",
+              "The Green Party grew out of environmental, peace, and anti nuclear movements that gained visibility in the late twentieth century. It seeks to link ecological concerns with questions of economic fairness and grassroots democracy. Greens present themselves as an alternative to what they see as short term thinking by the major parties on issues like pollution, climate, and corporate influence.\n\nLocal Green organizations appeared first, and national structures developed later as activists coordinated across states. The party has run candidates for local, state, and national offices, using campaigns both to win votes and to raise awareness about its priorities.\n\nBecause the United States uses a winner take all electoral system in most races, Greens often face structural hurdles to winning large offices. Even so, their presence pushes environmental and social issues into public conversation.\n\nTheir experience shows how smaller parties can influence debate even when they hold relatively few seats in government.",
           },
           {
             id: "green-values",
             title: "Core Values",
             content:
-              "Core Green Party values include ecological wisdom, social justice, nonviolence, and decentralization of political power. Supporters often believe that communities should have greater say in decisions that affect their land, water, and local economies. The party also stresses respect for diversity and the need for political systems that give ordinary citizens more direct influence.",
+              "Green Party values are often summarized in themes such as ecological wisdom, social justice, grassroots democracy, and nonviolence. Supporters believe that human societies must live within the limits of natural systems and that economic decisions should account for long term environmental costs. They tend to favor local decision making and participatory models of governance.\n\nSocial justice, in the Green view, includes reducing economic inequality and addressing discrimination. The party often calls for stronger worker protections, expanded social services, and policies aimed at supporting marginalized communities.\n\nNonviolence and peace are also central values. Greens usually oppose military interventions and weapons proliferation, arguing that diplomacy and development are better long range tools for resolving conflict.\n\nTaken together, these values express a vision where environmental health, human dignity, and local participation reinforce one another rather than compete.",
           },
           {
             id: "green-positions",
             title: "Policy Positions",
             content:
-              "Policy proposals from Green candidates usually call for rapid transitions to renewable energy, strict limits on pollution, and changes to campaign finance rules to reduce the influence of large donors. Many Greens support universal health care, guaranteed basic income experiments, and expansions of public transportation. They tend to favor non military approaches to foreign conflicts and greater international cooperation on environmental issues.",
+              "Green Party policy proposals frequently call for rapid transitions to renewable energy sources, strict limits on pollution, and major investments in public transportation and conservation. Supporters argue that these steps are necessary to protect future generations and create new forms of employment.\n\nOn economic issues, Greens often endorse ideas such as universal health care, higher minimum wages, and stronger public support for education and housing. They typically favor changes to campaign finance rules that would reduce the influence of large donors and corporations.\n\nIn foreign affairs, the party emphasizes diplomacy, international cooperation, and reductions in military spending. It often calls for redirecting resources from weapons to human needs and environmental protection.\n\nThese positions set the Green Party apart from both major parties and give voters a clear sense of its priorities, even when many proposals remain subjects of intense debate.",
           },
         ],
       },
@@ -1165,19 +1083,19 @@ O’er the land of the free and the home of the brave.
             id: "const-overview",
             title: "Overview",
             content:
-              "The Constitution Party is a smaller party that calls for a return to what it views as the plain meaning of the Constitution and the limited federal powers it describes. It often appeals to voters who are skeptical of both major parties and who want a platform that places strong emphasis on traditional moral principles and state sovereignty.",
+              "The Constitution Party is a smaller political party that calls for a strict reading of the United States Constitution and a significant narrowing of federal power. It appeals to voters who are dissatisfied with both major parties and who want a platform that closely links civil government with traditional moral principles.\n\nThe party grew out of concerns that Washington had far exceeded the authority originally granted to it and that many decisions should be returned to states, local communities, and families. Its leaders often speak of restoring what they view as the original intent of the founders.\n\nBecause of its size, the Constitution Party rarely wins major elections, but it offers a clear statement of one approach to constitutional interpretation and civic life.\n\nIts presence in the political landscape gives voice to voters who believe that the nation’s problems stem primarily from drifting away from limited government and rooted moral standards.",
           },
           {
             id: "const-principles",
             title: "Core Principles",
             content:
-              "Core principles of the Constitution Party include strict limits on federal authority, strong protection for life and family as they define it, and a belief that many functions now handled by Washington should be returned to state and local governments. The party often argues that centralization has weakened both liberty and community responsibility.",
+              "Core principles of the Constitution Party include limited federal authority, respect for state sovereignty, and strong protections for what it regards as traditional family and moral values. The party reads the Constitution as granting only narrow, enumerated powers to the national government, with most responsibilities reserved to the states or the people.\n\nMany party members argue that moral order and civil freedom are linked, and they support policies that reflect their religious and ethical convictions. They often emphasize the importance of local control over education, community standards, and many social issues.\n\nEconomic views typically stress the dangers of debt and inflation and the need for sound money. Some advocates call for a return to currency backed by precious metals.\n\nThese principles reflect a desire for a simpler, more decentralized republic with strong cultural continuity and limited federal reach.",
           },
           {
             id: "const-positions",
             title: "Policy Positions",
             content:
-              "Policy positions commonly associated with the Constitution Party include ending federal involvement in education, scaling back or abolishing certain federal agencies, and returning to forms of money backed by precious metals. The party usually supports strong protections for gun ownership and seeks to restrict federal spending and borrowing.",
+              "Policy positions commonly associated with the Constitution Party include reducing or abolishing certain federal departments, ending federal involvement in education, and sharply limiting foreign aid and overseas military commitments. Supporters often call for strict enforcement of immigration laws and stronger border controls.\n\nThe party usually advocates balanced budgets, opposition to most forms of federal welfare programs, and support for private charity and local solutions in their place. It tends to favor strong protections for gun ownership and other rights explicitly listed in the Constitution.\n\nOn monetary policy, some members endorse auditing or restructuring the Federal Reserve and exploring alternatives such as commodity backed currency.\n\nWhile these positions appeal to a specific portion of the electorate, they also contribute to broader debates about sovereignty, fiscal restraint, and the meaning of constitutional government.",
           },
         ],
       },
@@ -1190,209 +1108,113 @@ O’er the land of the free and the home of the brave.
             id: "independents",
             title: "Independent Voters",
             content:
-              "Independent voters do not formally align with any political party, though they may lean toward one side or the other in practice. Many are frustrated with partisan conflict or feel that neither major party fully represents their views. Because they can shift from election to election, independents often play a decisive role in close races and can push candidates to broaden their message.",
+              "Independent voters are citizens who do not formally register with or consistently support a single political party. Some lean toward one side or the other, while others shift depending on issues and candidates. Many independents express frustration with partisan conflict, negative campaigning, or what they see as a lack of real choice.\n\nBecause they are not firmly anchored to one party, independents can play a decisive role in close elections. Campaigns often tailor messages to appeal to these voters, highlighting ideas that cross usual party lines.\n\nIndependents also serve as a reminder that parties exist to serve voters, not the other way around. Their willingness to move between options pushes parties to refine their platforms and reach beyond their most loyal supporters.\n\nIn a healthy political culture, independent voters contribute fresh perspectives and resist automatic alignment with any one team.",
           },
           {
             id: "local-movements",
             title: "Local Political Movements",
             content:
-              "Local political movements grow out of specific concerns in towns, cities, or regions. Residents may organize around property taxes, zoning decisions, school policies, or environmental issues. These efforts show democracy at work on a human scale, where neighbors can meet face to face. Successful local movements sometimes influence state or national debates by demonstrating what is possible in practice.",
+              "Local political movements arise when neighbors organize around specific concerns close to home. Residents may band together over school policies, zoning decisions, public safety, taxes, or environmental questions in their communities. These efforts show democracy at eye level, where people can speak face to face and see the direct impact of their involvement.\n\nSome local movements remain focused on a single issue, while others grow into broader reform efforts. Success at the local level can influence state or national debates when other communities notice practical results.\n\nLocal movements often cut across party lines, uniting people who might disagree on national questions but share a common interest in their town or region. This cooperation can build trust and remind citizens that they share responsibilities beyond partisan labels.\n\nBy paying attention to local issues, citizens reinforce the idea that self government begins closest to home.",
           },
           {
             id: "third-parties",
             title: "Role of Third Parties",
             content:
-              "Third parties rarely win major national offices, but they can have outsized influence. By raising issues that the big parties avoid, they can shift the terms of debate and force new ideas onto the agenda. Sometimes major parties adopt planks from third party platforms to appeal to their voters. Understanding this dynamic helps explain why even small parties are part of the broader American political ecosystem.",
+              "Third parties rarely win major national offices in the United States, but they can have significant influence on public debate. By championing issues that the big parties overlook or avoid, they introduce new ideas and force others to respond. Historically, concerns first raised by third parties have sometimes been adopted later by Republicans or Democrats.\n\nThird party campaigns can also provide an outlet for voters who feel that neither major party reflects their priorities. This can send a signal to political leaders about emerging concerns or dissatisfaction.\n\nAt the same time, third parties face structural challenges such as ballot access rules, debate participation limits, and winner take all elections. These hurdles make it difficult for them to translate support into seats.\n\nUnderstanding the role of third parties helps citizens see American politics as a broader ecosystem. Ideas can begin at the margins and eventually reshape the center when they prove persuasive and practical over time.",
           },
         ],
       },
     ],
   },
 
-  // ===== PRINCIPLES IN PRACTICE =====
-  {
-    id: "principles-practice",
-    title: "Principles in Practice",
-    icon: "balance-scale",
-    description: "How American values are applied in society and governance",
-    sections: [
-      {
-        id: "freedom-responsibility",
-        title: "Freedom and Responsibility",
-        description: "Balancing individual liberty with social responsibility",
-        subsections: [
-          {
-            id: "individual-freedom",
-            title: "Individual Freedom",
-            content:
-              "Individual freedom allows people to choose their work, beliefs, associations, and direction in life without unnecessary interference from government. This liberty has fueled entrepreneurship, religious diversity, and artistic creativity. At the same time, freedom is not a license to ignore the impact of our actions on others. Recognizing the difference between personal preference and harmful behavior is part of the ongoing civic conversation.",
-          },
-          {
-            id: "social-responsibility",
-            title: "Social Responsibility",
-            content:
-              "Social responsibility means remembering that we live among neighbors, not in isolation. It shows up when people obey just laws, serve on juries, help those in need, and take part in community life. A society where everyone only pursues private interest becomes brittle. By balancing personal goals with concern for the common good, citizens keep freedom from sliding into selfishness.",
-          },
-          {
-            id: "balancing-act",
-            title: "The Balancing Act",
-            content:
-              "American history is full of debates about how to balance liberty and responsibility. Questions about public health rules, economic regulations, or social programs often turn on where to draw the line between individual choice and shared obligations. There is no permanent final answer, but the ongoing argument itself is a sign that people care about protecting both personal rights and community well being.",
-          },
-        ],
-      },
-      {
-        id: "faith-morality",
-        title: "Faith and Morality in Public Life",
-        description: "The role of religion and ethics in American society",
-        subsections: [
-          {
-            id: "religious-freedom",
-            title: "Religious Freedom",
-            content:
-              "Religious freedom protects the right to worship according to conscience and to live out one’s faith in daily life, within the limits of others’ rights. It has allowed many traditions to take root in the United States and to contribute schools, hospitals, charities, and cultural life. Maintaining this freedom requires both legal protection and a spirit of mutual respect among people who disagree on ultimate questions.",
-          },
-          {
-            id: "faith-public-square",
-            title: "Faith in the Public Square",
-            content:
-              "Faith in the public square refers to the ways religious beliefs influence civic action. Many historic movements, from abolition to various relief efforts, drew energy from churches and religious organizations. Citizens are free to bring their deepest convictions into political debate, just as others are free to disagree. The challenge is to argue strongly while still recognizing the dignity of those who see the world differently.",
-          },
-          {
-            id: "secular-governance",
-            title: "Secular Governance",
-            content:
-              "Secular governance does not mean a society without faith but a government that does not officially favor one faith over another. This arrangement protects religious communities from state control and protects citizens from being coerced into belief. It allows moral and spiritual voices to speak freely without giving any single institution the power to speak for everyone.",
-          },
-        ],
-      },
-      {
-        id: "tradition-progress",
-        title: "Tradition and Progress",
-        description: "Honoring the past while embracing the future",
-        subsections: [
-          {
-            id: "preserving-tradition",
-            title: "Preserving Tradition",
-            content:
-              "Preserving tradition means remembering where we came from and keeping practices that continue to serve the common good. Traditions such as civic holidays, local customs, and family rituals can provide stability in times of change. They connect younger generations with the wisdom and sacrifices of those who came before, reminding us that we are part of a longer story.",
-          },
-          {
-            id: "embracing-change",
-            title: "Embracing Change",
-            content:
-              "Embracing change recognizes that new circumstances require fresh thinking. Technology, population shifts, and new discoveries constantly reshape the world. Some traditions need to be reinterpreted or even replaced so that core principles like justice and liberty can be better honored. The key question is not whether change happens, but whether it moves the country closer to or farther from its foundational commitments.",
-          },
-          {
-            id: "dynamic-tension",
-            title: "Dynamic Tension",
-            content:
-              "The dynamic tension between tradition and progress is one of the engines of American life. Citizens argue over which customs to keep, which reforms to pursue, and how fast change should happen. When this tension is handled with patience and goodwill, it can produce solutions that respect the best of the past while opening doors for the future.",
-          },
-        ],
-      },
-      {
-        id: "equality-merit",
-        title: "Equality and Merit",
-        description: "Balancing equal opportunity with individual achievement",
-        subsections: [
-          {
-            id: "equal-opportunity",
-            title: "Equal Opportunity",
-            content:
-              "Equal opportunity means that people should have a fair chance to develop their abilities and pursue their goals regardless of their background. Schools, laws, and workplaces all play a part in either widening or narrowing opportunity. When barriers based on race, class, or other factors are reduced, more people can contribute their talents to the nation’s life.",
-          },
-          {
-            id: "meritocracy",
-            title: "Meritocracy",
-            content:
-              "Meritocracy is the idea that rewards should be based on effort, skill, and contribution rather than on inherited status. It pushes society to notice and honor excellence wherever it appears. At the same time, true meritocracy requires that people start from reasonably similar starting lines, or at least that obvious unfair obstacles are removed. Otherwise the word can become a cover for old inequalities.",
-          },
-          {
-            id: "equity-debates",
-            title: "Equity Debates",
-            content:
-              "Debates about equity ask how far society should go in correcting past injustices and current disadvantages. Some argue for policies that treat everyone the same under the law, while others support targeted measures to lift up groups that have faced long term obstacles. These conversations are complex and often emotional, but they revolve around the shared desire for a fair chance at a good life.",
-          },
-        ],
-      },
-      {
-        id: "role-government",
-        title: "The Role of Government",
-        description: "Debates about government's proper size and function",
-        subsections: [
-          {
-            id: "limited-government",
-            title: "Limited Government",
-            content:
-              "Limited government is a principle that says the state should perform only those tasks that individuals and voluntary groups cannot reasonably handle on their own. Supporters fear that when government grows too large, it can smother initiative, waste resources, and threaten liberty. Constitutional checks, balanced budgets, and sunset clauses on laws are some of the tools used to keep power within bounds.",
-          },
-          {
-            id: "active-government",
-            title: "Active Government",
-            content:
-              "Active government proponents believe that in a complex modern society, public institutions must take a hands on role in addressing major challenges. They point to history where coordinated efforts were needed to build infrastructure, respond to crises, or correct abuses. For them the question is not whether government should act, but how to ensure that its actions are effective, accountable, and focused on the common good.",
-          },
-          {
-            id: "practical-governance",
-            title: "Practical Governance",
-            content:
-              "Most citizens land somewhere between the poles of limited and active government. Practical governance looks for solutions that combine public action with private initiative. It asks what level of government is best suited to tackle a given problem, and how to measure results honestly. This pragmatic spirit helps translate broad principles into real world policies.",
-          },
-        ],
-      },
-      {
-        id: "community-common-good",
-        title: "Community and the Common Good",
-        description: "Balancing individual interests with collective welfare",
-        subsections: [
-          {
-            id: "individualism",
-            title: "American Individualism",
-            content:
-              "American individualism celebrates personal drive, ingenuity, and the belief that one person can make a difference. It has encouraged inventors, small business owners, and reformers to step forward without waiting for permission. At the same time, unchecked individualism can overlook the ways people depend on one another for safety, learning, and emotional support.",
-          },
-          {
-            id: "community-bonds",
-            title: "Community Bonds",
-            content:
-              "Community bonds form through families, friendships, congregations, clubs, and local organizations. These smaller circles provide help during hard times, mentor young people, and create traditions that give meaning to daily life. Strong communities make it easier for citizens to trust one another and to tackle challenges together.",
-          },
-          {
-            id: "common-good",
-            title: "The Common Good",
-            content:
-              "The common good refers to conditions that benefit everyone, such as public safety, clean air, reliable infrastructure, and trustworthy institutions. Pursuing the common good does not erase individual goals, but it asks people to consider how their choices affect the wider community. A society that loses sight of the common good risks becoming divided and unstable.",
-          },
-        ],
-      },
-      {
-        id: "national-global",
-        title: "National Identity and Global Responsibility",
-        description: "America's role in the world",
-        subsections: [
-          {
-            id: "national-interest",
-            title: "National Interest",
-            content:
-              "National interest includes the security, prosperity, and well being of a country’s citizens. Leaders must decide which alliances, trade agreements, and policies best advance that interest. Disagreements arise over how much to prioritize economic growth, human rights concerns, or cultural influence abroad. Healthy debate on national interest helps prevent any single priority from crowding out all others.",
-          },
-          {
-            id: "global-leadership",
-            title: "Global Leadership",
-            content:
-              "Global leadership describes the influence a nation has beyond its borders. The United States has often played a leading role in international organizations, humanitarian aid, and security alliances. Supporters of a strong leadership role argue that it helps keep the world more stable and protects American interests. Critics worry about overextension and unintended consequences. Balancing responsibility and restraint is an ongoing challenge.",
-          },
-          {
-            id: "international-cooperation",
-            title: "International Cooperation",
-            content:
-              "International cooperation is necessary when problems cross borders, such as pandemics, terrorism, and environmental issues. Working with other nations can multiply resources and knowledge, but it can also require compromise. Citizens and leaders must weigh how agreements affect sovereignty, local industries, and long term security. Thoughtful cooperation aims to protect national independence while recognizing shared global challenges.",
-          },
-        ],
-      },
-    ],
-  },
+// ===== PRINCIPLES IN PRACTICE =====
+{
+  id: "principles-practice",
+  title: "Principles in Practice",
+  icon: "balance",
+  description: "How American principles operate in real world systems and civic life",
+  sections: [
+    {
+      id: "rule-of-law",
+      title: "Rule of Law",
+      description: "The idea that laws apply to everyone...",
+      subsections: [
+        {
+          id: "rol-meaning",
+          title: "What It Means",
+          content:
+            "The rule of law means that rules, not personal whims, govern a nation. Presidents, judges, police officers, and ordinary citizens are all supposed to live under the same basic standards. No one is meant to be too important for the law and no one is meant to be too small for its protection.\n\nIn practice this idea shapes everything from how traffic tickets are handled to how elections are run. Laws are written down, procedures are spelled out, and decisions can be reviewed or appealed. This does not guarantee perfection, but it creates a framework where unfair treatment can be challenged instead of simply endured.\n\nThe rule of law also sets limits on what government may do. Officials must tie their actions to an actual law or constitutional power. When they cannot, courts and citizens have grounds to push back. This keeps authority from slowly turning into arbitrary power.\n\nA nation that honors the rule of law does more than punish wrongdoing. It builds habits of fairness, accountability, and predictability that allow people to plan, invest, and raise families with confidence that the rules will not suddenly change at someone’s convenience.",
+        },
+        {
+          id: "rol-courts",
+          title: "Courts and Justice",
+          content:
+            "Courts are one of the main tools for enforcing the rule of law. They provide a place where people can bring disputes, present evidence, and have a neutral judge or jury decide what the law requires. This process is slower than rule by decree, but it helps protect individuals from anger, favoritism, or fear.\n\nCriminal courts determine whether someone has broken the law and what punishment is appropriate. Civil courts settle conflicts over contracts, property, family matters, and other disagreements between private parties. In both settings, procedures such as notice, the right to be heard, and the right to appeal are designed to keep the process honest.\n\nCourts also review the actions of government. When a law or policy appears to cross constitutional lines, judges can strike it down or narrow its reach. This power is not meant to make courts the rulers of the country, but to ensure that every branch stays within the limits the people have set.\n\nA healthy justice system requires more than good paper rules. It needs judges who are independent, jurors who take their duty seriously, and citizens who are willing to serve as witnesses, follow the law, and accept outcomes even when they disagree. When these pieces work together, courts become a safeguard for liberty rather than just a place of punishment.",
+        },
+      ],
+    },
+    {
+      id: "checks-balances",
+      title: "Checks and Balances",
+      description:
+        "The system of checks and balances prevents any one branch of government from becoming too powerful by allowing each branch to limit, review, or block the actions of the others.",
+      subsections: [
+        {
+          id: "cb-structure",
+          title: "Structure of the System",
+          content:
+            "Checks and balances grow out of the Constitution’s decision to separate power among three branches: legislative, executive, and judicial. Each branch is given its own tools and responsibilities, but also specific ways to influence or limit the others. Congress writes the laws and controls taxing and spending. The President carries out the laws and leads the executive agencies. The courts interpret the laws and decide whether they agree with the Constitution.\n\nThese powers overlap on purpose. A President can veto a bill passed by Congress, but Congress can override that veto with a large enough majority. The Senate must confirm many of the President’s appointments and treaties, so the executive cannot operate entirely on its own. Courts can strike down actions by either Congress or the President if they violate constitutional limits.\n\nThis constant interaction forms a web of restraint. It slows down sudden swings of power and forces leaders to negotiate, persuade, and build coalitions rather than ruling by decree. While the system can be frustrating when people want fast change, it is designed to protect liberty by making it hard for any person or faction to capture the entire government.\n\nThe structure of checks and balances also encourages each branch to guard its own authority. When one branch pushes too far, the others have both the power and the incentive to push back. This tug of war is not a flaw in the American system; it is one of the ways the Constitution keeps freedom safer over time.",
+        },
+        {
+          id: "cb-gridlock",
+          title: "Why Gridlock Happens",
+          content:
+            "What many people call gridlock is often the visible side effect of checks and balances doing their work. When different branches or parties strongly disagree, the system makes it difficult for one side to impose its will. Bills may stall, appointments may be delayed, and big proposals may be watered down or blocked entirely. This can feel inefficient, especially in moments of crisis, but it is meant to slow decisions that have not earned broad support.\n\nThe United States is a large, diverse country, and citizens do not agree on every issue. Checks and balances force leaders to build enough agreement to move forward. When that agreement does not exist, the default is often inaction. While this can be frustrating, it prevents sudden swings in policy that could destabilize people’s lives, businesses, and communities.\n\nOf course, there are times when gridlock reflects more than honest disagreement. Partisan gamesmanship, personal ambition, and media pressure can all encourage politicians to block the other side simply to claim a victory. That kind of stalemate can erode public trust and make citizens feel that government cannot solve real problems.\n\nEven then, the answer is not to abandon checks and balances but to use them wisely. Citizens can reward leaders who compromise in good faith and punish those who treat every issue as a battlefield. The goal is not endless standoff but careful decision making that respects both majority rule and the rights of those who disagree.",
+        },
+      ],
+    },
+    {
+      id: "federalism",
+      title: "Federalism",
+      description:
+        "How authority is divided between the national government and the states",
+      subsections: [
+        {
+          id: "fed-overview",
+          title: "Overview",
+          content:
+            "Federalism reflects the belief that government power should be shared rather than concentrated. The Constitution gives certain authority to the national government, such as defense, currency, and interstate matters. Other powers remain with the states, which govern local issues like schools, police, and many areas of civil life. This division allows the system to balance unity with local control.\n\nThe states act as laboratories of democracy. They can test different approaches to education, transportation, public safety, and economic policy. When a policy works well in one place, other states may adopt it. When it fails, the consequences are contained rather than felt across the entire nation.\n\nFederalism also protects freedom by preventing any single authority from controlling every aspect of life. Citizens can influence government at multiple levels, participate in local decisions, and hold leaders accountable through elections and public engagement.\n\nAt its best, federalism encourages cooperation and experimentation. It allows communities to reflect their own character while still remaining part of a unified nation.",
+        },
+        {
+          id: "fed-tensions",
+          title: "Tensions and Cooperation",
+          content:
+            "Cooperation between states and the federal government is essential, but disagreements are inevitable. Issues related to commerce, environment, transportation, and public health often require coordination across state lines. When responsibilities overlap, debates arise about which level of government should take the lead.\n\nThese tensions are part of the constitutional design. The boundaries between state and federal authority were left flexible in some areas so that the nation could adapt to new circumstances. Throughout American history, courts have played a major role in clarifying these boundaries as cases arise.\n\nDuring crises such as wars, natural disasters, or economic downturns, cooperation often becomes more urgent. States may request federal assistance, and national leaders may rely on state agencies to carry out major programs. This partnership can strengthen resilience when it works well.\n\nHealthy federalism does not eliminate conflict. Instead, it uses structured disagreement as a tool for balance, innovation, and shared responsibility.",
+        },
+      ],
+    },
+    {
+      id: "civil-liberty",
+      title: "Civil Liberties",
+      description:
+        "The rights and freedoms that protect individuals from government overreach",
+      subsections: [
+        {
+          id: "cl-rights",
+          title: "What Rights Protect",
+          content:
+            "Civil liberties are the guarantees that limit government power and protect individual freedom. They include freedom of speech, freedom of religion, due process of law, and the right to assemble. These principles ensure that citizens can think, worship, speak, and gather without fear of government punishment.\n\nMany of these rights are rooted in the Bill of Rights, but they have been interpreted and expanded over time. Courts have refined the meaning of free expression, privacy, and fair procedure in response to new challenges. The result is a framework designed to protect personal freedom while allowing society to address real concerns.\n\nCivil liberties also require public vigilance. Rights can erode gradually if people grow indifferent to them or if officials prioritize convenience over principle. Citizens who understand their rights are better equipped to defend them.\n\nIn daily life, civil liberties create space for dissent, belief, creativity, and private life. They help ensure that America remains a place where ideas can compete without coercion.",
+        },
+        {
+          id: "cl-responsibility",
+          title: "Rights and Responsibility",
+          content:
+            "Civil liberties give citizens broad freedom, but rights work best when paired with responsibility. The freedom of speech protects your right to express your beliefs, but it also implies a duty to use that freedom thoughtfully. The free exercise of religion allows people to worship according to conscience, but it also asks citizens to respect the same freedom for others.\n\nRights place limits on what government can do, but they do not remove the need for communities to maintain order and respect. Exercising liberty requires self control, honesty, and willingness to live peaceably with those who hold different viewpoints.\n\nIn moments of crisis or tension, debates often arise about how to balance freedom with public safety. These debates have occurred throughout American history. When handled with care, they allow society to protect the vulnerable while preserving essential liberties.\n\nCivil liberties are strongest when citizens remember that freedom is not only something to defend from outside threats but also something to practice with courage and integrity every day.",
+        },
+      ],
+    },
+  ],
+},
 
   // ===== LAND AND LIFE =====
   {

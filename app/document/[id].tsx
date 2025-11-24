@@ -14,7 +14,6 @@ import { IconSymbol } from "@/components/IconSymbol";
 import { AppFooter } from "@/components/AppFooter";
 import { FavoriteToggle } from "@/components/FavoriteToggle";
 
-// Define which subsections are founding documents
 const FOUNDING_DOCUMENTS = [
   "declaration",
   "articles",
@@ -28,27 +27,20 @@ export default function DocumentScreen() {
   const router = useRouter();
   const { colors } = useTheme();
 
-  // Find the document in contentData
-  let foundDocument: any = null;
+  let foundDocument = null;
   let foundSection = "";
   let foundMainSection = "";
 
-  for (const mainSection of contentData) {
-    for (const section of mainSection.sections) {
-      for (const subsection of section.subsections) {
-        if (
-          subsection.id === id &&
-          FOUNDING_DOCUMENTS.includes(subsection.id)
-        ) {
-          foundDocument = subsection;
-          foundSection = section.title;
-          foundMainSection = mainSection.title;
-          break;
+  for (const main of contentData) {
+    for (const sec of main.sections) {
+      for (const sub of sec.subsections) {
+        if (sub.id === id && FOUNDING_DOCUMENTS.includes(sub.id)) {
+          foundDocument = sub;
+          foundSection = sec.title;
+          foundMainSection = main.title;
         }
       }
-      if (foundDocument) break;
     }
-    if (foundDocument) break;
   }
 
   if (!foundDocument) {
@@ -56,16 +48,16 @@ export default function DocumentScreen() {
       <>
         <Stack.Screen
           options={{
-            title: "Not Found",
             headerShown: true,
-            headerStyle: { backgroundColor: colors.card },
+            title: "Document",
+            headerBackTitle: "Back",
             headerTintColor: colors.text,
+            headerStyle: { backgroundColor: colors.card },
           }}
         />
         <View style={[styles.container, { backgroundColor: colors.background }]}>
           <View style={styles.errorContainer}>
             <IconSymbol
-              ios_icon_name="exclamationmark.triangle.fill"
               android_material_icon_name="error"
               size={64}
               color={colors.textSecondary}
@@ -74,10 +66,8 @@ export default function DocumentScreen() {
               Document not found
             </Text>
             <TouchableOpacity
-              style={[styles.backButton, { backgroundColor: colors.primary }]}
               onPress={() => router.back()}
-              accessibilityLabel="Go back"
-              accessibilityRole="button"
+              style={[styles.backButton, { backgroundColor: colors.primary }]}
             >
               <Text style={styles.backButtonText}>Go Back</Text>
             </TouchableOpacity>
@@ -87,27 +77,23 @@ export default function DocumentScreen() {
     );
   }
 
+  const hasFullText = foundDocument.fullText?.trim()?.length > 0;
+  const hasContext = foundDocument.context?.trim()?.length > 0;
   const isConstitution = id === "constitution";
-
-  const hasFullText =
-    typeof foundDocument.fullText === "string" &&
-    foundDocument.fullText.trim().length > 0;
-  const hasContext =
-    typeof foundDocument.context === "string" &&
-    foundDocument.context.trim().length > 0;
 
   return (
     <>
       <Stack.Screen
         options={{
-          title: foundDocument.title,
           headerShown: true,
-          headerStyle: { backgroundColor: colors.card },
-          headerTintColor: colors.text,
+          title: foundDocument.title,
           headerBackTitle: "Back",
+          headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.card },
           headerRight: () => <FavoriteToggle itemId={id} />,
         }}
       />
+
       <ScrollView
         style={[styles.container, { backgroundColor: colors.background }]}
         contentContainerStyle={styles.scrollContent}
@@ -124,7 +110,6 @@ export default function DocumentScreen() {
             ]}
           >
             <IconSymbol
-              ios_icon_name="doc.text.fill"
               android_material_icon_name="description"
               size={12}
               color={colors.primary}
@@ -133,110 +118,73 @@ export default function DocumentScreen() {
               Founding Document
             </Text>
           </View>
-          <Text
-            style={[styles.title, { color: colors.text }]}
-            accessibilityRole="header"
-          >
+
+          <Text style={[styles.title, { color: colors.text }]}>
             {foundDocument.title}
           </Text>
+
           <Text style={[styles.breadcrumb, { color: colors.textSecondary }]}>
             {foundMainSection} › {foundSection}
           </Text>
         </View>
 
         {/* OVERVIEW */}
-        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
-          <Text
-            style={[styles.sectionLabel, { color: colors.textSecondary }]}
-          >
+        <View style={[styles.card, { backgroundColor: colors.card }]}>
+          <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
             Overview
           </Text>
-          <Text style={[styles.description, { color: colors.text }]}>
+          <Text style={[styles.bodyText, { color: colors.text }]}>
             {foundDocument.content}
           </Text>
         </View>
 
-        {/* CONSTITUTION STRUCTURE */}
+        {/* STRUCTURE (constitution only) */}
         {isConstitution && (
           <>
-            <View
-              style={[
-                styles.divider,
-                { backgroundColor: colors.textSecondary + "20" },
-              ]}
-            />
-            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
-              <Text
-                style={[styles.sectionLabel, { color: colors.textSecondary }]}
-              >
+            <View style={styles.divider} />
+
+            <View style={[styles.card, { backgroundColor: colors.card }]}>
+              <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
                 Document Structure
               </Text>
-              <View style={styles.structureSection}>
-                <Text style={[styles.structureTitle, { color: colors.text }]}>
-                  Articles
-                </Text>
-                <Text
-                  style={[styles.structureText, { color: colors.textSecondary }]}
-                >
-                  • Article I - Legislative Branch{"\n"}
-                  • Article II - Executive Branch{"\n"}
-                  • Article III - Judicial Branch{"\n"}
-                  • Article IV - States&apos; Relations{"\n"}
-                  • Article V - Amendment Process{"\n"}
-                  • Article VI - Federal Power{"\n"}
-                  • Article VII - Ratification
-                </Text>
-              </View>
-              <View style={styles.structureSection}>
-                <Text style={[styles.structureTitle, { color: colors.text }]}>
-                  Amendments
-                </Text>
-                <Text
-                  style={[styles.structureText, { color: colors.textSecondary }]}
-                >
-                  • Amendments 1–10: Bill of Rights{"\n"}
-                  • Amendments 11–27: Additional Amendments
-                </Text>
-              </View>
+
+              <Text style={[styles.bodyText, { color: colors.textSecondary }]}>
+                • Article I — Legislative{"\n"}
+                • Article II — Executive{"\n"}
+                • Article III — Judicial{"\n"}
+                • Article IV — States{"\n"}
+                • Article V — Amendments{"\n"}
+                • Article VI — Federal Power{"\n"}
+                • Article VII — Ratification{"\n"}
+                {"\n"}
+                Bill of Rights (1–10){"\n"}
+                Amendments 11–27
+              </Text>
             </View>
           </>
         )}
 
-        {/* FULL TEXT (IF PRESENT) */}
+        {/* FULL TEXT */}
         {hasFullText && (
           <>
-            <View
-              style={[
-                styles.divider,
-                { backgroundColor: colors.textSecondary + "20" },
-              ]}
-            />
-            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
-              <Text
-                style={[styles.sectionLabel, { color: colors.textSecondary }]}
-              >
-                Full Document Text
+            <View style={styles.divider} />
+            <View style={[styles.card, { backgroundColor: colors.card }]}>
+              <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
+                Full Text
               </Text>
-              <Text style={[styles.documentText, { color: colors.text }]}>
+              <Text style={[styles.bodyText, { color: colors.text }]}>
                 {foundDocument.fullText}
               </Text>
             </View>
           </>
         )}
 
-        {/* HISTORICAL CONTEXT (IF PRESENT) */}
+        {/* CONTEXT */}
         {hasContext && (
           <>
-            <View
-              style={[
-                styles.divider,
-                { backgroundColor: colors.textSecondary + "20" },
-              ]}
-            />
-            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
-              <Text
-                style={[styles.sectionLabel, { color: colors.textSecondary }]}
-              >
+            <View style={styles.divider} />
+            <View style={[styles.card, { backgroundColor: colors.card }]}>
+              <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
                 Historical Context
               </Text>
               <Text style={[styles.bodyText, { color: colors.text }]}>
@@ -246,7 +194,6 @@ export default function DocumentScreen() {
           </>
         )}
 
-        {/* FOOTER */}
         <AppFooter />
       </ScrollView>
     </>
@@ -258,8 +205,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingTop: 24,
-    paddingHorizontal: 16,
+    padding: 16,
     paddingBottom: 120,
   },
   header: {
@@ -271,76 +217,48 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     paddingHorizontal: 10,
     paddingVertical: 6,
-    borderRadius: 999,
-    marginBottom: 12,
-    gap: 6,
-    borderWidth: 1,
-  },
-  badgeText: {
-    fontSize: 10,
-    fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: 0.6,
-    lineHeight: 14.5,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    lineHeight: 40.6,
-    marginBottom: 8,
-  },
-  breadcrumb: {
-    fontSize: 13,
-    lineHeight: 18.85,
-  },
-  card: {
-    padding: 20,
     borderRadius: 12,
     borderWidth: 1,
-    marginBottom: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+    marginBottom: 12,
+    gap: 6,
   },
-  divider: {
-    height: StyleSheet.hairlineWidth,
-    marginVertical: 16,
-  },
-  sectionLabel: {
+  badgeText: {
     fontSize: 11,
     fontWeight: "600",
     textTransform: "uppercase",
-    letterSpacing: 1.2,
-    marginBottom: 16,
-    lineHeight: 15.95,
+    letterSpacing: 0.5,
   },
-  description: {
-    fontSize: 16,
-    lineHeight: 23.2,
-  },
-  structureSection: {
-    marginBottom: 16,
-  },
-  structureTitle: {
-    fontSize: 16,
-    fontWeight: "600",
+  title: {
+    fontSize: 28,
+    fontWeight: "700",
     marginBottom: 8,
-    lineHeight: 23.2,
+    lineHeight: 36,
   },
-  structureText: {
-    fontSize: 14,
-    lineHeight: 20.3,
+  breadcrumb: {
+    fontSize: 12,
+    textTransform: "uppercase",
+    letterSpacing: 1,
   },
-  documentText: {
-    fontSize: 15,
-    lineHeight: 21.75,
-    fontFamily: "SpaceMono",
+  card: {
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+  },
+  sectionLabel: {
+    fontSize: 12,
+    fontWeight: "600",
+    textTransform: "uppercase",
+    letterSpacing: 1,
+    marginBottom: 12,
   },
   bodyText: {
-    fontSize: 16,
-    lineHeight: 23.2,
+    fontSize: 15,
+    lineHeight: 24,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    marginVertical: 8,
   },
   errorContainer: {
     flex: 1,
@@ -349,25 +267,19 @@ const styles = StyleSheet.create({
     padding: 32,
   },
   errorText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "600",
     marginTop: 16,
     marginBottom: 24,
-    lineHeight: 29,
   },
   backButton: {
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,
-    minWidth: 44,
-    minHeight: 44,
-    justifyContent: "center",
-    alignItems: "center",
   },
   backButtonText: {
-    color: "#FFFFFF",
+    color: "#1F2937",
     fontSize: 16,
     fontWeight: "600",
-    lineHeight: 23.2,
   },
 });

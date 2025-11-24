@@ -20,42 +20,39 @@ export default function DetailScreen() {
   const router = useRouter();
   const { colors } = useTheme();
 
-  // Find the item in contentData
-  let foundItem: any = null;
+  // Locate subsection
+  let foundItem = null;
   let foundSection = "";
   let foundMainSection = "";
 
-  for (const mainSection of contentData) {
-    for (const section of mainSection.sections) {
-      for (const subsection of section.subsections) {
-        if (subsection.id === id) {
-          foundItem = subsection;
-          foundSection = section.title;
-          foundMainSection = mainSection.title;
-          break;
+  for (const main of contentData) {
+    for (const sec of main.sections) {
+      for (const sub of sec.subsections) {
+        if (sub.id === id) {
+          foundItem = sub;
+          foundSection = sec.title;
+          foundMainSection = main.title;
         }
       }
-      if (foundItem) break;
     }
-    if (foundItem) break;
   }
 
+  // If item not found
   if (!foundItem) {
     return (
       <>
         <Stack.Screen
           options={{
-            title: "Not Found",
             headerShown: true,
-            headerStyle: { backgroundColor: colors.card },
-            headerTintColor: colors.text,
+            title: "Details",
             headerBackTitle: "Back",
+            headerTintColor: colors.text,
+            headerStyle: { backgroundColor: colors.card },
           }}
         />
         <View style={[styles.container, { backgroundColor: colors.background }]}>
           <View style={styles.errorContainer}>
             <IconSymbol
-              ios_icon_name="exclamationmark.triangle.fill"
               android_material_icon_name="error"
               size={64}
               color={colors.textSecondary}
@@ -64,10 +61,8 @@ export default function DetailScreen() {
               Item not found
             </Text>
             <TouchableOpacity
-              style={[styles.backButton, { backgroundColor: colors.primary }]}
               onPress={() => router.back()}
-              accessibilityLabel="Go back"
-              accessibilityRole="button"
+              style={[styles.backButton, { backgroundColor: colors.primary }]}
             >
               <Text style={styles.backButtonText}>Go Back</Text>
             </TouchableOpacity>
@@ -77,42 +72,34 @@ export default function DetailScreen() {
     );
   }
 
-  // Base content
-  const fullContent: string = foundItem.content ?? "";
-  let summary = fullContent;
-  let details = "";
+  // Split summary + details
+  const fullContent = foundItem.content || "";
+  const firstPeriod = fullContent.indexOf(".");
+  const summary =
+    firstPeriod !== -1
+      ? fullContent.slice(0, firstPeriod + 1).trim()
+      : fullContent;
+  const details =
+    firstPeriod !== -1 ? fullContent.slice(firstPeriod + 1).trim() : "";
+  const hasExtra = details.length > 0;
 
-  const firstPeriodIndex = fullContent.indexOf(".");
-  if (firstPeriodIndex !== -1) {
-    summary = fullContent.slice(0, firstPeriodIndex + 1).trim();
-    details = fullContent.slice(firstPeriodIndex + 1).trim();
-  }
-
-  const hasExtraDetails =
-    details.length > 0 && details.trim() !== summary.trim();
-
-  const hasFullText =
-    typeof foundItem.fullText === "string" &&
-    foundItem.fullText.trim().length > 0;
-
-  const hasContext =
-    typeof foundItem.context === "string" &&
-    foundItem.context.trim().length > 0;
-
+  const hasFullText = foundItem.fullText?.trim()?.length > 0;
+  const hasContext = foundItem.context?.trim()?.length > 0;
   const isFoundingDoc = hasFullText || hasContext;
 
   return (
     <>
       <Stack.Screen
         options={{
-          title: foundItem.title,
           headerShown: true,
-          headerStyle: { backgroundColor: colors.card },
-          headerTintColor: colors.text,
+          title: foundItem.title,
           headerBackTitle: "Back",
+          headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.card },
           headerRight: () => <FavoriteToggle itemId={id} />,
         }}
       />
+
       <ScrollView
         style={[styles.container, { backgroundColor: colors.background }]}
         contentContainerStyle={styles.scrollContent}
@@ -122,10 +109,7 @@ export default function DetailScreen() {
           <Text style={[styles.breadcrumb, { color: colors.textSecondary }]}>
             {foundMainSection} › {foundSection}
           </Text>
-          <Text
-            style={[styles.title, { color: colors.text }]}
-            accessibilityRole="header"
-          >
+          <Text style={[styles.title, { color: colors.text }]}>
             {foundItem.title}
           </Text>
 
@@ -140,146 +124,97 @@ export default function DetailScreen() {
               ]}
             >
               <IconSymbol
-                ios_icon_name="doc.text.fill"
                 android_material_icon_name="description"
                 size={12}
                 color={colors.primary}
               />
-              <Text
-                style={[
-                  styles.badgeText,
-                  { color: colors.primary },
-                ]}
-              >
+              <Text style={[styles.badgeText, { color: colors.primary }]}>
                 Founding Document
               </Text>
             </View>
           )}
         </View>
 
-        {/* HERO IMAGE */}
+        {/* IMAGE */}
         {foundItem.imageUrl && (
           <View style={styles.heroImageContainer}>
             <Image
               source={{ uri: foundItem.imageUrl }}
-              style={[
-                styles.heroImage,
-                {
-                  shadowColor: "#000",
-                  shadowOpacity: 0.15,
-                  shadowRadius: 8,
-                  shadowOffset: { width: 0, height: 4 },
-                },
-              ]}
+              style={styles.heroImage}
               resizeMode="cover"
             />
           </View>
         )}
 
-        {/* FOUNDING DOCUMENT LAYOUT */}
+        {/* CONTENT */}
         {isFoundingDoc ? (
           <>
-            {/* Overview */}
-            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
-              <Text
-                style={[styles.sectionLabel, { color: colors.textSecondary }]}
-              >
+            <View style={[styles.card, { backgroundColor: colors.card }]}>
+              <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
                 Overview
               </Text>
-              <Text style={[styles.bodyText, { color: colors.text }]}>
-                {fullContent}
-              </Text>
+              <Text style={[styles.bodyText, { color: colors.text }]}>{fullContent}</Text>
             </View>
 
-            {/* Divider */}
             {hasFullText && (
-              <View
-                style={[
-                  styles.divider,
-                  { backgroundColor: colors.textSecondary + "20" },
-                ]}
-              />
+              <>
+                <View style={[styles.divider]} />
+                <View style={[styles.card, { backgroundColor: colors.card }]}>
+                  <Text
+                    style={[styles.sectionLabel, { color: colors.textSecondary }]}
+                  >
+                    Full Text
+                  </Text>
+                  <Text style={[styles.bodyText, { color: colors.text }]}>
+                    {foundItem.fullText}
+                  </Text>
+                </View>
+              </>
             )}
 
-            {/* Full Text */}
-            {hasFullText && (
-              <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
-                <Text
-                  style={[styles.sectionLabel, { color: colors.textSecondary }]}
-                >
-                  Full Document Text
-                </Text>
-                <Text style={[styles.bodyText, { color: colors.text }]}>
-                  {foundItem.fullText}
-                </Text>
-              </View>
-            )}
-
-            {/* Divider */}
             {hasContext && (
-              <View
-                style={[
-                  styles.divider,
-                  { backgroundColor: colors.textSecondary + "20" },
-                ]}
-              />
-            )}
-
-            {/* Historical Context */}
-            {hasContext && (
-              <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
-                <Text
-                  style={[styles.sectionLabel, { color: colors.textSecondary }]}
-                >
-                  Historical Context
-                </Text>
-                <Text style={[styles.bodyText, { color: colors.text }]}>
-                  {foundItem.context}
-                </Text>
-              </View>
+              <>
+                <View style={[styles.divider]} />
+                <View style={[styles.card, { backgroundColor: colors.card }]}>
+                  <Text
+                    style={[styles.sectionLabel, { color: colors.textSecondary }]}
+                  >
+                    Historical Context
+                  </Text>
+                  <Text style={[styles.bodyText, { color: colors.text }]}>
+                    {foundItem.context}
+                  </Text>
+                </View>
+              </>
             )}
           </>
         ) : (
           <>
-            {/* Description */}
-            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
-              <Text
-                style={[styles.sectionLabel, { color: colors.textSecondary }]}
-              >
+            <View style={[styles.card, { backgroundColor: colors.card }]}>
+              <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
                 Description
               </Text>
-              <Text style={[styles.description, { color: colors.text }]}>
-                {summary}
-              </Text>
+              <Text style={[styles.bodyText, { color: colors.text }]}>{summary}</Text>
             </View>
 
-            {/* Divider */}
-            {hasExtraDetails && (
-              <View
-                style={[
-                  styles.divider,
-                  { backgroundColor: colors.textSecondary + "20" },
-                ]}
-              />
-            )}
-
-            {/* Additional Information */}
-            {hasExtraDetails && (
-              <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.primary + "15" }]}>
-                <Text
-                  style={[styles.sectionLabel, { color: colors.textSecondary }]}
-                >
-                  Additional Information
-                </Text>
-                <Text style={[styles.bodyText, { color: colors.text }]}>
-                  {details}
-                </Text>
-              </View>
+            {hasExtra && (
+              <>
+                <View style={styles.divider} />
+                <View style={[styles.card, { backgroundColor: colors.card }]}>
+                  <Text
+                    style={[styles.sectionLabel, { color: colors.textSecondary }]}
+                  >
+                    Additional Information
+                  </Text>
+                  <Text style={[styles.bodyText, { color: colors.text }]}>
+                    {details}
+                  </Text>
+                </View>
+              </>
             )}
           </>
         )}
 
-        {/* FOOTER */}
         <AppFooter />
       </ScrollView>
     </>
@@ -291,80 +226,70 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingTop: 24,
-    paddingHorizontal: 16,
+    padding: 16,
     paddingBottom: 120,
   },
   header: {
     marginBottom: 20,
   },
   breadcrumb: {
-    fontSize: 13,
+    fontSize: 12,
     marginBottom: 8,
-    lineHeight: 18.85,
+    textTransform: "uppercase",
+    letterSpacing: 1,
   },
   title: {
     fontSize: 28,
-    fontWeight: "bold",
-    lineHeight: 40.6,
-  },
-  heroImageContainer: {
-    marginBottom: 20,
-  },
-  heroImage: {
-    width: "100%",
-    aspectRatio: 1,
-    borderRadius: 12,
-    alignSelf: "center",
-  },
-  card: {
-    padding: 20,
-    borderRadius: 12,
-    borderWidth: 1,
-    marginBottom: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
-  },
-  divider: {
-    height: StyleSheet.hairlineWidth,
-    marginVertical: 16,
-  },
-  sectionLabel: {
-    fontSize: 11,
-    fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: 1.2,
-    marginBottom: 16,
-    lineHeight: 15.95,
-  },
-  description: {
-    fontSize: 16,
-    lineHeight: 23.2,
-  },
-  bodyText: {
-    fontSize: 16,
-    lineHeight: 23.2,
+    fontWeight: "700",
+    marginBottom: 12,
+    lineHeight: 36,
   },
   badge: {
-    marginTop: 12,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 999,
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "flex-start",
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 12,
     borderWidth: 1,
+    marginTop: 8,
     gap: 6,
   },
   badgeText: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: "600",
     textTransform: "uppercase",
-    letterSpacing: 0.6,
-    lineHeight: 14.5,
+    letterSpacing: 0.5,
+  },
+  heroImageContainer: {
+    marginBottom: 20,
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  heroImage: {
+    width: "100%",
+    height: 200,
+  },
+  card: {
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+  },
+  sectionLabel: {
+    fontSize: 12,
+    fontWeight: "600",
+    textTransform: "uppercase",
+    letterSpacing: 1,
+    marginBottom: 12,
+  },
+  bodyText: {
+    fontSize: 15,
+    lineHeight: 24,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    marginVertical: 8,
   },
   errorContainer: {
     flex: 1,
@@ -373,25 +298,19 @@ const styles = StyleSheet.create({
     padding: 32,
   },
   errorText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "600",
     marginTop: 16,
     marginBottom: 24,
-    lineHeight: 29,
   },
   backButton: {
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,
-    minWidth: 44,
-    minHeight: 44,
-    justifyContent: "center",
-    alignItems: "center",
   },
   backButtonText: {
-    color: "#FFFFFF",
+    color: "#1F2937",
     fontSize: 16,
     fontWeight: "600",
-    lineHeight: 23.2,
   },
 });

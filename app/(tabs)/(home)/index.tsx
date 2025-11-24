@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   ScrollView,
@@ -133,13 +132,23 @@ export default function HomeScreen() {
 
   const getIconName = (icon: string) => {
     const iconMap: { [key: string]: { ios: string; android: string } } = {
+      // Foundations
       book: { ios: "book.fill", android: "book" },
+      // Civic Literacy
       school: { ios: "graduationcap.fill", android: "school" },
+      // Political Landscape
       flag: { ios: "flag.fill", android: "flag" },
-      "balance-scale": { ios: "scale.3d", android: "balance" },
+      // Principles in Practice
+      balance: { ios: "scale.3d", android: "balance" },
+      // Land and Life
       globe: { ios: "globe.americas.fill", android: "public" },
+
+      // optional: keep this for backwards compatibility if any old data still uses it
+      "balance-scale": { ios: "scale.3d", android: "balance" },
     };
-    return iconMap[icon] || { ios: "circle.fill", android: "circle" };
+
+    // Fallback shows a question mark icon, mapped to "help" in IconSymbol
+    return iconMap[icon] || { ios: "questionmark.circle", android: "help" };
   };
 
   const navigateToSection = (sectionId: string) => {
@@ -225,7 +234,13 @@ export default function HomeScreen() {
             return (
               <React.Fragment key={index}>
                 <TouchableOpacity
-                  style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.primary + "10" }]}
+                  style={[
+                    styles.sectionCard,
+                    {
+                      backgroundColor: colors.card,
+                      borderColor: colors.primary + "10",
+                    },
+                  ]}
                   onPress={() => navigateToSection(section.id)}
                   activeOpacity={0.7}
                   accessibilityLabel={`Navigate to ${section.title}`}
@@ -277,7 +292,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingTop: Platform.OS === 'android' ? 48 : 32,
+    paddingTop: Platform.OS === "android" ? 48 : 32,
     paddingHorizontal: 16,
     paddingBottom: 120,
   },

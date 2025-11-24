@@ -7,7 +7,7 @@ import { colors, darkColors } from '@/styles/commonStyles';
 import { useColorScheme } from 'react-native';
 
 const menuItems = [
-  { label: 'Home', route: '/(tabs)/(home)/index' },
+  { label: 'Home', route: '/(tabs)/(home)' },
   { label: 'Foundations', route: '/(tabs)/foundations' },
   { label: 'Civic Literacy', route: '/(tabs)/civic-literacy' },
   { label: 'Political Landscape', route: '/(tabs)/political-landscape' },
@@ -21,9 +21,6 @@ const menuItems = [
 ];
 
 function HamburgerButton({ onPress }: { onPress: () => void }) {
-  const colorScheme = useColorScheme();
-  const themeColors = colorScheme === 'dark' ? darkColors : colors;
-  
   return (
     <TouchableOpacity 
       onPress={onPress} 
@@ -34,7 +31,7 @@ function HamburgerButton({ onPress }: { onPress: () => void }) {
         ios_icon_name="line.3.horizontal"
         android_material_icon_name="menu"
         size={24}
-        color={themeColors.text}
+        color="#FFFFFF"
       />
     </TouchableOpacity>
   );
@@ -166,9 +163,9 @@ export default function TabLayout() {
           headerLeft: () => <HamburgerButton onPress={openMenu} />,
           headerTitleAlign: 'center',
           headerStyle: {
-            backgroundColor: themeColors.background,
+            backgroundColor: '#1a1a1a',
           },
-          headerTintColor: themeColors.text,
+          headerTintColor: '#FFFFFF',
           headerShadowVisible: true,
         }}
       >

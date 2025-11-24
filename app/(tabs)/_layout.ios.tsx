@@ -7,7 +7,7 @@ import { colors, darkColors } from '@/styles/commonStyles';
 import { useColorScheme } from 'react-native';
 
 const menuItems = [
-  { label: 'Home', route: '/(tabs)/(home)/index' },
+  { label: 'Home', route: '/(tabs)/(home)' },
   { label: 'Foundations', route: '/(tabs)/foundations' },
   { label: 'Civic Literacy', route: '/(tabs)/civic-literacy' },
   { label: 'Political Landscape', route: '/(tabs)/political-landscape' },
@@ -21,20 +21,19 @@ const menuItems = [
 ];
 
 function HamburgerButton({ onPress }: { onPress: () => void }) {
-  const colorScheme = useColorScheme();
-  const themeColors = colorScheme === 'dark' ? darkColors : colors;
-  
   return (
     <TouchableOpacity 
       onPress={onPress} 
       style={styles.hamburgerButton}
       activeOpacity={0.7}
+      accessibilityLabel="Open menu"
+      accessibilityRole="button"
     >
       <IconSymbol
         ios_icon_name="line.3.horizontal"
         android_material_icon_name="menu"
-        size={24}
-        color={themeColors.text}
+        size={28}
+        color="#FFFFFF"
       />
     </TouchableOpacity>
   );
@@ -85,6 +84,8 @@ function HamburgerMenu({
               onPress={onClose}
               style={styles.closeButton}
               activeOpacity={0.7}
+              accessibilityLabel="Close menu"
+              accessibilityRole="button"
             >
               <IconSymbol
                 ios_icon_name="xmark"
@@ -112,6 +113,8 @@ function HamburgerMenu({
                   ]}
                   onPress={() => onNavigate(item.route)}
                   activeOpacity={0.7}
+                  accessibilityLabel={`Navigate to ${item.label}`}
+                  accessibilityRole="button"
                 >
                   <Text style={[
                     styles.menuItemText,
@@ -144,15 +147,17 @@ function HamburgerMenu({
 export default function TabLayout() {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const router = useRouter();
-  const colorScheme = useColorScheme();
-  const themeColors = colorScheme === 'dark' ? darkColors : colors;
 
-  const openMenu = () => setIsMenuVisible(true);
-  const closeMenu = () => setIsMenuVisible(false);
+  const openMenu = () => {
+    setIsMenuVisible(true);
+  };
+
+  const closeMenu = () => {
+    setIsMenuVisible(false);
+  };
 
   const navigateTo = (route: string) => {
     closeMenu();
-    // Use setTimeout to ensure menu closes before navigation
     setTimeout(() => {
       router.push(route as any);
     }, 100);
@@ -166,11 +171,11 @@ export default function TabLayout() {
           headerLeft: () => <HamburgerButton onPress={openMenu} />,
           headerTitleAlign: 'center',
           headerStyle: {
-            backgroundColor: themeColors.background,
+            backgroundColor: '#1a1a1a',
           },
-          headerTintColor: themeColors.text,
+          headerTintColor: '#FFFFFF',
           headerShadowVisible: true,
-          headerBlurEffect: colorScheme === 'dark' ? 'dark' : 'light',
+          headerBlurEffect: 'dark',
         }}
       >
         <Stack.Screen
@@ -254,6 +259,10 @@ const styles = StyleSheet.create({
   hamburgerButton: {
     paddingHorizontal: 16,
     paddingVertical: 8,
+    minWidth: 44,
+    minHeight: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalOverlay: {
     flex: 1,
@@ -288,6 +297,10 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     padding: 4,
+    minWidth: 44,
+    minHeight: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   menuScrollView: {
     flex: 1,
@@ -299,6 +312,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
+    minHeight: 44,
   },
   menuItemText: {
     fontSize: 16,

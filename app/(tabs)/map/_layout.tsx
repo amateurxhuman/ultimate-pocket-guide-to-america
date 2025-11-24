@@ -9,8 +9,19 @@ export default function MapLayout() {
       }}
     >
       <Stack.Screen name="index" />
-      <Stack.Screen name="region/[id]" />
-      <Stack.Screen name="state/[code]" />
+      <Stack.Screen 
+        name="region/[id]" 
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen 
+        name="state/[code]" 
+        options={{
+          headerShown: true,
+          headerBackVisible: true,
+        }}
+      />
     </Stack>
   );
 }

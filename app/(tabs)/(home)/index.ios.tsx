@@ -6,7 +6,6 @@ import { useRouter } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 import { contentData } from "@/data/contentData";
 import { IconSymbol } from "@/components/IconSymbol";
-import { HeaderRightButton, HeaderLeftButton } from "@/components/HeaderButtons";
 import { AppFooter } from "@/components/AppFooter";
 
 export default function HomeScreen() {
@@ -33,8 +32,7 @@ export default function HomeScreen() {
       <Stack.Screen
         options={{
           title: "Home",
-          headerRight: () => <HeaderRightButton />,
-          headerLeft: () => <HeaderLeftButton />,
+          headerShown: false,
         }}
       />
       <View style={[styles.container, { backgroundColor: colors.background }]}>

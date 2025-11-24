@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { IconSymbol } from '@/components/IconSymbol';
 import { AppFooter } from '@/components/AppFooter';
 import { findItemById, getItemRoute } from '@/utils/findItemById';
+import { mapData } from '@/data/mapData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FAVORITES_KEY = 'favorites';
@@ -23,6 +24,7 @@ interface FavoriteItem {
   title: string;
   breadcrumb: string;
   snippet: string;
+  type: 'content' | 'state';
 }
 
 export default function FavoritesScreen() {
@@ -47,15 +49,42 @@ export default function FavoritesScreen() {
         const items: FavoriteItem[] = [];
 
         for (const id of favoriteIds) {
-          const result = findItemById(id);
-          if (result) {
-            const snippet = result.item.content.slice(0, 100) + (result.item.content.length > 100 ? '...' : '');
-            items.push({
-              id,
-              title: result.item.title,
-              breadcrumb: `${result.mainSection.title} › ${result.section.title}`,
-              snippet,
-            });
+          // Check if it's a state favorite
+          if (id.startsWith('state:')) {
+            const stateCode = id.replace('state:', '');
+            let foundState = null;
+            
+            for (const region of mapData) {
+              const state = region.states.find((s) => s.code === stateCode);
+              if (state) {
+                foundState = state;
+                break;
+              }
+            }
+
+            if (foundState) {
+              const snippet = foundState.blurb.slice(0, 100) + (foundState.blurb.length > 100 ? '...' : '');
+              items.push({
+                id,
+                title: foundState.name,
+                breadcrumb: `Map › State`,
+                snippet,
+                type: 'state',
+              });
+            }
+          } else {
+            // Regular content item
+            const result = findItemById(id);
+            if (result) {
+              const snippet = result.item.content.slice(0, 100) + (result.item.content.length > 100 ? '...' : '');
+              items.push({
+                id,
+                title: result.item.title,
+                breadcrumb: `${result.mainSection.title} › ${result.section.title}`,
+                snippet,
+                type: 'content',
+              });
+            }
           }
         }
 
@@ -87,9 +116,14 @@ export default function FavoritesScreen() {
     }
   };
 
-  const handleItemPress = (id: string) => {
-    const route = getItemRoute(id);
-    router.push(route as any);
+  const handleItemPress = (item: FavoriteItem) => {
+    if (item.type === 'state') {
+      const stateCode = item.id.replace('state:', '').toLowerCase();
+      router.push(`/map/state/${stateCode}` as any);
+    } else {
+      const route = getItemRoute(item.id);
+      router.push(route as any);
+    }
   };
 
   const confirmRemove = (id: string, title: string) => {
@@ -116,8 +150,8 @@ export default function FavoritesScreen() {
           options={{
             title: 'Favorites',
             headerShown: true,
-            headerStyle: { backgroundColor: colors.card },
-            headerTintColor: colors.text,
+            headerStyle: { backgroundColor: '#1a1a1a' },
+            headerTintColor: '#FFFFFF',
           }}
         />
         <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -137,8 +171,8 @@ export default function FavoritesScreen() {
         options={{
           title: 'Favorites',
           headerShown: true,
-          headerStyle: { backgroundColor: colors.card },
-          headerTintColor: colors.text,
+          headerStyle: { backgroundColor: '#1a1a1a' },
+          headerTintColor: '#FFFFFF',
         }}
       />
       <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -158,7 +192,7 @@ export default function FavoritesScreen() {
                 No favorites yet
               </Text>
               <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-                Tap the star icon on any topic to save it here
+                Tap the star icon on any topic or state to save it here
               </Text>
             </View>
           ) : (
@@ -170,10 +204,15 @@ export default function FavoritesScreen() {
                 <View key={index} style={[styles.itemCard, { backgroundColor: colors.card }]}>
                   <TouchableOpacity
                     style={styles.itemContent}
-                    onPress={() => handleItemPress(item.id)}
+                    onPress={() => handleItemPress(item)}
                     accessibilityLabel={`Open ${item.title}`}
                     accessibilityRole="button"
                   >
+                    {item.type === 'state' && (
+                      <View style={[styles.stateBadge, { backgroundColor: colors.highlight }]}>
+                        <Text style={[styles.stateBadgeText, { color: colors.primary }]}>STATE</Text>
+                      </View>
+                    )}
                     <Text style={[styles.itemTitle, { color: colors.text }]}>
                       {item.title}
                     </Text>
@@ -261,6 +300,18 @@ const styles = StyleSheet.create({
   itemContent: {
     flex: 1,
     padding: 16,
+  },
+  stateBadge: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+    marginBottom: 8,
+  },
+  stateBadgeText: {
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 0.5,
   },
   itemTitle: {
     fontSize: 17,

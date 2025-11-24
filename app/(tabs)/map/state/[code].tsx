@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   View,
@@ -7,6 +8,8 @@ import {
 } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { mapData, State } from "@/data/mapData";
+import { useTheme } from "@/contexts/ThemeContext";
+import { FavoriteToggle } from "@/components/FavoriteToggle";
 
 /**
  * State detail screen for the American Map Explorer.
@@ -15,6 +18,7 @@ import { mapData, State } from "@/data/mapData";
  * - Splits the long text on "\n\n" and renders each as a separate paragraph.
  */
 export default function StateDetailScreen() {
+  const { colors } = useTheme();
   const params = useLocalSearchParams();
   const rawCode = params.code as string | string[] | undefined;
 
@@ -34,11 +38,11 @@ export default function StateDetailScreen() {
 
   if (!foundState) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Stack.Screen options={{ title: "State" }} />
         <View style={styles.inner}>
-          <Text style={styles.errorTitle}>State not found</Text>
-          <Text style={styles.errorText}>
+          <Text style={[styles.errorTitle, { color: colors.accent }]}>State not found</Text>
+          <Text style={[styles.errorText, { color: colors.text }]}>
             The state you tried to open could not be located. Please go back to
             the map and try again.
           </Text>
@@ -54,22 +58,30 @@ export default function StateDetailScreen() {
 
   const paragraphs = longText.split("\n\n");
 
+  // Create a unique ID for this state for favorites
+  const stateId = `state:${foundState.code}`;
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Stack.Screen
-  options={{
-    title: foundState.name,
-    headerShown: true,
-    headerBackVisible: true,
-  }}
-/>
+        options={{
+          title: foundState.name,
+          headerShown: true,
+          headerBackVisible: true,
+          headerRight: () => <FavoriteToggle itemId={stateId} />,
+          headerStyle: {
+            backgroundColor: '#1a1a1a',
+          },
+          headerTintColor: '#FFFFFF',
+        }}
+      />
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.title}>{foundState.name}</Text>
-        <Text style={styles.subtitle}>{foundState.code}</Text>
+        <Text style={[styles.title, { color: colors.text }]}>{foundState.name}</Text>
+        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{foundState.code}</Text>
 
         {paragraphs.map((para, index) => (
-          <View key={index} style={styles.card}>
-            <Text style={styles.paragraph}>{para}</Text>
+          <View key={index} style={[styles.card, { backgroundColor: colors.card }]}>
+            <Text style={[styles.paragraph, { color: colors.text }]}>{para}</Text>
           </View>
         ))}
       </ScrollView>
@@ -80,7 +92,6 @@ export default function StateDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#050509", // dark background to match the rest of the app
   },
   inner: {
     flex: 1,
@@ -88,23 +99,20 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   scrollContent: {
-  paddingHorizontal: 20,
-  paddingTop: 24,
-  paddingBottom: 120,
-},
+    paddingHorizontal: 20,
+    paddingTop: 24,
+    paddingBottom: 120,
+  },
   title: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#f5f5f5",
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
-    color: "#a1a1aa",
     marginBottom: 16,
   },
   card: {
-    backgroundColor: "#18181b",
     borderRadius: 18,
     padding: 16,
     marginBottom: 12,
@@ -112,17 +120,14 @@ const styles = StyleSheet.create({
   paragraph: {
     fontSize: 15,
     lineHeight: 22,
-    color: "#e4e4e7",
   },
   errorTitle: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#f97373",
     marginBottom: 8,
   },
   errorText: {
     fontSize: 15,
     lineHeight: 22,
-    color: "#e4e4e7",
   },
 });

@@ -1,53 +1,125 @@
 
-// app/(tabs)/_layout.tsx
 import React from "react";
 import { Tabs } from "expo-router";
-import { useTheme } from "@/contexts/ThemeContext";
 import { IconSymbol } from "@/components/IconSymbol";
 
 export default function TabLayout() {
-  const { colors } = useTheme();
-
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.textSecondary,
         tabBarStyle: {
-          backgroundColor: colors.background,
-          borderTopColor: colors.highlight,
-          borderTopWidth: 1,
+          backgroundColor: '#000000',
+          borderTopWidth: 0,
           height: 65,
           paddingBottom: 8,
           paddingTop: 8,
         },
+        tabBarActiveTintColor: '#FBBF24',
+        tabBarInactiveTintColor: '#FFFFFF',
         tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: "600",
-        },
-        tabBarItemStyle: {
-          paddingVertical: 4,
+          fontSize: 11,
+          fontWeight: '600',
         },
       }}
     >
-      {/* HOME (group route: app/(tabs)/(home)/index.tsx) */}
+      {/* HOME TAB */}
       <Tabs.Screen
         name="(home)"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color }) => (
             <IconSymbol
               android_material_icon_name="home"
               ios_icon_name="house.fill"
-              size={size ?? 24}
+              size={24}
               color={color}
             />
           ),
         }}
       />
 
-      {/* Section pages - hidden from tab bar but still accessible via navigation */}
+      {/* MAP TAB */}
+      <Tabs.Screen
+        name="map"
+        options={{
+          title: "Map",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              android_material_icon_name="map"
+              ios_icon_name="map.fill"
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      {/* QUIZ TAB */}
+      <Tabs.Screen
+        name="quiz"
+        options={{
+          title: "Quiz",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              android_material_icon_name="help"
+              ios_icon_name="questionmark.circle.fill"
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      {/* SEARCH TAB */}
+      <Tabs.Screen
+        name="search"
+        options={{
+          title: "Search",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              android_material_icon_name="search"
+              ios_icon_name="magnifyingglass"
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      {/* GLOSSARY TAB */}
+      <Tabs.Screen
+        name="glossary"
+        options={{
+          title: "Glossary",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              android_material_icon_name="menu_book"
+              ios_icon_name="book.fill"
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      {/* FAVORITES TAB */}
+      <Tabs.Screen
+        name="favorites"
+        options={{
+          title: "Favorites",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              android_material_icon_name="star"
+              ios_icon_name="star.fill"
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      {/* HIDDEN SCREENS - Not shown in tab bar */}
       <Tabs.Screen
         name="foundations"
         options={{
@@ -76,86 +148,6 @@ export default function TabLayout() {
         name="land-life"
         options={{
           href: null,
-        }}
-      />
-
-      {/* MAP (app/(tabs)/map/index.tsx) */}
-      <Tabs.Screen
-        name="map"
-        options={{
-          title: "Map",
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol
-              android_material_icon_name="map"
-              ios_icon_name="map.fill"
-              size={size ?? 24}
-              color={color}
-            />
-          ),
-        }}
-      />
-
-      {/* QUIZ (app/(tabs)/quiz/index.tsx) */}
-      <Tabs.Screen
-        name="quiz"
-        options={{
-          title: "Quiz",
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol
-              android_material_icon_name="help"
-              ios_icon_name="questionmark.circle.fill"
-              size={size ?? 24}
-              color={color}
-            />
-          ),
-        }}
-      />
-
-      {/* SEARCH (app/(tabs)/search/index.tsx) */}
-      <Tabs.Screen
-        name="search"
-        options={{
-          title: "Search",
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol
-              android_material_icon_name="search"
-              ios_icon_name="magnifyingglass"
-              size={size ?? 24}
-              color={color}
-            />
-          ),
-        }}
-      />
-
-      {/* GLOSSARY (app/(tabs)/glossary/index.tsx) */}
-      <Tabs.Screen
-        name="glossary"
-        options={{
-          title: "Glossary",
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol
-              android_material_icon_name="menu_book"
-              ios_icon_name="book.fill"
-              size={size ?? 24}
-              color={color}
-            />
-          ),
-        }}
-      />
-
-      {/* FAVORITES (app/(tabs)/favorites/index.tsx) */}
-      <Tabs.Screen
-        name="favorites"
-        options={{
-          title: "Favorites",
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol
-              android_material_icon_name="star"
-              ios_icon_name="star.fill"
-              size={size ?? 24}
-              color={color}
-            />
-          ),
         }}
       />
     </Tabs>

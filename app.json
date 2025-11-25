@@ -1,7 +1,8 @@
+
 {
   "expo": {
-    "name": "Ultimate Pocket Guide to America!",
-    "slug": "Ultimate Pocket Guide to America!",
+    "name": "Ultimate Pocket Guide to America",
+    "slug": "ultimate-pocket-guide-to-america",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",
@@ -14,9 +15,13 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.Natively",
+      "bundleIdentifier": "com.anonymous.ultimatepocketguidetoamerica",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSCameraUsageDescription": "This app does not use the camera.",
+        "NSPhotoLibraryUsageDescription": "This app does not access your photo library.",
+        "NSLocationWhenInUseUsageDescription": "This app does not use your location.",
+        "NSMicrophoneUsageDescription": "This app does not use the microphone."
       }
     },
     "android": {
@@ -25,7 +30,8 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.Natively"
+      "package": "com.anonymous.ultimatepocketguidetoamerica",
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/images/final_quest_240x240.png",
@@ -36,13 +42,12 @@
       "expo-router",
       "expo-web-browser"
     ],
-    "scheme": "natively",
+    "scheme": "ultimate-pocket-guide-to-america",
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
       "router": {}
     }
-  },
-  "scheme": "Ultimate Pocket Guide to America!"
+  }
 }

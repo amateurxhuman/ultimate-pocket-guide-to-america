@@ -418,6 +418,7 @@ const styles = StyleSheet.create({
     lineHeight: 23.2,
   },
   emptyState: {
+    alignItems: 'center',
     paddingVertical: 24,
   },
   emptyStateText: {
@@ -430,6 +431,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 16,
     marginBottom: 8,
+    textAlign: 'center',
     lineHeight: 29,
   },
   emptyText: {

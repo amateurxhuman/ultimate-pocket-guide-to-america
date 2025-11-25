@@ -31,7 +31,9 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       }
       setIsLoaded(true);
     } catch (error) {
-      console.log('Error loading favorites:', error);
+      if (__DEV__) {
+        console.log('Error loading favorites:', error);
+      }
       setFavorites([]);
       setIsLoaded(true);
     }
@@ -42,7 +44,9 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites));
       setFavorites(newFavorites);
     } catch (error) {
-      console.log('Error saving favorites:', error);
+      if (__DEV__) {
+        console.log('Error saving favorites:', error);
+      }
     }
   };
 
@@ -53,7 +57,9 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       }
       const newFavorites = [...current, id];
       AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites)).catch((error) => {
-        console.log('Error saving favorites:', error);
+        if (__DEV__) {
+          console.log('Error saving favorites:', error);
+        }
       });
       return newFavorites;
     });
@@ -63,7 +69,9 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     setFavorites((current) => {
       const newFavorites = current.filter((fav) => fav !== id);
       AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites)).catch((error) => {
-        console.log('Error saving favorites:', error);
+        if (__DEV__) {
+          console.log('Error saving favorites:', error);
+        }
       });
       return newFavorites;
     });
@@ -75,7 +83,9 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
         ? current.filter((fav) => fav !== id)
         : [...current, id];
       AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites)).catch((error) => {
-        console.log('Error saving favorites:', error);
+        if (__DEV__) {
+          console.log('Error saving favorites:', error);
+        }
       });
       return newFavorites;
     });

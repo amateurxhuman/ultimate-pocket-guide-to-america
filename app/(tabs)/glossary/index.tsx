@@ -22,7 +22,6 @@ export default function GlossaryScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTerm, setSelectedTerm] = useState<GlossaryTerm | null>(null);
 
-  // Filter terms based on search
   const filteredTerms = searchQuery.trim()
     ? glossaryData.filter(
         (term) =>
@@ -31,7 +30,6 @@ export default function GlossaryScreen() {
       )
     : glossaryData;
 
-  // Group terms by first letter
   const groupedTerms = filteredTerms.reduce((acc, term) => {
     const firstLetter = term.term[0].toUpperCase();
     if (!acc[firstLetter]) {
@@ -56,7 +54,9 @@ export default function GlossaryScreen() {
         : `/detail/${id}`;
       router.push(route as any);
     } else {
-      console.log('Item not found:', id);
+      if (__DEV__) {
+        console.log('Item not found:', id);
+      }
     }
   };
 
@@ -64,7 +64,6 @@ export default function GlossaryScreen() {
     setSelectedTerm(null);
   };
 
-  // Get related topics with their titles
   const getRelatedTopics = (relatedIds?: string[]) => {
     if (!relatedIds || relatedIds.length === 0) return [];
     
@@ -93,7 +92,6 @@ export default function GlossaryScreen() {
         }}
       />
       <View style={[styles.container, { backgroundColor: colors.background }]}>
-        {/* Search Bar */}
         <View style={[styles.searchBar, { backgroundColor: colors.card, borderColor: colors.primary + "20" }]}>
           <IconSymbol
             ios_icon_name="magnifyingglass"
@@ -141,8 +139,8 @@ export default function GlossaryScreen() {
                 color={colors.textSecondary}
               />
               <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-  No terms match your search. Try a different word or clear the search box.
-</Text>
+                No terms match your search. Try a different word or clear the search box.
+              </Text>
             </View>
           ) : (
             <>
@@ -181,7 +179,6 @@ export default function GlossaryScreen() {
           <AppFooter />
         </ScrollView>
 
-        {/* Term Detail Modal */}
         {selectedTerm && (
           <View style={[styles.modal, { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
             <View style={[styles.modalContent, { backgroundColor: colors.card }]}>

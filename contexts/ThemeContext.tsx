@@ -32,11 +32,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       if (savedTheme === 'light' || savedTheme === 'dark') {
         setThemeState(savedTheme);
       } else {
-        // Default to dark theme
         setThemeState('dark');
       }
     } catch (error) {
-      console.log('Error loading theme preference:', error);
+      if (__DEV__) {
+        console.log('Error loading theme preference:', error);
+      }
     }
   };
 
@@ -45,7 +46,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       await AsyncStorage.setItem(THEME_STORAGE_KEY, newTheme);
       setThemeState(newTheme);
     } catch (error) {
-      console.log('Error saving theme preference:', error);
+      if (__DEV__) {
+        console.log('Error saving theme preference:', error);
+      }
     }
   };
 

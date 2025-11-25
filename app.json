@@ -1,7 +1,8 @@
+
 {
   "expo": {
     "name": "Ultimate Pocket Guide to America!",
-    "slug": "Ultimate Pocket Guide to America!",
+    "slug": "ultimate-pocket-guide-to-america",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",

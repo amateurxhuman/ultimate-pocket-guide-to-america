@@ -1,15 +1,17 @@
 
 import React from "react";
 import { Stack } from "expo-router";
-import { ThemeProvider } from "@/contexts/ThemeContext";
+import { ThemeProvider, useTheme } from "@/contexts/ThemeContext";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import { StatusBar } from "expo-status-bar";
 
-export default function RootLayout() {
+function RootLayoutContent() {
+  const { isDark } = useTheme();
+
   return (
-    <ThemeProvider>
+    <>
+      <StatusBar style={isDark ? "light" : "dark"} />
       <FavoritesProvider>
-        <StatusBar style="light" />
         <Stack
           screenOptions={{
             headerShown: false,
@@ -32,6 +34,14 @@ export default function RootLayout() {
           />
         </Stack>
       </FavoritesProvider>
+    </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <RootLayoutContent />
     </ThemeProvider>
   );
 }

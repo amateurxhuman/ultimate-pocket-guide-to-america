@@ -38,12 +38,10 @@ export default function SearchScreen() {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
-  // Load recent searches on mount
   useEffect(() => {
     loadRecentSearches();
   }, []);
 
-  // Debounce search query
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(searchQuery);
@@ -52,7 +50,6 @@ export default function SearchScreen() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // Perform search when debounced query changes
   useEffect(() => {
     if (debouncedQuery.trim()) {
       performSearch(debouncedQuery);
@@ -69,7 +66,9 @@ export default function SearchScreen() {
         setRecentSearches(JSON.parse(stored));
       }
     } catch (error) {
-      console.log('Error loading recent searches:', error);
+      if (__DEV__) {
+        console.log('Error loading recent searches:', error);
+      }
     }
   };
 
@@ -84,7 +83,9 @@ export default function SearchScreen() {
       await AsyncStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
       setRecentSearches(updated);
     } catch (error) {
-      console.log('Error saving recent search:', error);
+      if (__DEV__) {
+        console.log('Error saving recent search:', error);
+      }
     }
   };
 
@@ -93,7 +94,9 @@ export default function SearchScreen() {
       await AsyncStorage.removeItem(RECENT_SEARCHES_KEY);
       setRecentSearches([]);
     } catch (error) {
-      console.log('Error clearing recent searches:', error);
+      if (__DEV__) {
+        console.log('Error clearing recent searches:', error);
+      }
     }
   };
 
@@ -106,7 +109,6 @@ export default function SearchScreen() {
     for (const mainSection of contentData) {
       for (const section of mainSection.sections) {
         for (const subsection of section.subsections) {
-          // Skip duplicates
           if (seenIds.has(subsection.id)) continue;
 
           const title = subsection.title.toLowerCase();
@@ -115,50 +117,31 @@ export default function SearchScreen() {
           const content = subsection.content.toLowerCase();
           const fullText = subsection.fullText?.toLowerCase() || '';
 
-          // Calculate relevance score with improved ordering
           let relevanceScore = 0;
 
-          // PRIORITY 1: Title matches (highest priority)
           if (title === lowerQuery) {
-            // Exact title match
             relevanceScore = 10000;
           } else if (title.startsWith(lowerQuery)) {
-            // Title starts with query
             relevanceScore = 5000;
           } else if (title.includes(` ${lowerQuery}`) || title.includes(`${lowerQuery} `)) {
-            // Title contains query as a whole word
             relevanceScore = 3000;
           } else if (title.includes(lowerQuery)) {
-            // Title contains query as substring
             relevanceScore = 1500;
-          }
-          
-          // PRIORITY 2: Section/Main section matches
-          else if (sectionName === lowerQuery || mainSectionName === lowerQuery) {
-            // Exact section match
+          } else if (sectionName === lowerQuery || mainSectionName === lowerQuery) {
             relevanceScore = 1000;
           } else if (sectionName.includes(lowerQuery) || mainSectionName.includes(lowerQuery)) {
-            // Section contains query
             relevanceScore = 500;
-          }
-          
-          // PRIORITY 3: Body text matches (lowest priority)
-          else if (content.startsWith(lowerQuery)) {
-            // Content starts with query
+          } else if (content.startsWith(lowerQuery)) {
             relevanceScore = 200;
           } else if (content.includes(` ${lowerQuery}`) || content.includes(`${lowerQuery} `)) {
-            // Content contains query as whole word
             relevanceScore = 100;
           } else if (content.includes(lowerQuery)) {
-            // Content contains query as substring
             relevanceScore = 50;
           } else if (fullText.includes(lowerQuery)) {
-            // Full text contains query
             relevanceScore = 25;
           }
 
           if (relevanceScore > 0) {
-            // Create snippet
             let snippet = '';
             const matchIndex = content.indexOf(lowerQuery);
 
@@ -184,7 +167,6 @@ export default function SearchScreen() {
       }
     }
 
-    // Sort by relevance score (highest first)
     foundResults.sort((a, b) => b.relevanceScore - a.relevanceScore);
 
     setResults(foundResults);
@@ -208,7 +190,6 @@ export default function SearchScreen() {
 
   const showRecentSearches = !searchQuery.trim() && recentSearches.length > 0;
   const showEmptyState = !searchQuery.trim() && recentSearches.length === 0;
-  const showNoResults = searchQuery.trim() && results.length === 0 && !isSearching;
 
   return (
     <>
@@ -221,7 +202,6 @@ export default function SearchScreen() {
         }}
       />
       <View style={[styles.container, { backgroundColor: colors.background }]}>
-        {/* Search Bar */}
         <View style={[styles.searchBar, { backgroundColor: colors.card, borderColor: colors.primary + "20" }]}>
           <IconSymbol
             ios_icon_name="magnifyingglass"
@@ -262,7 +242,6 @@ export default function SearchScreen() {
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
         >
-          {/* Recent Searches */}
           {showRecentSearches && (
             <View style={styles.recentContainer}>
               <View style={styles.recentHeader}>
@@ -302,7 +281,6 @@ export default function SearchScreen() {
             </View>
           )}
 
-          {/* Empty State */}
           {showEmptyState && (
             <View style={styles.emptyState}>
               <IconSymbol
@@ -315,30 +293,19 @@ export default function SearchScreen() {
                 Search the Guide
               </Text>
               <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-  Try searching for &apos;Constitution&apos;, &apos;federalism&apos;, or &apos;founders&apos;
-</Text>
+                Try searching for &apos;Constitution&apos;, &apos;federalism&apos;, or &apos;founders&apos;
+              </Text>
             </View>
           )}
 
-          {/* No Results */}
-          {showNoResults && (
+          {!isSearching && debouncedQuery.length > 0 && results.length === 0 && (
             <View style={styles.emptyState}>
-              <IconSymbol
-                ios_icon_name="exclamationmark.magnifyingglass"
-                android_material_icon_name="search_off"
-                size={64}
-                color={colors.textSecondary}
-              />
-              <Text style={[styles.emptyTitle, { color: colors.text }]}>
-                No matches found
-              </Text>
-              <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-                Try different keywords
+              <Text style={[styles.emptyStateText, { color: colors.textSecondary }]}>
+                No results found. Try another word or phrase.
               </Text>
             </View>
           )}
 
-          {/* Results */}
           {results.length > 0 && (
             <View style={styles.resultsContainer}>
               <Text style={[styles.resultsCount, { color: colors.textSecondary }]}>
@@ -451,10 +418,12 @@ const styles = StyleSheet.create({
     lineHeight: 23.2,
   },
   emptyState: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 80,
-    paddingHorizontal: 32,
+    paddingVertical: 24,
+  },
+  emptyStateText: {
+    fontSize: 14,
+    textAlign: 'center',
+    lineHeight: 20.3,
   },
   emptyTitle: {
     fontSize: 20,

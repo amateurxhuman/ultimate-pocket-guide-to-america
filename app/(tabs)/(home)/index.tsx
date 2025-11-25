@@ -1,4 +1,3 @@
-
 import React, { useMemo, useCallback } from "react";
 import {
   ScrollView,
@@ -17,7 +16,7 @@ import { AppFooter } from "@/components/AppFooter";
 import QuickAccessGrid from "@/components/QuickAccessGrid";
 
 const HERO_FLAG_URL =
-  "https://i0.wp.com/thehumanconservative.com/wp-content/uploads/2025/10/image.png?w=1024&ssl=1";
+  "https://thehumanconservative.com/wp-content/uploads/2025/11/App-Logo-Final.png";
 
 const AMERICAN_FACTS: string[] = [
   "The United States Constitution is the oldest written national constitution still in use.",
@@ -99,9 +98,12 @@ export default function HomeScreen() {
     setFact(AMERICAN_FACTS[idx]);
   }, []);
 
-  const navigateToSection = useCallback((sectionId: string) => {
-    router.push(`/(tabs)/${sectionId}` as any);
-  }, [router]);
+  const navigateToSection = useCallback(
+    (sectionId: string) => {
+      router.push(`/(tabs)/${sectionId}` as any);
+    },
+    [router]
+  );
 
   const sectionCards = useMemo(() => {
     return contentData.map((section, index) => {
@@ -165,17 +167,8 @@ export default function HomeScreen() {
               source={{ uri: HERO_FLAG_URL }}
               style={styles.heroCard}
               imageStyle={styles.heroImage}
-            >
-              <View style={styles.heroOverlay}>
-                <Text style={styles.title}>
-                  Ultimate Pocket Guide to America
-                </Text>
-                <Text style={styles.subtitle}>
-                  Your pocket guide to the principles, foundations, and story of
-                  the American Republic.
-                </Text>
-              </View>
-            </ImageBackground>
+              resizeMode="contain"
+            />
           </View>
         </View>
 
@@ -209,15 +202,18 @@ export default function HomeScreen() {
 
         {/* SECTIONS HEADER */}
         <View style={styles.sectionsHeaderRow}>
-          <Text style={[styles.sectionsHeaderText, { color: colors.textSecondary }]}>
+          <Text
+            style={[
+              styles.sectionsHeaderText,
+              { color: colors.textSecondary },
+            ]}
+          >
             Explore the guide
           </Text>
         </View>
 
         {/* SECTIONS */}
-        <View style={styles.sectionsContainer}>
-          {sectionCards}
-        </View>
+        <View style={styles.sectionsContainer}>{sectionCards}</View>
 
         {/* QUICK ACCESS GRID */}
         <QuickAccessGrid />
@@ -247,34 +243,13 @@ const styles = StyleSheet.create({
   },
   heroCard: {
     width: "100%",
+    aspectRatio: 1, // square card so the full circular logo is visible
     borderRadius: 14,
     overflow: "hidden",
+    justifyContent: "flex-end",
   },
   heroImage: {
-    resizeMode: "cover",
-  },
-  heroOverlay: {
-    paddingHorizontal: 20,
-    paddingVertical: 24,
-    backgroundColor: "rgba(0, 0, 0, 0.55)",
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: "700",
-    textAlign: "left",
-    marginBottom: 8,
-    lineHeight: 34,
-    letterSpacing: 0.5,
-    color: "#FFFFFF",
-    textShadowColor: "rgba(0, 0, 0, 0.3)",
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
-  },
-  subtitle: {
-    fontSize: 14,
-    lineHeight: 20.3,
-    textAlign: "left",
-    color: "#E5E7EB",
+    // kept for future tweaks if needed
   },
   factCard: {
     marginBottom: 20,

@@ -33,7 +33,6 @@ export default function FavoritesScreen() {
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Reload favorites when screen comes into focus
   useFocusEffect(
     React.useCallback(() => {
       loadFavorites();
@@ -49,7 +48,6 @@ export default function FavoritesScreen() {
         const items: FavoriteItem[] = [];
 
         for (const id of favoriteIds) {
-          // Check if it's a state favorite
           if (id.startsWith('state:')) {
             const stateCode = id.replace('state:', '');
             let foundState = null;
@@ -73,7 +71,6 @@ export default function FavoritesScreen() {
               });
             }
           } else {
-            // Regular content item
             const result = findItemById(id);
             if (result) {
               const snippet = result.item.content.slice(0, 100) + (result.item.content.length > 100 ? '...' : '');
@@ -88,14 +85,15 @@ export default function FavoritesScreen() {
           }
         }
 
-        // Sort alphabetically by title
         items.sort((a, b) => a.title.localeCompare(b.title));
         setFavorites(items);
       } else {
         setFavorites([]);
       }
     } catch (error) {
-      console.log('Error loading favorites:', error);
+      if (__DEV__) {
+        console.log('Error loading favorites:', error);
+      }
       setFavorites([]);
     } finally {
       setIsLoading(false);
@@ -112,7 +110,9 @@ export default function FavoritesScreen() {
         loadFavorites();
       }
     } catch (error) {
-      console.log('Error removing favorite:', error);
+      if (__DEV__) {
+        console.log('Error removing favorite:', error);
+      }
     }
   };
 

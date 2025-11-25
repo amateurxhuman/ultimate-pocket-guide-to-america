@@ -1,4 +1,3 @@
-
 import React from "react";
 import { getSectionById } from "@/data/contentData";
 import { SectionList } from "@/components/SectionList";
@@ -10,5 +9,5 @@ export default function PrinciplesPracticeScreen() {
     return null;
   }
 
-  return <SectionList mainSection={section} />;
+  return <SectionList mainSection={section} showCustomHeader={false} />;
 }

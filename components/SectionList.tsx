@@ -1,6 +1,12 @@
-
 import React from "react";
-import { ScrollView, StyleSheet, View, Text, Pressable, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 import { MainSection } from "@/data/contentData";
@@ -14,6 +20,8 @@ import Animated, {
 
 interface SectionListProps {
   mainSection: MainSection;
+  /** Controls the small bar header with back button + title */
+  showCustomHeader?: boolean;
 }
 
 const FOUNDING_DOCUMENTS = [
@@ -24,7 +32,10 @@ const FOUNDING_DOCUMENTS = [
   "federalist-papers",
 ];
 
-export function SectionList({ mainSection }: SectionListProps) {
+export function SectionList({
+  mainSection,
+  showCustomHeader = true,
+}: SectionListProps) {
   const { colors } = useTheme();
   const router = useRouter();
 
@@ -38,28 +49,38 @@ export function SectionList({ mainSection }: SectionListProps) {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      {/* Custom Header with Back Button */}
-      <View style={[styles.customHeader, { backgroundColor: colors.background, borderBottomColor: colors.card }]}>
-        <TouchableOpacity
-          onPress={() => router.back()}
-          style={styles.backButton}
-          accessibilityLabel="Go back"
-          accessibilityRole="button"
+      {/* Custom Header with Back Button (can be hidden) */}
+      {showCustomHeader && (
+        <View
+          style={[
+            styles.customHeader,
+            { backgroundColor: colors.background, borderBottomColor: colors.card },
+          ]}
         >
-          <IconSymbol
-            ios_icon_name="chevron.left"
-            android_material_icon_name="arrow_back"
-            size={24}
-            color={colors.text}
-          />
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: colors.text }]} numberOfLines={1}>
-          {mainSection.title}
-        </Text>
-        <View style={styles.headerSpacer} />
-      </View>
+          <TouchableOpacity
+            onPress={() => router.back()}
+            style={styles.backButton}
+            accessibilityLabel="Go back"
+            accessibilityRole="button"
+          >
+            <IconSymbol
+              ios_icon_name="chevron.left"
+              android_material_icon_name="arrow_back"
+              size={24}
+              color={colors.text}
+            />
+          </TouchableOpacity>
+          <Text
+            style={[styles.headerTitle, { color: colors.text }]}
+            numberOfLines={1}
+          >
+            {mainSection.title}
+          </Text>
+          <View style={styles.headerSpacer} />
+        </View>
+      )}
 
-      <ScrollView 
+      <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
@@ -82,7 +103,12 @@ export function SectionList({ mainSection }: SectionListProps) {
                 <Text style={[styles.sectionTitle, { color: colors.text }]}>
                   {section.title}
                 </Text>
-                <Text style={[styles.sectionDescription, { color: colors.textSecondary }]}>
+                <Text
+                  style={[
+                    styles.sectionDescription,
+                    { color: colors.textSecondary },
+                  ]}
+                >
                   {section.description}
                 </Text>
               </View>

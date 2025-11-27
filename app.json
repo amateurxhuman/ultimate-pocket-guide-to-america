@@ -4,14 +4,20 @@
     "slug": "Ultimate Pocket Guide to America",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/natively-dark.png",
+
+    // 🔥 REMOTE APP ICON
+    "icon": "https://thehumanconservative.com/wp-content/uploads/2025/11/Icon.png",
+
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+
     "splash": {
-      "image": "./assets/images/natively-dark.png",
+      // 🔥 USE SAME ICON FOR SPLASH (optional, but safe)
+      "image": "https://thehumanconservative.com/wp-content/uploads/2025/11/Icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
+
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.amateurxhuman.ultimatepocketguidetoamerica",
@@ -23,31 +29,39 @@
         "NSMicrophoneUsageDescription": "This app does not use the microphone."
       }
     },
+
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/natively-dark.png",
+        // 🔥 ADAPTIVE ICON FOR ANDROID
+        "foregroundImage": "https://thehumanconservative.com/wp-content/uploads/2025/11/Icon.png",
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.amateurxhuman.ultimatepocketguidetoamerica",
       "permissions": []
     },
+
     "web": {
       "favicon": "./assets/images/final_quest_240x240.png",
       "bundler": "metro"
     },
+
     "plugins": [
       "expo-font",
       "expo-router",
       "expo-web-browser"
     ],
+
     "scheme": "ultimate-pocket-guide-to-america",
+
     "experiments": {
       "typedRoutes": true
     },
+
     "extra": {
       "router": {}
     }
   },
+
   "scheme": "Ultimate Pocket Guide to America"
 }

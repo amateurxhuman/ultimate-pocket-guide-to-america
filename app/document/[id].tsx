@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   View,
@@ -27,7 +26,7 @@ export default function DocumentScreen() {
   const router = useRouter();
   const { colors } = useTheme();
 
-  let foundDocument = null;
+  let foundDocument: any = null;
   let foundSection = "";
   let foundMainSection = "";
 
@@ -51,6 +50,7 @@ export default function DocumentScreen() {
             headerShown: true,
             title: "Document",
             headerBackTitle: "Back",
+            headerBackTitleVisible: true,
             headerTintColor: colors.text,
             headerStyle: { backgroundColor: colors.card },
           }}
@@ -88,6 +88,7 @@ export default function DocumentScreen() {
           headerShown: true,
           title: foundDocument.title,
           headerBackTitle: "Back",
+          headerBackTitleVisible: true,
           headerTintColor: colors.text,
           headerStyle: { backgroundColor: colors.card },
           headerRight: () => <FavoriteToggle itemId={id} />,
@@ -144,7 +145,9 @@ export default function DocumentScreen() {
             <View style={styles.divider} />
 
             <View style={[styles.card, { backgroundColor: colors.card }]}>
-              <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
+              <Text
+                style={[styles.sectionLabel, { color: colors.textSecondary }]}
+              >
                 Document Structure
               </Text>
 

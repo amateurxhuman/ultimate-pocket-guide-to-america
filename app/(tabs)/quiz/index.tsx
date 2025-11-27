@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   ScrollView,
@@ -8,6 +7,7 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
+import { Stack } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 import { generateRandomQuiz, QuizQuestion } from "@/data/quizData";
 import { IconSymbol } from "@/components/IconSymbol";
@@ -20,7 +20,9 @@ import Animated, {
 
 export default function QuizScreen() {
   const { colors } = useTheme();
-  const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>(() => generateRandomQuiz(10));
+  const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>(() =>
+    generateRandomQuiz(10)
+  );
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
@@ -94,11 +96,15 @@ export default function QuizScreen() {
                 { color: colors.textSecondary },
               ]}
             >
-              You answered {score} out of {quizQuestions.length} questions correctly.
+              You answered {score} out of {quizQuestions.length} questions
+              correctly.
             </Text>
 
             <TouchableOpacity
-              style={[styles.restartButton, { backgroundColor: colors.primary }]}
+              style={[
+                styles.restartButton,
+                { backgroundColor: colors.primary },
+              ]}
               onPress={handleRestart}
               accessibilityLabel="Restart quiz with new questions"
               accessibilityRole="button"
@@ -120,147 +126,163 @@ export default function QuizScreen() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.header}>
-          <Text
-            style={[styles.title, { color: colors.text }]}
-            accessibilityRole="header"
-          >
-            Civics Quiz
-          </Text>
-          <View style={styles.progressContainer}>
-            <Text style={[styles.progressText, { color: colors.textSecondary }]}>
-              Question {currentQuestionIndex + 1} of {quizQuestions.length}
-            </Text>
-            <View
-              style={[
-                styles.progressBar,
-                { backgroundColor: colors.highlight },
-              ]}
+    <>
+      <Stack.Screen
+        options={{
+          title: "Civics Quiz",
+        }}
+      />
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.header}>
+            <Text
+              style={[styles.title, { color: colors.text }]}
+              accessibilityRole="header"
             >
+              Civics Quiz
+            </Text>
+            <View style={styles.progressContainer}>
+              <Text
+                style={[
+                  styles.progressText,
+                  { color: colors.textSecondary },
+                ]}
+              >
+                Question {currentQuestionIndex + 1} of {quizQuestions.length}
+              </Text>
               <View
                 style={[
-                  styles.progressFill,
-                  {
-                    backgroundColor: colors.primary,
-                    width: `${
-                      ((currentQuestionIndex + 1) / quizQuestions.length) * 100
-                    }%`,
-                  },
+                  styles.progressBar,
+                  { backgroundColor: colors.highlight },
                 ]}
-              />
+              >
+                <View
+                  style={[
+                    styles.progressFill,
+                    {
+                      backgroundColor: colors.primary,
+                      width: `${
+                        ((currentQuestionIndex + 1) / quizQuestions.length) *
+                        100
+                      }%`,
+                    },
+                  ]}
+                />
+              </View>
             </View>
           </View>
-        </View>
 
-        <View
-          style={[
-            styles.questionCard,
-            {
-              backgroundColor: colors.card,
-              borderColor: colors.primary + "15",
-            },
-          ]}
-        >
-          <Text style={[styles.questionText, { color: colors.text }]}>
-            {currentQuestion.question}
-          </Text>
-        </View>
-
-        <View style={styles.optionsContainer}>
-          {currentQuestion.options.map((option, index) => (
-            <OptionButton
-              key={index}
-              option={option}
-              index={index}
-              colors={colors}
-              selectedAnswer={selectedAnswer}
-              correctIndex={currentQuestion.correctIndex}
-              onPress={() => handleAnswerSelect(index)}
-            />
-          ))}
-        </View>
-
-        {showExplanation && currentQuestion.explanation && (
           <View
             style={[
-              styles.explanationCard,
+              styles.questionCard,
               {
                 backgroundColor: colors.card,
-                borderColor:
-                  selectedAnswer === currentQuestion.correctIndex
-                    ? colors.primary
-                    : colors.accent,
+                borderColor: colors.primary + "15",
               },
             ]}
           >
-            <View style={styles.explanationHeader}>
-              <IconSymbol
-                ios_icon_name={
-                  selectedAnswer === currentQuestion.correctIndex
-                    ? "checkmark.circle.fill"
-                    : "xmark.circle.fill"
-                }
-                android_material_icon_name={
-                  selectedAnswer === currentQuestion.correctIndex
-                    ? "check_circle"
-                    : "cancel"
-                }
-                size={24}
-                color={
-                  selectedAnswer === currentQuestion.correctIndex
-                    ? colors.primary
-                    : colors.accent
-                }
-              />
-              <Text
-                style={[
-                  styles.explanationTitle,
-                  {
-                    color:
-                      selectedAnswer === currentQuestion.correctIndex
-                        ? colors.primary
-                        : colors.accent,
-                  },
-                ]}
-              >
-                {selectedAnswer === currentQuestion.correctIndex
-                  ? "Correct!"
-                  : "Incorrect"}
-              </Text>
-            </View>
-            <Text
-              style={[styles.explanationText, { color: colors.textSecondary }]}
-            >
-              {currentQuestion.explanation}
+            <Text style={[styles.questionText, { color: colors.text }]}>
+              {currentQuestion.question}
             </Text>
           </View>
-        )}
 
-        {selectedAnswer !== null && (
-          <TouchableOpacity
-            style={[styles.nextButton, { backgroundColor: colors.primary }]}
-            onPress={handleNext}
-            accessibilityLabel="Next question"
-            accessibilityRole="button"
-          >
-            <Text style={styles.nextButtonText}>Next Question</Text>
-            <IconSymbol
-              ios_icon_name="arrow.right"
-              android_material_icon_name="arrow_forward"
-              size={20}
-              color="#FFFFFF"
-            />
-          </TouchableOpacity>
-        )}
+          <View style={styles.optionsContainer}>
+            {currentQuestion.options.map((option, index) => (
+              <OptionButton
+                key={index}
+                option={option}
+                index={index}
+                colors={colors}
+                selectedAnswer={selectedAnswer}
+                correctIndex={currentQuestion.correctIndex}
+                onPress={() => handleAnswerSelect(index)}
+              />
+            ))}
+          </View>
 
-        <AppFooter />
-      </ScrollView>
-    </View>
+          {showExplanation && currentQuestion.explanation && (
+            <View
+              style={[
+                styles.explanationCard,
+                {
+                  backgroundColor: colors.card,
+                  borderColor:
+                    selectedAnswer === currentQuestion.correctIndex
+                      ? colors.primary
+                      : colors.accent,
+                },
+              ]}
+            >
+              <View style={styles.explanationHeader}>
+                <IconSymbol
+                  ios_icon_name={
+                    selectedAnswer === currentQuestion.correctIndex
+                      ? "checkmark.circle.fill"
+                      : "xmark.circle.fill"
+                  }
+                  android_material_icon_name={
+                    selectedAnswer === currentQuestion.correctIndex
+                      ? "check_circle"
+                      : "cancel"
+                  }
+                  size={24}
+                  color={
+                    selectedAnswer === currentQuestion.correctIndex
+                      ? colors.primary
+                      : colors.accent
+                  }
+                />
+                <Text
+                  style={[
+                    styles.explanationTitle,
+                    {
+                      color:
+                        selectedAnswer === currentQuestion.correctIndex
+                          ? colors.primary
+                          : colors.accent,
+                    },
+                  ]}
+                >
+                  {selectedAnswer === currentQuestion.correctIndex
+                    ? "Correct!"
+                    : "Incorrect"}
+                </Text>
+              </View>
+              <Text
+                style={[
+                  styles.explanationText,
+                  { color: colors.textSecondary },
+                ]}
+              >
+                {currentQuestion.explanation}
+              </Text>
+            </View>
+          )}
+
+          {selectedAnswer !== null && (
+            <TouchableOpacity
+              style={[styles.nextButton, { backgroundColor: colors.primary }]}
+              onPress={handleNext}
+              accessibilityLabel="Next question"
+              accessibilityRole="button"
+            >
+              <Text style={styles.nextButtonText}>Next Question</Text>
+              <IconSymbol
+                ios_icon_name="arrow.right"
+                android_material_icon_name="arrow_forward"
+                size={20}
+                color="#FFFFFF"
+              />
+            </TouchableOpacity>
+          )}
+
+          <AppFooter />
+        </ScrollView>
+      </View>
+    </>
   );
 }
 

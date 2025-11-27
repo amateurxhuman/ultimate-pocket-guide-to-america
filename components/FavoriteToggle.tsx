@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, Platform } from "react-native";
+import { Pressable, Platform } from "react-native";
 import { IconSymbol } from "@/components/IconSymbol";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useFavorites } from "@/contexts/FavoritesContext";
@@ -28,10 +28,9 @@ export function FavoriteToggle({ itemId, size = 22 }: FavoriteToggleProps) {
   };
 
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={toggleFavorite}
-      hitSlop={8}
-      style={styles.button}
+      hitSlop={10}
       accessibilityLabel={
         isCurrentlyFavorite ? "Remove from favorites" : "Add to favorites"
       }
@@ -39,23 +38,12 @@ export function FavoriteToggle({ itemId, size = 22 }: FavoriteToggleProps) {
     >
       <IconSymbol
         ios_icon_name={isCurrentlyFavorite ? "star.fill" : "star"}
-        android_material_icon_name={isCurrentlyFavorite ? "star" : "star_border"}
+        android_material_icon_name={
+          isCurrentlyFavorite ? "star" : "star_border"
+        }
         size={size}
         color={isCurrentlyFavorite ? colors.primary : colors.text}
       />
-    </TouchableOpacity>
+    </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    width: 32,              // fixed square touch target
-    height: 32,
-    borderRadius: 16,       // perfect circle
-    alignItems: "center",
-    justifyContent: "center",
-    // IMPORTANT:
-    // no padding, no marginRight here
-    // spacing from the screen edge will be handled by headerRight wrapper
-  },
-});

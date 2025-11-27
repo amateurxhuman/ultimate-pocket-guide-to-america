@@ -8,7 +8,7 @@ import * as Haptics from "expo-haptics";
 
 interface FavoriteToggleProps {
   itemId: string;
-  size?: number;
+  size?: number; // icon size, not button size
 }
 
 export function FavoriteToggle({ itemId, size = 24 }: FavoriteToggleProps) {

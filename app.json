@@ -1,8 +1,7 @@
-
 {
   "expo": {
     "name": "Ultimate Pocket Guide to America",
-    "slug": "ultimate-pocket-guide-to-america",
+    "slug": "Ultimate Pocket Guide to America",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",
@@ -49,5 +48,6 @@
     "extra": {
       "router": {}
     }
-  }
+  },
+  "scheme": "Ultimate Pocket Guide to America"
 }

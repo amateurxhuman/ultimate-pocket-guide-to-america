@@ -50,56 +50,6 @@ export default function SearchScreen() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  useEffect(() => {
-    if (debouncedQuery.trim()) {
-      performSearch(debouncedQuery);
-    } else {
-      setResults([]);
-      setIsSearching(false);
-    }
-  }, [debouncedQuery]);
-
-  const loadRecentSearches = async () => {
-    try {
-      const stored = await AsyncStorage.getItem(RECENT_SEARCHES_KEY);
-      if (stored) {
-        setRecentSearches(JSON.parse(stored));
-      }
-    } catch (error) {
-      if (__DEV__) {
-        console.log('Error loading recent searches:', error);
-      }
-    }
-  };
-
-  const saveRecentSearch = async (query: string) => {
-    try {
-      const trimmed = query.trim();
-      if (!trimmed) return;
-
-      let updated = [trimmed, ...recentSearches.filter((s) => s !== trimmed)];
-      updated = updated.slice(0, MAX_RECENT_SEARCHES);
-
-      await AsyncStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
-      setRecentSearches(updated);
-    } catch (error) {
-      if (__DEV__) {
-        console.log('Error saving recent search:', error);
-      }
-    }
-  };
-
-  const clearRecentSearches = async () => {
-    try {
-      await AsyncStorage.removeItem(RECENT_SEARCHES_KEY);
-      setRecentSearches([]);
-    } catch (error) {
-      if (__DEV__) {
-        console.log('Error clearing recent searches:', error);
-      }
-    }
-  };
-
   const performSearch = useCallback((query: string) => {
     setIsSearching(true);
     const lowerQuery = query.toLowerCase().trim();
@@ -172,6 +122,56 @@ export default function SearchScreen() {
     setResults(foundResults);
     setIsSearching(false);
   }, []);
+
+  useEffect(() => {
+    if (debouncedQuery.trim()) {
+      performSearch(debouncedQuery);
+    } else {
+      setResults([]);
+      setIsSearching(false);
+    }
+  }, [debouncedQuery, performSearch]);
+
+  const loadRecentSearches = async () => {
+    try {
+      const stored = await AsyncStorage.getItem(RECENT_SEARCHES_KEY);
+      if (stored) {
+        setRecentSearches(JSON.parse(stored));
+      }
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Error loading recent searches:', error);
+      }
+    }
+  };
+
+  const saveRecentSearch = async (query: string) => {
+    try {
+      const trimmed = query.trim();
+      if (!trimmed) return;
+
+      let updated = [trimmed, ...recentSearches.filter((s) => s !== trimmed)];
+      updated = updated.slice(0, MAX_RECENT_SEARCHES);
+
+      await AsyncStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
+      setRecentSearches(updated);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Error saving recent search:', error);
+      }
+    }
+  };
+
+  const clearRecentSearches = async () => {
+    try {
+      await AsyncStorage.removeItem(RECENT_SEARCHES_KEY);
+      setRecentSearches([]);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Error clearing recent searches:', error);
+      }
+    }
+  };
 
   const handleResultPress = (id: string) => {
     saveRecentSearch(searchQuery);

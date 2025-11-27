@@ -26,7 +26,6 @@ export default function DetailScreen() {
   const router = useRouter();
   const { colors } = useTheme();
 
-  // Locate subsection
   let foundItem: any = null;
   let foundSection = "";
   let foundMainSection = "";
@@ -43,7 +42,6 @@ export default function DetailScreen() {
     }
   }
 
-  // If item not found
   if (!foundItem) {
     return (
       <>
@@ -52,6 +50,7 @@ export default function DetailScreen() {
             headerShown: true,
             title: "Details",
             headerBackTitle: "Back",
+            headerBackTitleVisible: true,
             headerTintColor: colors.text,
             headerStyle: { backgroundColor: colors.card },
           }}
@@ -78,7 +77,6 @@ export default function DetailScreen() {
     );
   }
 
-  // Split summary + details
   const fullContent = foundItem.content || "";
   const firstPeriod = fullContent.indexOf(".");
   const summary =
@@ -100,9 +98,14 @@ export default function DetailScreen() {
           headerShown: true,
           title: foundItem.title,
           headerBackTitle: "Back",
+          headerBackTitleVisible: true,
           headerTintColor: colors.text,
           headerStyle: { backgroundColor: colors.card },
-          headerRight: () => <FavoriteToggle itemId={id} />,
+          headerRight: () => (
+            <View style={{ marginRight: 8 }}>
+              <FavoriteToggle itemId={id} size={22} />
+            </View>
+          ),
         }}
       />
 
@@ -169,7 +172,9 @@ export default function DetailScreen() {
             {hasFullText && (
               <>
                 <View style={[styles.divider]} />
-                <View style={[styles.card, { backgroundColor: colors.card }]}>
+                <View
+                  style={[styles.card, { backgroundColor: colors.card }]}
+                >
                   <Text
                     style={[
                       styles.sectionLabel,
@@ -188,7 +193,9 @@ export default function DetailScreen() {
             {hasContext && (
               <>
                 <View style={[styles.divider]} />
-                <View style={[styles.card, { backgroundColor: colors.card }]}>
+                <View
+                  style={[styles.card, { backgroundColor: colors.card }]}
+                >
                   <Text
                     style={[
                       styles.sectionLabel,
@@ -220,7 +227,9 @@ export default function DetailScreen() {
             {hasExtra && (
               <>
                 <View style={styles.divider} />
-                <View style={[styles.card, { backgroundColor: colors.card }]}>
+                <View
+                  style={[styles.card, { backgroundColor: colors.card }]}
+                >
                   <Text
                     style={[
                       styles.sectionLabel,
@@ -284,8 +293,6 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     letterSpacing: 0.5,
   },
-
-  // Square hero image with gold border, flush with cards
   heroImageContainer: {
     width: IMAGE_SIZE,
     height: IMAGE_SIZE,
@@ -301,7 +308,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-
   card: {
     padding: 16,
     borderRadius: 12,

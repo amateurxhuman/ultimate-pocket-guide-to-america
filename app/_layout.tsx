@@ -4,6 +4,7 @@ import { Stack } from "expo-router";
 import { ThemeProvider, useTheme } from "@/contexts/ThemeContext";
 import { TextSizeProvider } from "@/contexts/TextSizeContext";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
+import { ReadingHistoryProvider } from "@/contexts/ReadingHistoryContext";
 import { StatusBar } from "expo-status-bar";
 
 function RootLayoutContent() {
@@ -12,29 +13,31 @@ function RootLayoutContent() {
   return (
     <>
       <StatusBar style={isDark ? "light" : "dark"} />
-      <FavoritesProvider>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen 
-            name="detail/[id]" 
-            options={{ 
-              headerShown: true,
-              presentation: "card",
-            }} 
-          />
-          <Stack.Screen 
-            name="document/[id]" 
-            options={{ 
-              headerShown: true,
-              presentation: "card",
-            }} 
-          />
-        </Stack>
-      </FavoritesProvider>
+      <ReadingHistoryProvider>
+        <FavoritesProvider>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen 
+              name="detail/[id]" 
+              options={{ 
+                headerShown: true,
+                presentation: "card",
+              }} 
+            />
+            <Stack.Screen 
+              name="document/[id]" 
+              options={{ 
+                headerShown: true,
+                presentation: "card",
+              }} 
+            />
+          </Stack>
+        </FavoritesProvider>
+      </ReadingHistoryProvider>
     </>
   );
 }

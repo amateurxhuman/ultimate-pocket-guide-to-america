@@ -14,6 +14,9 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { contentData } from "@/data/contentData";
 import { IconSymbol } from "@/components/IconSymbol";
 import QuickAccessGrid from "@/components/QuickAccessGrid";
+import DailyInsightCard from "@/components/DailyInsightCard";
+import LastReadCard from "@/components/LastReadCard";
+import RecentlyViewedList from "@/components/RecentlyViewedList";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, {
   useSharedValue,
@@ -100,18 +103,18 @@ export default function HomeScreen() {
   const { colors, shadows, animations } = useTheme();
   const router = useRouter();
 
-  const glowOpacity = useSharedValue(0.3);
+  const glowOpacity = useSharedValue(0.5);
 
   useEffect(() => {
     glowOpacity.value = withRepeat(
       withSequence(
-        withTiming(0.6, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
-        withTiming(0.3, { duration: 2000, easing: Easing.inOut(Easing.ease) })
+        withTiming(0.8, { duration: 3000, easing: Easing.inOut(Easing.ease) }),
+        withTiming(0.5, { duration: 3000, easing: Easing.inOut(Easing.ease) })
       ),
       -1,
       false
     );
-  }, []);
+  }, [glowOpacity]);
 
   const glowStyle = useAnimatedStyle(() => ({
     opacity: glowOpacity.value,
@@ -223,13 +226,13 @@ export default function HomeScreen() {
             <Animated.View style={[styles.glowLayer, glowStyle]}>
               <LinearGradient
                 colors={[
-                  colors.glowColor,
-                  colors.primary + '40',
-                  colors.glowColor,
+                  colors.primary + '30',
+                  colors.primary + '20',
+                  colors.primary + '30',
                 ]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
-                style={StyleSheet.absoluteFill}
+                style={[StyleSheet.absoluteFill, { borderRadius: 24 }]}
               />
             </Animated.View>
 
@@ -258,6 +261,18 @@ export default function HomeScreen() {
               </ImageBackground>
             </LinearGradient>
           </View>
+        </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(100).springify()}>
+          <DailyInsightCard />
+        </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(150).springify()}>
+          <LastReadCard />
+        </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(175).springify()}>
+          <RecentlyViewedList />
         </Animated.View>
 
         <Animated.View entering={FadeInDown.delay(200).springify()}>
@@ -379,31 +394,31 @@ const styles = StyleSheet.create({
   },
   glowLayer: {
     position: 'absolute',
-    top: -8,
-    left: -8,
-    right: -8,
-    bottom: -8,
-    borderRadius: 28,
+    top: -4,
+    left: -4,
+    right: -4,
+    bottom: -4,
+    borderRadius: 24,
     zIndex: -1,
   },
   flagBorder: {
     borderRadius: 20,
-    padding: 3,
+    padding: 2.5,
   },
   heroCard: {
     width: "100%",
     aspectRatio: 1,
-    borderRadius: 17,
+    borderRadius: 17.5,
     overflow: "hidden",
     justifyContent: "flex-end",
     backgroundColor: '#1A1A1A',
   },
   heroImage: {
-    borderRadius: 17,
+    borderRadius: 17.5,
   },
   heroOverlay: {
     ...StyleSheet.absoluteFillObject,
-    borderRadius: 17,
+    borderRadius: 17.5,
   },
   factCard: {
     marginBottom: 24,

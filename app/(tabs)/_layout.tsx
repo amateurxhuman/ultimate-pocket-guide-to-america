@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { IconSymbol } from "@/components/IconSymbol";
 import { useTheme } from "@/contexts/ThemeContext";
+import FloatingTabBar from "@/components/FloatingTabBar";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import * as Haptics from "expo-haptics";
 
@@ -29,6 +30,37 @@ const menuItems = [
   { label: "Glossary", route: "/(tabs)/glossary" },
   { label: "Favorites", route: "/(tabs)/favorites" },
   { label: "Settings", route: "/(tabs)/settings" },
+];
+
+const floatingTabBarTabs = [
+  {
+    name: "home",
+    route: "/(tabs)/(home)" as any,
+    icon: "home" as keyof typeof MaterialIcons.glyphMap,
+    iosIcon: "house.fill",
+    label: "Home",
+  },
+  {
+    name: "favorites",
+    route: "/(tabs)/favorites" as any,
+    icon: "favorite" as keyof typeof MaterialIcons.glyphMap,
+    iosIcon: "heart.fill",
+    label: "Favorites",
+  },
+  {
+    name: "glossary",
+    route: "/(tabs)/glossary" as any,
+    icon: "book" as keyof typeof MaterialIcons.glyphMap,
+    iosIcon: "book.fill",
+    label: "Glossary",
+  },
+  {
+    name: "search",
+    route: "/(tabs)/search" as any,
+    icon: "search" as keyof typeof MaterialIcons.glyphMap,
+    iosIcon: "magnifyingglass",
+    label: "Search",
+  },
 ];
 
 function HamburgerButton({ onPress }: { onPress: () => void }) {
@@ -286,6 +318,8 @@ export default function TabLayout() {
         onClose={closeMenu}
         onNavigate={navigateTo}
       />
+
+      <FloatingTabBar tabs={floatingTabBarTabs} />
     </View>
   );
 }

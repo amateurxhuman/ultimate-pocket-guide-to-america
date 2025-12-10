@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import { useLocalSearchParams, useRouter, Stack } from "expo-router";
 import { contentData } from "@/data/contentData";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTextSize } from "@/contexts/TextSizeContext";
+import { useReadingHistory } from "@/contexts/ReadingHistoryContext";
 import { IconSymbol } from "@/components/IconSymbol";
 import { FavoriteToggle } from "@/components/FavoriteToggle";
 
@@ -27,6 +28,7 @@ export default function DetailScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const { getTextSizeMultiplier } = useTextSize();
+  const { addToHistory } = useReadingHistory();
   const textMultiplier = getTextSizeMultiplier();
 
   let foundItem: any = null;
@@ -55,6 +57,16 @@ export default function DetailScreen() {
       console.log('Error finding item:', error);
     }
   }
+
+  useEffect(() => {
+    if (foundItem && foundMainSection) {
+      addToHistory({
+        id: foundItem.id,
+        title: foundItem.title,
+        section: foundMainSection,
+      });
+    }
+  }, [foundItem, foundMainSection]);
 
   if (!foundItem) {
     return (

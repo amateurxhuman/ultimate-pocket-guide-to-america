@@ -1,50 +1,37 @@
 
-import { contentData, MainSection, Section, SubSection } from '@/data/contentData';
+import { contentData } from '@/data/contentData';
 
-export interface ItemLookupResult {
-  item: SubSection;
-  section: Section;
-  mainSection: MainSection;
-}
-
-/**
- * Finds an item by its ID across all content data
- * Returns the item along with its parent section and main section
- */
-export function findItemById(id: string): ItemLookupResult | null {
-  for (const mainSection of contentData) {
-    for (const section of mainSection.sections) {
-      for (const subsection of section.subsections) {
-        if (subsection.id === id) {
-          return {
-            item: subsection,
-            section,
-            mainSection,
-          };
-        }
-      }
-    }
-  }
-  return null;
-}
-
-/**
- * Determines if an item is a founding document
- */
-export function isFoundingDocument(id: string): boolean {
-  const foundingDocs = [
+export function getItemRoute(itemId: string): string {
+  const foundingDocuments = [
     'declaration',
     'articles',
     'constitution',
     'bill-of-rights',
     'federalist-papers',
   ];
-  return foundingDocs.includes(id);
+
+  if (foundingDocuments.includes(itemId)) {
+    return `/document/${itemId}`;
+  }
+
+  return `/detail/${itemId}`;
 }
 
-/**
- * Gets the appropriate route for an item (detail or document)
- */
-export function getItemRoute(id: string): string {
-  return isFoundingDocument(id) ? `/document/${id}` : `/detail/${id}`;
+export function findItemById(itemId: string) {
+  for (const main of contentData) {
+    if (!main || !main.sections) continue;
+    for (const sec of main.sections) {
+      if (!sec || !sec.subsections) continue;
+      for (const sub of sec.subsections) {
+        if (sub && sub.id === itemId) {
+          return {
+            item: sub,
+            section: sec.title,
+            mainSection: main.title,
+          };
+        }
+      }
+    }
+  }
+  return null;
 }

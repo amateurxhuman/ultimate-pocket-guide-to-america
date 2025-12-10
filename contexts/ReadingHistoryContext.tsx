@@ -2,11 +2,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LAST_READ_KEY = 'last_read_item';
-const RECENTLY_VIEWED_KEY = 'recently_viewed_items';
-const MAX_RECENT_ITEMS = 5;
-
-export interface ReadingHistoryItem {
+interface ReadingItem {
   id: string;
   title: string;
   section: string;
@@ -14,17 +10,20 @@ export interface ReadingHistoryItem {
 }
 
 interface ReadingHistoryContextType {
-  lastReadItem: ReadingHistoryItem | null;
-  recentlyViewed: ReadingHistoryItem[];
-  saveReadingHistory: (item: Omit<ReadingHistoryItem, 'timestamp'>) => Promise<void>;
-  clearHistory: () => Promise<void>;
+  lastReadItem: ReadingItem | null;
+  recentlyViewed: ReadingItem[];
+  addToHistory: (item: Omit<ReadingItem, 'timestamp'>) => Promise<void>;
 }
 
 const ReadingHistoryContext = createContext<ReadingHistoryContextType | undefined>(undefined);
 
+const LAST_READ_KEY = 'app_last_read_item';
+const RECENTLY_VIEWED_KEY = 'app_recently_viewed';
+const MAX_RECENT_ITEMS = 5;
+
 export function ReadingHistoryProvider({ children }: { children: ReactNode }) {
-  const [lastReadItem, setLastReadItem] = useState<ReadingHistoryItem | null>(null);
-  const [recentlyViewed, setRecentlyViewed] = useState<ReadingHistoryItem[]>([]);
+  const [lastReadItem, setLastReadItem] = useState<ReadingItem | null>(null);
+  const [recentlyViewed, setRecentlyViewed] = useState<ReadingItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -33,7 +32,7 @@ export function ReadingHistoryProvider({ children }: { children: ReactNode }) {
 
   const loadHistory = async () => {
     try {
-      const [lastReadData, recentData] = await Promise.all([
+      const [lastReadData, recentlyViewedData] = await Promise.all([
         AsyncStorage.getItem(LAST_READ_KEY),
         AsyncStorage.getItem(RECENTLY_VIEWED_KEY),
       ]);
@@ -42,8 +41,8 @@ export function ReadingHistoryProvider({ children }: { children: ReactNode }) {
         setLastReadItem(JSON.parse(lastReadData));
       }
 
-      if (recentData) {
-        setRecentlyViewed(JSON.parse(recentData));
+      if (recentlyViewedData) {
+        setRecentlyViewed(JSON.parse(recentlyViewedData));
       }
     } catch (error) {
       if (__DEV__) {
@@ -54,41 +53,25 @@ export function ReadingHistoryProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const saveReadingHistory = async (item: Omit<ReadingHistoryItem, 'timestamp'>) => {
+  const addToHistory = async (item: Omit<ReadingItem, 'timestamp'>) => {
     try {
-      const historyItem: ReadingHistoryItem = {
+      const newItem: ReadingItem = {
         ...item,
         timestamp: Date.now(),
       };
 
-      // Save as last read
-      await AsyncStorage.setItem(LAST_READ_KEY, JSON.stringify(historyItem));
-      setLastReadItem(historyItem);
+      setLastReadItem(newItem);
+      await AsyncStorage.setItem(LAST_READ_KEY, JSON.stringify(newItem));
 
-      // Update recently viewed (remove duplicates and add to front)
-      const filtered = recentlyViewed.filter(i => i.id !== item.id);
-      const updated = [historyItem, ...filtered].slice(0, MAX_RECENT_ITEMS);
-      
-      await AsyncStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(updated));
-      setRecentlyViewed(updated);
+      setRecentlyViewed((prev) => {
+        const filtered = prev.filter((i) => i.id !== item.id);
+        const updated = [newItem, ...filtered].slice(0, MAX_RECENT_ITEMS);
+        AsyncStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(updated));
+        return updated;
+      });
     } catch (error) {
       if (__DEV__) {
         console.log('Error saving reading history:', error);
-      }
-    }
-  };
-
-  const clearHistory = async () => {
-    try {
-      await Promise.all([
-        AsyncStorage.removeItem(LAST_READ_KEY),
-        AsyncStorage.removeItem(RECENTLY_VIEWED_KEY),
-      ]);
-      setLastReadItem(null);
-      setRecentlyViewed([]);
-    } catch (error) {
-      if (__DEV__) {
-        console.log('Error clearing history:', error);
       }
     }
   };
@@ -98,14 +81,7 @@ export function ReadingHistoryProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <ReadingHistoryContext.Provider
-      value={{
-        lastReadItem,
-        recentlyViewed,
-        saveReadingHistory,
-        clearHistory,
-      }}
-    >
+    <ReadingHistoryContext.Provider value={{ lastReadItem, recentlyViewed, addToHistory }}>
       {children}
     </ReadingHistoryContext.Provider>
   );

@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import { useLocalSearchParams, useRouter, Stack } from "expo-router";
 import { contentData } from "@/data/contentData";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTextSize } from "@/contexts/TextSizeContext";
+import { useReadingHistory } from "@/contexts/ReadingHistoryContext";
 import { IconSymbol } from "@/components/IconSymbol";
 import { FavoriteToggle } from "@/components/FavoriteToggle";
 
@@ -27,6 +28,7 @@ export default function DocumentScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const { getTextSizeMultiplier } = useTextSize();
+  const { addToHistory } = useReadingHistory();
   const textMultiplier = getTextSizeMultiplier();
 
   let foundDocument: any = null;
@@ -44,6 +46,16 @@ export default function DocumentScreen() {
       }
     }
   }
+
+  useEffect(() => {
+    if (foundDocument && foundMainSection) {
+      addToHistory({
+        id: foundDocument.id,
+        title: foundDocument.title,
+        section: foundMainSection,
+      });
+    }
+  }, [foundDocument, foundMainSection]);
 
   if (!foundDocument) {
     return (

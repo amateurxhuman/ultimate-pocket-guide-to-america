@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { Stack, useRouter, usePathname } from 'expo-router';
 import { View, TouchableOpacity, Text, StyleSheet, Modal, Pressable, ScrollView } from 'react-native';
 import { IconSymbol } from '@/components/IconSymbol';
-import { colors, darkColors } from '@/styles/commonStyles';
-import { useColorScheme } from 'react-native';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const menuItems = [
   { label: 'Home', route: '/(tabs)/(home)' },
@@ -18,9 +17,12 @@ const menuItems = [
   { label: 'Search', route: '/(tabs)/search' },
   { label: 'Glossary', route: '/(tabs)/glossary' },
   { label: 'Favorites', route: '/(tabs)/favorites' },
+  { label: 'Settings', route: '/(tabs)/settings' },
 ];
 
 function HamburgerButton({ onPress }: { onPress: () => void }) {
+  const { colors } = useTheme();
+
   return (
     <TouchableOpacity 
       onPress={onPress} 
@@ -33,7 +35,7 @@ function HamburgerButton({ onPress }: { onPress: () => void }) {
         ios_icon_name="line.3.horizontal"
         android_material_icon_name="menu"
         size={28}
-        color="#FFFFFF"
+        color={colors.text}
       />
     </TouchableOpacity>
   );
@@ -48,8 +50,7 @@ function HamburgerMenu({
   onClose: () => void; 
   onNavigate: (route: string) => void;
 }) {
-  const colorScheme = useColorScheme();
-  const themeColors = colorScheme === 'dark' ? darkColors : colors;
+  const { colors: themeColors } = useTheme();
   const pathname = usePathname();
 
   return (
@@ -146,6 +147,7 @@ function HamburgerMenu({
 
 export default function TabLayout() {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const { colors: themeColors } = useTheme();
   const router = useRouter();
 
   const openMenu = () => {
@@ -171,11 +173,11 @@ export default function TabLayout() {
           headerLeft: () => <HamburgerButton onPress={openMenu} />,
           headerTitleAlign: 'center',
           headerStyle: {
-            backgroundColor: '#1a1a1a',
+            backgroundColor: themeColors.background,
           },
-          headerTintColor: '#FFFFFF',
+          headerTintColor: themeColors.text,
           headerShadowVisible: true,
-          headerBlurEffect: 'dark',
+          headerBlurEffect: themeColors.background === '#0A0A0A' ? 'dark' : 'light',
         }}
       >
         <Stack.Screen
@@ -242,6 +244,12 @@ export default function TabLayout() {
           name="favorites"
           options={{
             title: 'Favorites',
+          }}
+        />
+        <Stack.Screen
+          name="settings"
+          options={{
+            title: 'Settings',
           }}
         />
       </Stack>

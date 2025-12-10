@@ -12,8 +12,8 @@ import {
 import { useLocalSearchParams, useRouter, Stack } from "expo-router";
 import { contentData } from "@/data/contentData";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useTextSize } from "@/contexts/TextSizeContext";
 import { IconSymbol } from "@/components/IconSymbol";
-import { AppFooter } from "@/components/AppFooter";
 import { FavoriteToggle } from "@/components/FavoriteToggle";
 
 const BORDER_WIDTH = 3;
@@ -26,6 +26,8 @@ export default function DetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const { colors } = useTheme();
+  const { getTextSizeMultiplier } = useTextSize();
+  const textMultiplier = getTextSizeMultiplier();
 
   let foundItem: any = null;
   let foundSection = "";
@@ -125,7 +127,6 @@ export default function DetailScreen() {
         style={[styles.container, { backgroundColor: colors.background }]}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* HEADER */}
         <View style={styles.header}>
           <Text style={[styles.breadcrumb, { color: colors.textSecondary }]}>
             {foundMainSection} › {foundSection}
@@ -156,7 +157,6 @@ export default function DetailScreen() {
           )}
         </View>
 
-        {/* IMAGE */}
         {foundItem.imageUrl && (
           <View style={styles.heroImageContainer}>
             <Image
@@ -167,7 +167,6 @@ export default function DetailScreen() {
           </View>
         )}
 
-        {/* CONTENT */}
         {isFoundingDoc ? (
           <>
             <View style={[styles.card, { backgroundColor: colors.card }]}>
@@ -176,7 +175,7 @@ export default function DetailScreen() {
               >
                 Overview
               </Text>
-              <Text style={[styles.bodyText, { color: colors.text }]}>
+              <Text style={[styles.bodyText, { color: colors.text, fontSize: 15 * textMultiplier, lineHeight: 24 * textMultiplier }]}>
                 {fullContent}
               </Text>
             </View>
@@ -195,7 +194,7 @@ export default function DetailScreen() {
                   >
                     Full Text
                   </Text>
-                  <Text style={[styles.bodyText, { color: colors.text }]}>
+                  <Text style={[styles.bodyText, { color: colors.text, fontSize: 15 * textMultiplier, lineHeight: 24 * textMultiplier }]}>
                     {foundItem.fullText}
                   </Text>
                 </View>
@@ -216,7 +215,7 @@ export default function DetailScreen() {
                   >
                     Historical Context
                   </Text>
-                  <Text style={[styles.bodyText, { color: colors.text }]}>
+                  <Text style={[styles.bodyText, { color: colors.text, fontSize: 15 * textMultiplier, lineHeight: 24 * textMultiplier }]}>
                     {foundItem.context}
                   </Text>
                 </View>
@@ -231,7 +230,7 @@ export default function DetailScreen() {
               >
                 Description
               </Text>
-              <Text style={[styles.bodyText, { color: colors.text }]}>
+              <Text style={[styles.bodyText, { color: colors.text, fontSize: 15 * textMultiplier, lineHeight: 24 * textMultiplier }]}>
                 {summary}
               </Text>
             </View>
@@ -250,7 +249,7 @@ export default function DetailScreen() {
                   >
                     Additional Information
                   </Text>
-                  <Text style={[styles.bodyText, { color: colors.text }]}>
+                  <Text style={[styles.bodyText, { color: colors.text, fontSize: 15 * textMultiplier, lineHeight: 24 * textMultiplier }]}>
                     {details}
                   </Text>
                 </View>
@@ -258,8 +257,6 @@ export default function DetailScreen() {
             )}
           </>
         )}
-
-        <AppFooter />
       </ScrollView>
     </>
   );

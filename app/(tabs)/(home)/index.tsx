@@ -1,4 +1,5 @@
-import React, { useMemo, useCallback } from "react";
+
+import React, { useMemo, useCallback, useEffect } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -12,11 +13,22 @@ import { useRouter } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 import { contentData } from "@/data/contentData";
 import { IconSymbol } from "@/components/IconSymbol";
-import { AppFooter } from "@/components/AppFooter";
 import QuickAccessGrid from "@/components/QuickAccessGrid";
+import { LinearGradient } from "expo-linear-gradient";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withRepeat,
+  withSequence,
+  Easing,
+  FadeIn,
+  FadeInDown,
+} from "react-native-reanimated";
+import * as Haptics from "expo-haptics";
 
 const HERO_FLAG_URL =
-  "https://thehumanconservative.com/wp-content/uploads/2025/11/App-Logo-Final.png";
+  "https://thehumanconservative.com/wp-content/uploads/2025/12/app-logo-2.0.png";
 
 const AMERICAN_FACTS: string[] = [
   "The United States Constitution is the oldest written national constitution still in use.",
@@ -85,8 +97,25 @@ const getIconName = (icon: string) => {
 };
 
 export default function HomeScreen() {
-  const { colors } = useTheme();
+  const { colors, shadows, animations } = useTheme();
   const router = useRouter();
+
+  const glowOpacity = useSharedValue(0.3);
+
+  useEffect(() => {
+    glowOpacity.value = withRepeat(
+      withSequence(
+        withTiming(0.6, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+        withTiming(0.3, { duration: 2000, easing: Easing.inOut(Easing.ease) })
+      ),
+      -1,
+      false
+    );
+  }, []);
+
+  const glowStyle = useAnimatedStyle(() => ({
+    opacity: glowOpacity.value,
+  }));
 
   const [fact, setFact] = React.useState(() => {
     const idx = Math.floor(Math.random() * AMERICAN_FACTS.length);
@@ -94,12 +123,26 @@ export default function HomeScreen() {
   });
 
   const shuffleFact = useCallback(() => {
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Haptics error:', error);
+      }
+    }
     const idx = Math.floor(Math.random() * AMERICAN_FACTS.length);
     setFact(AMERICAN_FACTS[idx]);
   }, []);
 
   const navigateToSection = useCallback(
     (sectionId: string) => {
+      try {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      } catch (error) {
+        if (__DEV__) {
+          console.log('Haptics error:', error);
+        }
+      }
       router.push(`/(tabs)/${sectionId}` as any);
     },
     [router]
@@ -109,50 +152,65 @@ export default function HomeScreen() {
     return contentData.map((section, index) => {
       const icons = getIconName(section.icon);
       return (
-        <TouchableOpacity
+        <Animated.View
           key={section.id}
-          style={[
-            styles.sectionCard,
-            {
-              backgroundColor: colors.card,
-              borderColor: colors.primary + "10",
-            },
-          ]}
-          onPress={() => navigateToSection(section.id)}
-          activeOpacity={0.7}
-          accessibilityLabel={`Navigate to ${section.title}`}
-          accessibilityRole="button"
+          entering={FadeInDown.delay(index * 100).springify()}
         >
-          <View
+          <TouchableOpacity
             style={[
-              styles.iconContainer,
-              { backgroundColor: colors.highlight },
+              styles.sectionCard,
+              {
+                backgroundColor: colors.card,
+                ...shadows.medium,
+              },
             ]}
+            onPress={() => navigateToSection(section.id)}
+            activeOpacity={0.85}
+            accessibilityLabel={`Navigate to ${section.title}`}
+            accessibilityRole="button"
           >
-            <IconSymbol
-              ios_icon_name={icons.ios}
-              android_material_icon_name={icons.android}
-              size={32}
-              color={colors.primary}
+            <LinearGradient
+              colors={[colors.borderGlow, colors.primary + '00']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.cardGradientBorder}
             />
-          </View>
-          <View style={styles.cardContent}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>
-              {section.title}
-            </Text>
-            <Text
+            
+            <View
               style={[
-                styles.sectionDescription,
-                { color: colors.textSecondary },
+                styles.iconContainer,
+                { 
+                  backgroundColor: colors.highlight,
+                  ...shadows.small,
+                },
               ]}
             >
-              {section.description}
-            </Text>
-          </View>
-        </TouchableOpacity>
+              <IconSymbol
+                ios_icon_name={icons.ios}
+                android_material_icon_name={icons.android}
+                size={32}
+                color={colors.primary}
+                animated
+              />
+            </View>
+            <View style={styles.cardContent}>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>
+                {section.title}
+              </Text>
+              <Text
+                style={[
+                  styles.sectionDescription,
+                  { color: colors.textSecondary },
+                ]}
+              >
+                {section.description}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </Animated.View>
       );
     });
-  }, [colors, navigateToSection]);
+  }, [colors, shadows, navigateToSection]);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -160,65 +218,143 @@ export default function HomeScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* HERO CARD WITH GOLD BORDER */}
-        <View style={styles.header}>
-          <View style={[styles.flagBorder, { borderColor: colors.primary }]}>
-            <ImageBackground
-              source={{ uri: HERO_FLAG_URL }}
-              style={styles.heroCard}
-              imageStyle={styles.heroImage}
-              resizeMode="contain"
+        <Animated.View style={styles.header} entering={FadeIn.duration(800)}>
+          <View style={[styles.heroWrapper, { ...shadows.large }]}>
+            <Animated.View style={[styles.glowLayer, glowStyle]}>
+              <LinearGradient
+                colors={[
+                  colors.glowColor,
+                  colors.primary + '40',
+                  colors.glowColor,
+                ]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={StyleSheet.absoluteFill}
+              />
+            </Animated.View>
+
+            <LinearGradient
+              colors={[
+                colors.goldGradientStart,
+                colors.primary,
+                colors.goldGradientEnd,
+              ]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.flagBorder}
+            >
+              <ImageBackground
+                source={{ uri: HERO_FLAG_URL }}
+                style={styles.heroCard}
+                imageStyle={styles.heroImage}
+                resizeMode="contain"
+              >
+                <View
+                  style={[
+                    styles.heroOverlay,
+                    { backgroundColor: colors.heroOverlay },
+                  ]}
+                />
+              </ImageBackground>
+            </LinearGradient>
+          </View>
+        </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(200).springify()}>
+          <LinearGradient
+            colors={[colors.card, colors.highlight + '40']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={[
+              styles.factCard,
+              {
+                borderColor: colors.primary + '30',
+                ...shadows.medium,
+              },
+            ]}
+          >
+            <View style={styles.factHeader}>
+              <View style={styles.factLabelContainer}>
+                <View
+                  style={[
+                    styles.factDot,
+                    { backgroundColor: colors.primary },
+                  ]}
+                />
+                <Text style={[styles.factLabel, { color: colors.textSecondary }]}>
+                  Did you know?
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={shuffleFact}
+                style={[
+                  styles.shuffleButton,
+                  {
+                    backgroundColor: colors.highlight,
+                    ...shadows.small,
+                  },
+                ]}
+                accessibilityLabel="Get a new fact"
+                accessibilityRole="button"
+              >
+                <IconSymbol
+                  ios_icon_name="arrow.clockwise"
+                  android_material_icon_name="refresh"
+                  size={18}
+                  color={colors.primary}
+                  animated
+                />
+              </TouchableOpacity>
+            </View>
+            <Text style={[styles.factText, { color: colors.text }]}>
+              {fact}
+            </Text>
+          </LinearGradient>
+        </Animated.View>
+
+        <Animated.View
+          style={styles.sectionsHeaderRow}
+          entering={FadeInDown.delay(300).springify()}
+        >
+          <View style={styles.sectionHeaderLine}>
+            <LinearGradient
+              colors={[
+                colors.primary + '00',
+                colors.primary + '60',
+                colors.primary + '00',
+              ]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.headerGradient}
             />
           </View>
-        </View>
-
-        {/* RANDOM FACT CARD */}
-        <View
-          style={[
-            styles.factCard,
-            { backgroundColor: colors.card, borderColor: colors.primary + "20" },
-          ]}
-        >
-          <View style={styles.factHeader}>
-            <Text style={[styles.factLabel, { color: colors.textSecondary }]}>
-              Did you know?
-            </Text>
-            <TouchableOpacity
-              onPress={shuffleFact}
-              style={styles.shuffleButton}
-              accessibilityLabel="Get a new fact"
-              accessibilityRole="button"
-            >
-              <IconSymbol
-                ios_icon_name="arrow.clockwise"
-                android_material_icon_name="refresh"
-                size={16}
-                color={colors.primary}
-              />
-            </TouchableOpacity>
-          </View>
-          <Text style={[styles.factText, { color: colors.text }]}>{fact}</Text>
-        </View>
-
-        {/* SECTIONS HEADER */}
-        <View style={styles.sectionsHeaderRow}>
           <Text
             style={[
               styles.sectionsHeaderText,
               { color: colors.textSecondary },
             ]}
           >
-            Explore the guide
+            EXPLORE THE GUIDE
           </Text>
-        </View>
+          <View style={styles.sectionHeaderLine}>
+            <LinearGradient
+              colors={[
+                colors.primary + '00',
+                colors.primary + '60',
+                colors.primary + '00',
+              ]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.headerGradient}
+            />
+          </View>
+        </Animated.View>
 
-        {/* SECTIONS */}
         <View style={styles.sectionsContainer}>{sectionCards}</View>
 
-        {/* QUICK ACCESS GRID */}
-        <QuickAccessGrid />
-
-        <AppFooter />
+        <Animated.View entering={FadeInDown.delay(500).springify()}>
+          <QuickAccessGrid />
+        </Animated.View>
       </ScrollView>
     </View>
   );
@@ -234,104 +370,144 @@ const styles = StyleSheet.create({
     paddingBottom: 120,
   },
   header: {
-    marginBottom: 16,
+    marginBottom: 20,
+  },
+  heroWrapper: {
+    position: 'relative',
+    borderRadius: 20,
+    overflow: 'visible',
+  },
+  glowLayer: {
+    position: 'absolute',
+    top: -8,
+    left: -8,
+    right: -8,
+    bottom: -8,
+    borderRadius: 28,
+    zIndex: -1,
   },
   flagBorder: {
-    borderWidth: 2,
-    borderRadius: 16,
-    padding: 0,
+    borderRadius: 20,
+    padding: 3,
   },
   heroCard: {
     width: "100%",
-    aspectRatio: 1, // square card so the full circular logo is visible
-    borderRadius: 14,
+    aspectRatio: 1,
+    borderRadius: 17,
     overflow: "hidden",
     justifyContent: "flex-end",
+    backgroundColor: '#1A1A1A',
   },
   heroImage: {
-    // kept for future tweaks if needed
+    borderRadius: 17,
+  },
+  heroOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 17,
   },
   factCard: {
-    marginBottom: 20,
-    padding: 16,
-    borderRadius: 12,
+    marginBottom: 24,
+    padding: 20,
+    borderRadius: 16,
     borderWidth: 1,
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+    overflow: 'hidden',
   },
   factHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 12,
+  },
+  factLabelContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  factDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
   },
   factLabel: {
     fontSize: 12,
-    fontWeight: "600",
+    fontWeight: "700",
     textTransform: "uppercase",
-    letterSpacing: 1,
+    letterSpacing: 1.2,
     lineHeight: 17.4,
   },
   shuffleButton: {
-    padding: 4,
-    minWidth: 32,
-    minHeight: 32,
+    padding: 8,
+    borderRadius: 12,
+    minWidth: 36,
+    minHeight: 36,
     justifyContent: "center",
     alignItems: "center",
   },
   factText: {
-    fontSize: 14,
-    lineHeight: 20.3,
+    fontSize: 15,
+    lineHeight: 22,
+    fontWeight: '500',
   },
   sectionsHeaderRow: {
-    marginBottom: 12,
-    paddingHorizontal: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    gap: 12,
+  },
+  sectionHeaderLine: {
+    flex: 1,
+    height: 1,
+  },
+  headerGradient: {
+    width: '100%',
+    height: '100%',
   },
   sectionsHeaderText: {
-    fontSize: 12,
-    fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    lineHeight: 17.4,
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 1.5,
+    lineHeight: 16,
   },
   sectionsContainer: {
-    gap: 12,
-    marginBottom: 20,
+    gap: 14,
+    marginBottom: 32,
   },
   sectionCard: {
     flexDirection: "row",
-    padding: 16,
-    borderRadius: 12,
+    padding: 18,
+    borderRadius: 16,
     alignItems: "center",
-    borderWidth: 1,
-    shadowColor: "#000",
-    shadowOpacity: 0.12,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 3 },
-    elevation: 3,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  cardGradientBorder: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 4,
   },
   iconContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 60,
+    height: 60,
+    borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 14,
+    marginRight: 16,
   },
   cardContent: {
     flex: 1,
   },
   sectionTitle: {
     fontSize: 17,
-    fontWeight: "600",
+    fontWeight: "700",
     marginBottom: 4,
-    lineHeight: 24.65,
+    lineHeight: 24,
+    letterSpacing: 0.2,
   },
   sectionDescription: {
     fontSize: 13,
-    lineHeight: 18.85,
+    lineHeight: 19,
+    opacity: 0.85,
   },
 });

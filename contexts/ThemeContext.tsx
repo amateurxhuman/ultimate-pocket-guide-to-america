@@ -1,7 +1,6 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useColorScheme } from 'react-native';
-import { colors, darkColors } from '@/styles/commonStyles';
+import { colors, darkColors, animations, shadows, glassmorphism } from '@/styles/commonStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Theme = 'light' | 'dark';
@@ -12,15 +11,19 @@ interface ThemeContextType {
   toggleTheme: () => void;
   colors: typeof colors;
   isDark: boolean;
+  // NEW: Expose animation and shadow helpers
+  animations: typeof animations;
+  shadows: typeof shadows;
+  glassmorphism: typeof glassmorphism;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
 const THEME_STORAGE_KEY = 'app_theme_preference';
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const systemColorScheme = useColorScheme();
   const [theme, setThemeState] = useState<Theme>('dark');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     loadThemePreference();
@@ -32,12 +35,17 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       if (savedTheme === 'light' || savedTheme === 'dark') {
         setThemeState(savedTheme);
       } else {
-        setThemeState('dark');
+        // Use system preference if no saved theme
+        setThemeState(systemColorScheme === 'light' ? 'light' : 'dark');
       }
     } catch (error) {
       if (__DEV__) {
         console.log('Error loading theme preference:', error);
       }
+      // Fallback to system preference on error
+      setThemeState(systemColorScheme === 'light' ? 'light' : 'dark');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,6 +57,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       if (__DEV__) {
         console.log('Error saving theme preference:', error);
       }
+      // Still update UI even if save fails
+      setThemeState(newTheme);
     }
   };
 
@@ -60,8 +70,24 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const isDark = theme === 'dark';
   const currentColors = isDark ? darkColors : colors;
 
+  // Show a minimal loading state while theme loads
+  if (isLoading) {
+    return null;
+  }
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, colors: currentColors, isDark }}>
+    <ThemeContext.Provider 
+      value={{ 
+        theme, 
+        setTheme, 
+        toggleTheme, 
+        colors: currentColors, 
+        isDark,
+        animations,
+        shadows,
+        glassmorphism,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );

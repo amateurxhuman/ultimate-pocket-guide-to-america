@@ -12,6 +12,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { MainSection } from "@/data/contentData";
 import { IconSymbol } from "@/components/IconSymbol";
 import { AppFooter } from "@/components/AppFooter";
+import * as Haptics from "expo-haptics";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -20,7 +21,6 @@ import Animated, {
 
 interface SectionListProps {
   mainSection: MainSection;
-  /** Controls the small bar header with back button + title */
   showCustomHeader?: boolean;
 }
 
@@ -36,20 +36,46 @@ export function SectionList({
   mainSection,
   showCustomHeader = true,
 }: SectionListProps) {
-  const { colors } = useTheme();
+  const { colors, shadows } = useTheme();
   const router = useRouter();
 
+  // Safety check
+  if (!mainSection || !mainSection.sections) {
+    return (
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <View style={styles.errorContainer}>
+          <Text style={[styles.errorText, { color: colors.text }]}>
+            Content not available
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
   const navigateToItem = (subsectionId: string) => {
-    if (FOUNDING_DOCUMENTS.includes(subsectionId)) {
-      router.push(`/document/${subsectionId}` as any);
-    } else {
-      router.push(`/detail/${subsectionId}` as any);
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Haptics error:', error);
+      }
+    }
+
+    try {
+      if (FOUNDING_DOCUMENTS.includes(subsectionId)) {
+        router.push(`/document/${subsectionId}` as any);
+      } else {
+        router.push(`/detail/${subsectionId}` as any);
+      }
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Navigation error:', error);
+      }
     }
   };
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      {/* Custom Header with Back Button (can be hidden) */}
       {showCustomHeader && (
         <View
           style={[
@@ -58,7 +84,15 @@ export function SectionList({
           ]}
         >
           <TouchableOpacity
-            onPress={() => router.back()}
+            onPress={() => {
+              try {
+                router.back();
+              } catch (error) {
+                if (__DEV__) {
+                  console.log('Back navigation error:', error);
+                }
+              }
+            }}
             style={styles.backButton}
             accessibilityLabel="Go back"
             accessibilityRole="button"
@@ -74,7 +108,7 @@ export function SectionList({
             style={[styles.headerTitle, { color: colors.text }]}
             numberOfLines={1}
           >
-            {mainSection.title}
+            {mainSection.title || "Content"}
           </Text>
           <View style={styles.headerSpacer} />
         </View>
@@ -89,46 +123,59 @@ export function SectionList({
             style={[styles.title, { color: colors.text }]}
             accessibilityRole="header"
           >
-            {mainSection.title}
+            {mainSection.title || "Content"}
           </Text>
-          <Text style={[styles.description, { color: colors.textSecondary }]}>
-            {mainSection.description}
-          </Text>
+          {mainSection.description && (
+            <Text style={[styles.description, { color: colors.textSecondary }]}>
+              {mainSection.description}
+            </Text>
+          )}
         </View>
 
         <View style={styles.sectionsContainer}>
-          {mainSection.sections.map((section, sectionIndex) => (
-            <View key={sectionIndex} style={styles.sectionGroup}>
-              <View style={styles.sectionHeader}>
-                <Text style={[styles.sectionTitle, { color: colors.text }]}>
-                  {section.title}
-                </Text>
-                <Text
-                  style={[
-                    styles.sectionDescription,
-                    { color: colors.textSecondary },
-                  ]}
-                >
-                  {section.description}
-                </Text>
-              </View>
+          {mainSection.sections.map((section, sectionIndex) => {
+            // Safety checks
+            if (!section || !section.subsections) return null;
 
-              <View style={styles.subsectionsContainer}>
-                {section.subsections.map((subsection, subsectionIndex) => {
-                  const isDocument = FOUNDING_DOCUMENTS.includes(subsection.id);
-                  return (
-                    <SubsectionCard
-                      key={subsectionIndex}
-                      subsection={subsection}
-                      isDocument={isDocument}
-                      colors={colors}
-                      onPress={() => navigateToItem(subsection.id)}
-                    />
-                  );
-                })}
+            return (
+              <View key={`section-${sectionIndex}`} style={styles.sectionGroup}>
+                <View style={styles.sectionHeader}>
+                  <Text style={[styles.sectionTitle, { color: colors.text }]}>
+                    {section.title || "Section"}
+                  </Text>
+                  {section.description && (
+                    <Text
+                      style={[
+                        styles.sectionDescription,
+                        { color: colors.textSecondary },
+                      ]}
+                    >
+                      {section.description}
+                    </Text>
+                  )}
+                </View>
+
+                <View style={styles.subsectionsContainer}>
+                  {section.subsections.map((subsection, subsectionIndex) => {
+                    // Safety checks
+                    if (!subsection || !subsection.id) return null;
+
+                    const isDocument = FOUNDING_DOCUMENTS.includes(subsection.id);
+                    return (
+                      <SubsectionCard
+                        key={`subsection-${subsectionIndex}`}
+                        subsection={subsection}
+                        isDocument={isDocument}
+                        colors={colors}
+                        shadows={shadows}
+                        onPress={() => navigateToItem(subsection.id)}
+                      />
+                    );
+                  })}
+                </View>
               </View>
-            </View>
-          ))}
+            );
+          })}
         </View>
 
         <AppFooter />
@@ -141,11 +188,13 @@ function SubsectionCard({
   subsection,
   isDocument,
   colors,
+  shadows,
   onPress,
 }: {
   subsection: any;
   isDocument: boolean;
   colors: any;
+  shadows: any;
   onPress: () => void;
 }) {
   const scale = useSharedValue(1);
@@ -171,7 +220,7 @@ function SubsectionCard({
       onPress={onPress}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      accessibilityLabel={`Navigate to ${subsection.title}`}
+      accessibilityLabel={`Navigate to ${subsection.title || 'content'}`}
       accessibilityRole="button"
     >
       <Animated.View
@@ -179,7 +228,8 @@ function SubsectionCard({
           styles.subsectionCard,
           {
             backgroundColor: colors.card,
-            borderColor: "rgba(255, 255, 255, 0.06)",
+            borderColor: colors.primary + "20",
+            ...shadows.small,
           },
           animatedStyle,
         ]}
@@ -201,7 +251,7 @@ function SubsectionCard({
             </View>
           )}
           <Text style={[styles.subsectionTitle, { color: colors.text }]}>
-            {subsection.title}
+            {subsection.title || "Untitled"}
           </Text>
         </View>
         <IconSymbol
@@ -292,11 +342,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     borderWidth: 1,
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
     minHeight: 44,
   },
   subsectionContent: {
@@ -317,5 +362,15 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     flex: 1,
     lineHeight: 23.2,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
+  },
+  errorText: {
+    fontSize: 18,
+    fontWeight: '600',
   },
 });

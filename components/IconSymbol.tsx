@@ -1,6 +1,5 @@
-
 // components/IconSymbol.tsx
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import {
   Image,
   View,
@@ -11,6 +10,12 @@ import {
 } from "react-native";
 import { useTheme } from "@/contexts/ThemeContext";
 import * as Haptics from "expo-haptics";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  withSequence,
+} from "react-native-reanimated";
 
 // ──────────────────────────────────────────────────────────────────
 // Master icon map
@@ -76,6 +81,10 @@ const ICONS = {
   "globe.americas.fill": "https://thehumanconservative.com/wp-content/uploads/2025/11/Public1.png",
   "questionmark.circle": "https://thehumanconservative.com/wp-content/uploads/2025/11/quiz_help1.png",
   help: "https://thehumanconservative.com/wp-content/uploads/2025/11/quiz_help1.png",
+  lightbulb: "https://thehumanconservative.com/wp-content/uploads/2025/11/light-mode-on1.png",
+  "lightbulb.fill": "https://thehumanconservative.com/wp-content/uploads/2025/11/light-mode-on1.png",
+  brain: "https://thehumanconservative.com/wp-content/uploads/2025/11/quiz_help1.png",
+  "map.fill": "https://thehumanconservative.com/wp-content/uploads/2025/11/map1.png",
 } as const;
 
 type IconKey = keyof typeof ICONS;
@@ -89,6 +98,7 @@ interface IconSymbolProps {
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
   accessibilityLabel?: string;
+  animated?: boolean; // NEW: Enable subtle animations
 }
 
 const IconSymbol = memo(function IconSymbol({
@@ -100,57 +110,104 @@ const IconSymbol = memo(function IconSymbol({
   style,
   onPress,
   accessibilityLabel,
+  animated = false,
 }: IconSymbolProps) {
-  const { colors: themeColors } = useTheme();
+  const { colors: themeColors, animations } = useTheme();
+  const [imageError, setImageError] = useState(false);
+  
+  // Animation values
+  const scale = useSharedValue(1);
+  const rotate = useSharedValue(0);
 
   const key = (android_material_icon_name || name || ios_icon_name || "") as IconKey;
   const uri = ICONS[key];
 
-  // If icon is missing → show fallback
-  if (!uri) {
+  // Animated style for subtle hover/press effects
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      { scale: scale.value },
+      { rotate: `${rotate.value}deg` },
+    ],
+  }));
+
+  // Handle press with animation
+  const handlePressIn = () => {
+    scale.value = withSpring(0.9, {
+      damping: animations.spring.damping,
+      stiffness: animations.spring.stiffness,
+    });
+  };
+
+  const handlePressOut = () => {
+    scale.value = withSpring(1, {
+      damping: animations.spring.damping,
+      stiffness: animations.spring.stiffness,
+    });
+  };
+
+  const handlePress = () => {
+    try {
+      Haptics.selectionAsync();
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Haptics error:', error);
+      }
+    }
+    
+    // Subtle pulse animation on press
+    if (animated) {
+      scale.value = withSequence(
+        withSpring(1.1, { damping: 15 }),
+        withSpring(1, { damping: 15 })
+      );
+    }
+    
+    onPress?.();
+  };
+
+  // If icon is missing or failed to load → show fallback
+  if (!uri || imageError) {
     const fallbackStyle: ViewStyle = {
       width: size,
       height: size,
-      backgroundColor: themeColors.card,
+      backgroundColor: themeColors.highlight,
       borderRadius: size / 4,
       justifyContent: "center",
       alignItems: "center",
+      borderWidth: 1,
+      borderColor: themeColors.primary + "40",
     };
     return <View style={[fallbackStyle, style]} />;
   }
 
-  // Image style - note: color prop is ignored for images (tintColor would work but not universally supported)
+  // Image style
   const imageStyle: ImageStyle = {
     width: size,
     height: size,
   };
 
+  const ImageComponent = animated ? Animated.Image : Image;
+
   const image = (
-    <Image
+    <ImageComponent
       source={{ uri }}
-      style={[imageStyle, style]}
+      style={[imageStyle, style, animated && animatedStyle]}
       resizeMode="contain"
       accessible={!!accessibilityLabel}
       accessibilityLabel={accessibilityLabel}
       accessibilityRole="image"
+      onError={() => setImageError(true)}
     />
   );
 
   if (onPress) {
     return (
       <TouchableOpacity
-        activeOpacity={0.72}
+        activeOpacity={0.7}
         hitSlop={{ top: 16, bottom: 16, left: 16, right: 16 }}
-        onPress={() => {
-          try {
-            Haptics.selectionAsync();
-          } catch (error) {
-            if (__DEV__) {
-              console.log('Haptics error:', error);
-            }
-          }
-          onPress();
-        }}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        onPress={handlePress}
         accessibilityRole="button"
         accessibilityLabel={accessibilityLabel || `Icon ${key}`}
       >

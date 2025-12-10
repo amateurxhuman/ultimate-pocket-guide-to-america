@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   View,
@@ -16,6 +15,7 @@ import { AppFooter } from '@/components/AppFooter';
 import { findItemById, getItemRoute } from '@/utils/findItemById';
 import { mapData } from '@/data/mapData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Haptics from 'expo-haptics';
 
 const FAVORITES_KEY = 'favorites';
 
@@ -28,7 +28,7 @@ interface FavoriteItem {
 }
 
 export default function FavoritesScreen() {
-  const { colors } = useTheme();
+  const { colors, shadows, isDark } = useTheme();
   const router = useRouter();
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -109,6 +109,14 @@ export default function FavoritesScreen() {
 
   const handleRemoveFavorite = async (id: string) => {
     try {
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Haptics error:', error);
+      }
+    }
+    
+    try {
       const stored = await AsyncStorage.getItem(FAVORITES_KEY);
       if (stored) {
         const favoriteIds: string[] = JSON.parse(stored);
@@ -124,6 +132,14 @@ export default function FavoritesScreen() {
   };
 
   const handleItemPress = (item: FavoriteItem) => {
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Haptics error:', error);
+      }
+    }
+    
     try {
       if (item.type === 'state') {
         const stateCode = item.id.replace('state:', '').toLowerCase();
@@ -163,7 +179,7 @@ export default function FavoritesScreen() {
           options={{
             title: 'Favorites',
             headerShown: true,
-            headerStyle: { backgroundColor: '#1a1a1a' },
+            headerStyle: { backgroundColor: isDark ? '#1a1a1a' : '#1E3A8A' },
             headerTintColor: '#FFFFFF',
           }}
         />
@@ -184,7 +200,7 @@ export default function FavoritesScreen() {
         options={{
           title: 'Favorites',
           headerShown: true,
-          headerStyle: { backgroundColor: '#1a1a1a' },
+          headerStyle: { backgroundColor: isDark ? '#1a1a1a' : '#1E3A8A' },
           headerTintColor: '#FFFFFF',
         }}
       />
@@ -214,7 +230,7 @@ export default function FavoritesScreen() {
                 {favorites.length} {favorites.length === 1 ? 'favorite' : 'favorites'}
               </Text>
               {favorites.map((item, index) => (
-                <View key={index} style={[styles.itemCard, { backgroundColor: colors.card }]}>
+                <View key={index} style={[styles.itemCard, { backgroundColor: colors.card, ...shadows.small }]}>
                   <TouchableOpacity
                     style={styles.itemContent}
                     onPress={() => handleItemPress(item)}
@@ -304,11 +320,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 12,
     overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
   },
   itemContent: {
     flex: 1,

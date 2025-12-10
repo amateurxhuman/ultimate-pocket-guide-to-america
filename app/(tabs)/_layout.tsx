@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Stack, useRouter, usePathname } from "expo-router";
 import {
@@ -11,9 +12,9 @@ import {
   Platform,
 } from "react-native";
 import { IconSymbol } from "@/components/IconSymbol";
-import { colors, darkColors } from "@/styles/commonStyles";
-import { useColorScheme } from "react-native";
+import { useTheme } from "@/contexts/ThemeContext";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import * as Haptics from "expo-haptics";
 
 const menuItems = [
   { label: "Home", route: "/(tabs)/(home)" },
@@ -27,9 +28,12 @@ const menuItems = [
   { label: "Search", route: "/(tabs)/search" },
   { label: "Glossary", route: "/(tabs)/glossary" },
   { label: "Favorites", route: "/(tabs)/favorites" },
+  { label: "Settings", route: "/(tabs)/settings" },
 ];
 
 function HamburgerButton({ onPress }: { onPress: () => void }) {
+  const { colors } = useTheme();
+
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -38,7 +42,7 @@ function HamburgerButton({ onPress }: { onPress: () => void }) {
       accessibilityRole="button"
       activeOpacity={0.7}
     >
-      <MaterialIcons name="menu" size={28} color="#FFFFFF" />
+      <MaterialIcons name="menu" size={28} color={colors.text} />
     </TouchableOpacity>
   );
 }
@@ -52,8 +56,7 @@ function HamburgerMenu({
   onClose: () => void;
   onNavigate: (route: string) => void;
 }) {
-  const colorScheme = useColorScheme();
-  const themeColors = colorScheme === "dark" ? darkColors : colors;
+  const { colors: themeColors, shadows } = useTheme();
   const pathname = usePathname();
 
   return (
@@ -65,7 +68,13 @@ function HamburgerMenu({
     >
       <Pressable style={styles.modalOverlay} onPress={onClose}>
         <Pressable
-          style={[styles.menuContainer, { backgroundColor: themeColors.background }]}
+          style={[
+            styles.menuContainer,
+            {
+              backgroundColor: themeColors.background,
+              ...shadows.large,
+            },
+          ]}
           onPress={(e) => e.stopPropagation()}
         >
           <View
@@ -154,9 +163,17 @@ function HamburgerMenu({
 
 export default function TabLayout() {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const { colors: themeColors } = useTheme();
   const router = useRouter();
 
   const openMenu = () => {
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (error) {
+      if (__DEV__) {
+        console.log("Haptics error:", error);
+      }
+    }
     setIsMenuVisible(true);
   };
 
@@ -165,6 +182,13 @@ export default function TabLayout() {
   };
 
   const navigateTo = (route: string) => {
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } catch (error) {
+      if (__DEV__) {
+        console.log("Haptics error:", error);
+      }
+    }
     closeMenu();
     router.push(route as any);
   };
@@ -177,9 +201,9 @@ export default function TabLayout() {
           headerLeft: () => <HamburgerButton onPress={openMenu} />,
           headerTitleAlign: "center",
           headerStyle: {
-            backgroundColor: "#1a1a1a",
+            backgroundColor: themeColors.background,
           },
-          headerTintColor: "#FFFFFF",
+          headerTintColor: themeColors.text,
           headerShadowVisible: true,
         }}
       >
@@ -249,6 +273,12 @@ export default function TabLayout() {
             title: "Favorites",
           }}
         />
+        <Stack.Screen
+          name="settings"
+          options={{
+            title: "Settings",
+          }}
+        />
       </Stack>
 
       <HamburgerMenu
@@ -270,14 +300,6 @@ const styles = StyleSheet.create({
   menuContainer: {
     width: 280,
     height: "100%",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 2,
-      height: 0,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    elevation: 5,
   },
   menuHeader: {
     flexDirection: "row",

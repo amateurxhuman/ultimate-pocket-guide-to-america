@@ -1,11 +1,10 @@
-// components/QuickAccessGrid.tsx
+
 import React from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  Platform,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -27,7 +26,7 @@ interface QuickButton {
 }
 
 export default function QuickAccessGrid() {
-  const { colors, isDark, toggleTheme } = useTheme();
+  const { colors, shadows } = useTheme();
   const router = useRouter();
 
   const buttons: QuickButton[] = [
@@ -36,11 +35,18 @@ export default function QuickAccessGrid() {
     { id: "search", label: "Search", iosIcon: "magnifyingglass", androidIcon: "search", route: "/(tabs)/search" },
     { id: "glossary", label: "Glossary", iosIcon: "book.fill", androidIcon: "menu_book", route: "/(tabs)/glossary" },
     { id: "favorites", label: "Favorites", iosIcon: "star.fill", androidIcon: "star", route: "/(tabs)/favorites" },
-    { id: "theme", label: isDark ? "Light Mode" : "Dark Mode", iosIcon: "lightbulb.fill", androidIcon: "lightbulb", action: toggleTheme },
+    { id: "settings", label: "Settings", iosIcon: "gearshape.fill", androidIcon: "settings", route: "/(tabs)/settings" },
   ];
 
   const handlePress = (button: QuickButton) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Haptics error:', error);
+      }
+    }
+    
     if (button.route) {
       router.push(button.route);
     } else if (button.action) {
@@ -56,7 +62,7 @@ export default function QuickAccessGrid() {
             key={button.id}
             button={button}
             colors={colors}
-            isDark={isDark}
+            shadows={shadows}
             onPress={() => handlePress(button)}
           />
         ))}
@@ -68,12 +74,12 @@ export default function QuickAccessGrid() {
 function QuickButtonItem({
   button,
   colors,
-  isDark,
+  shadows,
   onPress,
 }: {
   button: QuickButton;
   colors: any;
-  isDark: boolean;
+  shadows: any;
   onPress: () => void;
 }) {
   const scale = useSharedValue(1);
@@ -88,13 +94,6 @@ function QuickButtonItem({
     scale.value = withSpring(1);
   };
 
-  // Dynamic styles moved OUT of StyleSheet.create
-  const dynamicButtonStyle = {
-    backgroundColor: colors.card,
-    borderColor: colors.primary + "30", // now safe — applied inline
-    shadowColor: isDark ? "#000000" : "#D4AF37",
-  };
-
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -105,12 +104,23 @@ function QuickButtonItem({
       accessibilityLabel={button.label}
       accessibilityRole="button"
     >
-      <Animated.View style={[styles.button, dynamicButtonStyle, animatedStyle]}>
+      <Animated.View 
+        style={[
+          styles.button, 
+          {
+            backgroundColor: colors.card,
+            borderColor: colors.primary + "30",
+            ...shadows.medium,
+          },
+          animatedStyle
+        ]}
+      >
         <IconSymbol
           ios_icon_name={button.iosIcon}
           android_material_icon_name={button.androidIcon}
           size={36}
           color={colors.primary}
+          animated
         />
         <Text style={[styles.label, { color: colors.text }]}>
           {button.label}
@@ -120,39 +130,34 @@ function QuickButtonItem({
   );
 }
 
-// Only static styles here — safe for Natively.dev
 const styles = StyleSheet.create({
   container: {
     marginBottom: 32,
-    paddingHorizontal: 8,
+    paddingHorizontal: 4,
   },
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    gap: 16,
+    rowGap: 12,
   },
   touchable: {
-    width: "30.8%",
+    width: "31%",
   },
   button: {
     aspectRatio: 1,
-    borderRadius: 28,
-    borderWidth: 2.5,
+    borderRadius: 20,
+    borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
-    gap: 12,
-    padding: 16,
-    shadowOffset: { width: 0, height: 10 },
-    shadowRadius: 24,
-    shadowOpacity: 0.4,
-    elevation: 18,
+    gap: 8,
+    padding: 12,
   },
   label: {
-    fontSize: 13.5,
-    fontWeight: "800",
-    letterSpacing: 0.6,
+    fontSize: 12,
+    fontWeight: "700",
+    letterSpacing: 0.3,
     textAlign: "center",
-    marginTop: 4,
+    lineHeight: 16,
   },
 });

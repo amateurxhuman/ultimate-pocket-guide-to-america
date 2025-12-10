@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   View,
@@ -9,8 +10,8 @@ import {
 import { useLocalSearchParams, useRouter, Stack } from "expo-router";
 import { contentData } from "@/data/contentData";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useTextSize } from "@/contexts/TextSizeContext";
 import { IconSymbol } from "@/components/IconSymbol";
-import { AppFooter } from "@/components/AppFooter";
 import { FavoriteToggle } from "@/components/FavoriteToggle";
 
 const FOUNDING_DOCUMENTS = [
@@ -25,6 +26,8 @@ export default function DocumentScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const { colors } = useTheme();
+  const { getTextSizeMultiplier } = useTextSize();
+  const textMultiplier = getTextSizeMultiplier();
 
   let foundDocument: any = null;
   let foundSection = "";
@@ -99,7 +102,6 @@ export default function DocumentScreen() {
         style={[styles.container, { backgroundColor: colors.background }]}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* HEADER */}
         <View style={styles.header}>
           <View
             style={[
@@ -129,17 +131,15 @@ export default function DocumentScreen() {
           </Text>
         </View>
 
-        {/* OVERVIEW */}
         <View style={[styles.card, { backgroundColor: colors.card }]}>
           <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
             Overview
           </Text>
-          <Text style={[styles.bodyText, { color: colors.text }]}>
+          <Text style={[styles.bodyText, { color: colors.text, fontSize: 15 * textMultiplier, lineHeight: 24 * textMultiplier }]}>
             {foundDocument.content}
           </Text>
         </View>
 
-        {/* STRUCTURE (constitution only) */}
         {isConstitution && (
           <>
             <View style={styles.divider} />
@@ -151,7 +151,7 @@ export default function DocumentScreen() {
                 Document Structure
               </Text>
 
-              <Text style={[styles.bodyText, { color: colors.textSecondary }]}>
+              <Text style={[styles.bodyText, { color: colors.textSecondary, fontSize: 15 * textMultiplier, lineHeight: 24 * textMultiplier }]}>
                 • Article I — Legislative{"\n"}
                 • Article II — Executive{"\n"}
                 • Article III — Judicial{"\n"}
@@ -167,7 +167,6 @@ export default function DocumentScreen() {
           </>
         )}
 
-        {/* FULL TEXT */}
         {hasFullText && (
           <>
             <View style={styles.divider} />
@@ -175,14 +174,13 @@ export default function DocumentScreen() {
               <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
                 Full Text
               </Text>
-              <Text style={[styles.bodyText, { color: colors.text }]}>
+              <Text style={[styles.bodyText, { color: colors.text, fontSize: 15 * textMultiplier, lineHeight: 24 * textMultiplier }]}>
                 {foundDocument.fullText}
               </Text>
             </View>
           </>
         )}
 
-        {/* CONTEXT */}
         {hasContext && (
           <>
             <View style={styles.divider} />
@@ -190,14 +188,12 @@ export default function DocumentScreen() {
               <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
                 Historical Context
               </Text>
-              <Text style={[styles.bodyText, { color: colors.text }]}>
+              <Text style={[styles.bodyText, { color: colors.text, fontSize: 15 * textMultiplier, lineHeight: 24 * textMultiplier }]}>
                 {foundDocument.context}
               </Text>
             </View>
           </>
         )}
-
-        <AppFooter />
       </ScrollView>
     </>
   );

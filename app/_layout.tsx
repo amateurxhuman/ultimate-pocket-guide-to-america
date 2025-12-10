@@ -2,6 +2,7 @@
 import React from "react";
 import { Stack } from "expo-router";
 import { ThemeProvider, useTheme } from "@/contexts/ThemeContext";
+import { TextSizeProvider } from "@/contexts/TextSizeContext";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import { StatusBar } from "expo-status-bar";
 
@@ -41,7 +42,9 @@ function RootLayoutContent() {
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <RootLayoutContent />
+      <TextSizeProvider>
+        <RootLayoutContent />
+      </TextSizeProvider>
     </ThemeProvider>
   );
 }

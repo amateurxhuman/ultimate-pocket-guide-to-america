@@ -1,14 +1,12 @@
-
 {
   "expo": {
-    "name": "Ultimate Pocket Guide to America",
-    "slug": "ultimate-pocket-guide-to-america",
+    "name": "Pocket Guide to America",
+    "slug": "Pocket Guide to America",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/final_quest_240x240.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-
     "splash": {
       "image": "./assets/images/final_quest_240x240.png",
       "resizeMode": "contain",
@@ -37,26 +35,22 @@
       "package": "com.amateurxhuman.ultimatepocketguidetoamerica",
       "versionCode": 1
     },
-
     "web": {
       "favicon": "./assets/images/final_quest_240x240.png",
       "bundler": "metro"
     },
-
     "plugins": [
       "expo-font",
       "expo-router",
       "expo-web-browser"
     ],
-
-    "scheme": "ultimate-pocket-guide-to-america",
-
+    "scheme": "pocket-guide-to-america",
     "experiments": {
       "typedRoutes": true
     },
-
     "extra": {
       "router": {}
     }
-  }
+  },
+  "scheme": "Pocket Guide to America"
 }

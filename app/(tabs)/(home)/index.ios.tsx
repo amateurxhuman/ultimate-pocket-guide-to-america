@@ -13,7 +13,6 @@ import { useRouter } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 import { contentData } from "@/data/contentData";
 import { IconSymbol } from "@/components/IconSymbol";
-import { AppFooter } from "@/components/AppFooter";
 import QuickAccessGrid from "@/components/QuickAccessGrid";
 
 const HERO_FLAG_URL =
@@ -168,7 +167,6 @@ export default function HomeScreen() {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          {/* HERO CARD WITH GOLD BORDER */}
           <View style={styles.header}>
             <View style={[styles.flagBorder, { borderColor: colors.primary }]}>
               <ImageBackground
@@ -180,7 +178,6 @@ export default function HomeScreen() {
             </View>
           </View>
 
-          {/* RANDOM FACT CARD */}
           <View
             style={[
               styles.factCard,
@@ -208,7 +205,6 @@ export default function HomeScreen() {
             <Text style={[styles.factText, { color: colors.text }]}>{fact}</Text>
           </View>
 
-          {/* SECTIONS HEADER */}
           <View style={styles.sectionsHeaderRow}>
             <Text
               style={[
@@ -220,13 +216,9 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          {/* SECTIONS */}
           <View style={styles.sectionsContainer}>{sectionCards}</View>
 
-          {/* QUICK ACCESS GRID */}
           <QuickAccessGrid />
-
-          <AppFooter />
         </ScrollView>
       </View>
     </>
@@ -258,7 +250,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   heroImage: {
-    // kept for future tweaks if needed
   },
   factCard: {
     marginBottom: 20,

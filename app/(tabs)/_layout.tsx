@@ -24,6 +24,7 @@ const menuItems = [
   { label: "Political Landscape", route: "/(tabs)/political-landscape" },
   { label: "Principles in Practice", route: "/(tabs)/principles-practice" },
   { label: "Land and Life", route: "/(tabs)/land-life" },
+  { label: "History", route: "/(tabs)/history" },
   { label: "Map", route: "/(tabs)/map" },
   { label: "Quiz", route: "/(tabs)/quiz" },
   { label: "Search", route: "/(tabs)/search" },
@@ -43,8 +44,8 @@ const floatingTabBarTabs = [
   {
     name: "favorites",
     route: "/(tabs)/favorites" as any,
-    icon: "favorite" as keyof typeof MaterialIcons.glyphMap,
-    iosIcon: "heart.fill",
+    icon: "star" as keyof typeof MaterialIcons.glyphMap,
+    iosIcon: "star.fill",
     label: "Favorites",
   },
   {
@@ -273,6 +274,12 @@ export default function TabLayout() {
           name="land-life"
           options={{
             title: "Land and Life",
+          }}
+        />
+        <Stack.Screen
+          name="history"
+          options={{
+            title: "History",
           }}
         />
         <Stack.Screen

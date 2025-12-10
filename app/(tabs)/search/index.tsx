@@ -13,7 +13,7 @@ import { useRouter, Stack } from 'expo-router';
 import { useTheme } from '@/contexts/ThemeContext';
 import { IconSymbol } from '@/components/IconSymbol';
 import { AppFooter } from '@/components/AppFooter';
-import { contentData } from '@/data/contentData';
+import { allContentData } from '@/data/contentData';
 import { getItemRoute } from '@/utils/findItemById';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -64,7 +64,7 @@ export default function SearchScreen() {
       const foundResults: SearchResult[] = [];
       const seenIds = new Set<string>();
 
-      for (const mainSection of contentData) {
+      for (const mainSection of allContentData) {
         if (!mainSection || !mainSection.sections) continue;
 
         for (const section of mainSection.sections) {

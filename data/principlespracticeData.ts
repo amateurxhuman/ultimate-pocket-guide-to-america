@@ -25,95 +25,86 @@ export interface MainSection {
 
 export const principlespracticeData: MainSection = {
   id: "principles-practice",
-  title: "Principles in Practice",
-  icon: "balance",
-  description: "How American principles operate in real world systems and civic life",
-  sections: [
-    {
-      id: "core-tensions",
-      title: "Core Tensions",
-      description: "The fundamental tensions that shape American political life",
-      subsections: [
-        {
-          id: "freedom-responsibility",
-          title: "Freedom and Responsibility",
-          content:
-            "Freedom and responsibility are two sides of the same coin in American life. Freedom means the ability to make choices, to pursue one's own goals, and to live according to one's own values. Responsibility means accepting the consequences of those choices and recognizing that freedom depends on self restraint and respect for others.\n\nThe American system trusts individuals to make their own decisions, but it also expects them to act with integrity and to consider the impact of their actions on others. This balance is not always easy to maintain. Too much emphasis on freedom can lead to selfishness and disorder. Too much emphasis on responsibility can lead to conformity and the loss of individual initiative.\n\nIn practice, this tension plays out in debates about everything from business regulation to personal behavior. Should people be free to start businesses without government interference, or should there be rules to protect workers and consumers? Should individuals be free to make their own health care decisions, or should society ensure that everyone has access to care? These questions do not have simple answers, but they reflect the ongoing effort to balance freedom and responsibility.\n\nThe best outcomes often come when people exercise their freedom with a sense of responsibility, and when society protects freedom while also holding people accountable for harm they cause. This requires judgment, humility, and a willingness to engage in good faith debate about where the lines should be drawn.",
-        },
-        {
-          id: "faith-morality",
-          title: "Faith and Morality in Public Life",
-          content:
-            "Faith and morality have always played a significant role in American public life. Many of the nation's founders were influenced by religious beliefs, and many social movements, from abolition to civil rights, have been led by people of faith. At the same time, the Constitution prohibits the establishment of an official religion and protects the free exercise of all faiths.\n\nThis creates a tension between allowing religious voices to participate in public debate and ensuring that government does not favor one religion over another. People of faith often argue that their beliefs should inform their political positions and that excluding religious perspectives from public life is unfair and impractical. Others worry that allowing religion to influence policy can lead to discrimination and the imposition of one group's values on everyone else.\n\nIn practice, Americans have found ways to navigate this tension. Religious organizations run schools, hospitals, and charities that serve people of all backgrounds. Religious leaders speak out on issues of justice and morality, and their voices are part of the broader conversation. At the same time, laws are expected to have secular justifications and to respect the rights of those who do not share the majority's beliefs.\n\nThe challenge is to honor the role of faith in shaping values and motivating action, while also protecting the rights of those who hold different beliefs or no religious beliefs at all. This requires mutual respect, a commitment to pluralism, and a recognition that people of good will can disagree about the proper role of religion in public life.",
-        },
-        {
-          id: "tradition-progress",
-          title: "Tradition and Progress",
-          content:
-            "Tradition and progress represent two different approaches to change. Tradition emphasizes the wisdom of the past, the importance of continuity, and the value of institutions that have stood the test of time. Progress emphasizes the need for reform, the possibility of improvement, and the importance of adapting to new circumstances.\n\nAmerica has always been shaped by both impulses. The founders drew on centuries of political thought and experience, but they also created something new. The Constitution itself balances tradition and progress by establishing enduring principles while allowing for amendments and reinterpretation.\n\nIn practice, this tension plays out in debates about everything from education to criminal justice. Should schools teach traditional subjects and values, or should they embrace new methods and perspectives? Should the legal system rely on precedent and established practices, or should it adapt to changing social norms? These questions do not have simple answers, but they reflect the ongoing effort to honor the past while remaining open to the future.\n\nThe best outcomes often come when tradition and progress are seen not as opposites but as complements. Tradition provides stability and a sense of identity, while progress allows for growth and correction of past mistakes. A healthy society respects its heritage while also being willing to change when change is needed.",
-        },
-        {
-          id: "equality-merit",
-          title: "Equality and Merit",
-          content:
-            "Equality and merit are both central to the American ideal, but they can sometimes pull in different directions. Equality means that all people have the same basic rights and should be treated fairly under the law. Merit means that people should be rewarded based on their abilities, effort, and achievements.\n\nThe tension arises when people start from unequal positions. If some have access to better schools, more resources, or stronger networks, then a system based purely on merit may perpetuate existing inequalities. On the other hand, if outcomes are equalized without regard to effort or ability, then the incentive to work hard and excel may be weakened.\n\nIn practice, Americans have tried to balance these values by ensuring equal opportunity while allowing for unequal outcomes. This means removing barriers based on race, gender, or background, while also recognizing that people will achieve different levels of success based on their choices and talents. It means providing a safety net for those who fall behind, while also rewarding those who excel.\n\nThe challenge is to create a society where everyone has a fair chance to succeed, but where success is still earned rather than guaranteed. This requires both removing unjust obstacles and maintaining standards of excellence. It requires both compassion for those who struggle and respect for those who achieve.",
-        },
-      ],
-    },
-    {
-      id: "role-government",
-      title: "The Role of Government",
-      description: "Debates about what government should and should not do",
-      subsections: [
-        {
-          id: "limited-vs-active",
-          title: "Limited vs. Active Government",
-          content:
-            "One of the most enduring debates in American politics is about the proper size and scope of government. Should government be limited to protecting rights and providing basic services, or should it play an active role in addressing social and economic problems?\n\nThose who favor limited government argue that individuals and communities are better at solving problems than distant bureaucrats. They believe that government intervention often creates unintended consequences, stifles innovation, and reduces personal freedom. They point to the success of free markets and voluntary associations as evidence that people can thrive without heavy handed regulation.\n\nThose who favor active government argue that markets alone cannot address issues like poverty, pollution, or discrimination. They believe that government has a responsibility to protect the vulnerable, to provide public goods, and to ensure that everyone has access to basic necessities like health care and education. They point to programs like Social Security and Medicare as evidence that government can improve people's lives.\n\nIn practice, most Americans fall somewhere in the middle. They want government to be effective but not intrusive, to provide a safety net but not to stifle initiative. The challenge is to find the right balance, and that balance may shift depending on circumstances and values.",
-        },
-        {
-          id: "federalism-practice",
-          title: "Federalism in Practice",
-          content:
-            "Federalism divides power between the national government and the states, but the line between federal and state authority has always been contested. Some issues, like national defense and interstate commerce, clearly belong to the federal government. Others, like education and policing, are primarily state and local responsibilities. But many issues fall into a gray area.\n\nIn practice, federalism allows for experimentation and diversity. States can try different approaches to problems, and successful policies can be adopted by others. This is sometimes called the laboratory of democracy. It also allows regions to reflect their own values and priorities, so that a policy that works in one state may not be imposed on another.\n\nHowever, federalism can also lead to inequality and conflict. If some states provide better services or stronger protections than others, then people's rights and opportunities may depend on where they live. And when states and the federal government disagree, the result can be legal battles and confusion.\n\nThe challenge is to preserve the benefits of federalism—diversity, experimentation, and local control—while also ensuring that basic rights and standards are protected nationwide. This requires ongoing negotiation and a willingness to respect both state autonomy and national unity.",
-        },
-      ],
-    },
-    {
-      id: "community-common-good",
-      title: "Community and the Common Good",
-      description: "Balancing individual rights with collective responsibilities",
-      subsections: [
-        {
-          id: "individualism-community",
-          title: "Individualism and Community",
-          content:
-            "American culture celebrates individualism, but individuals do not exist in isolation. People are born into families, grow up in communities, and depend on others for support, education, and opportunity. The challenge is to honor individual freedom while also recognizing the importance of community and the common good.\n\nIndividualism emphasizes personal responsibility, self reliance, and the right to pursue one's own goals. It has inspired countless stories of people who overcame obstacles and achieved success through hard work and determination. But individualism can also lead to isolation, competition, and a lack of concern for others.\n\nCommunity emphasizes connection, cooperation, and shared responsibility. It recognizes that people are stronger together and that some problems can only be solved through collective action. But an overemphasis on community can lead to conformity, the suppression of individual initiative, and the tyranny of the majority.\n\nThe best outcomes often come when individuals see themselves as part of a larger whole, and when communities respect the rights and dignity of each person. This requires a balance between personal freedom and social responsibility, between pursuing one's own interests and contributing to the common good.",
-        },
-        {
-          id: "civic-virtue",
-          title: "Civic Virtue",
-          content:
-            "Civic virtue is the quality of being a good citizen. It includes honesty, integrity, respect for the law, and a willingness to put the common good ahead of narrow self interest. Civic virtue is not just about following rules; it is about actively contributing to the health and vitality of the community.\n\nIn a democracy, civic virtue is essential. When citizens are informed, engaged, and willing to serve, democracy thrives. When they are apathetic, cynical, or focused only on their own interests, democracy weakens. Civic virtue means voting, serving on juries, paying taxes, and obeying the law. It also means speaking up when government oversteps its bounds and defending the rights of others.\n\nCivic virtue also includes qualities like tolerance, humility, and a willingness to listen to others. It means engaging in good faith debate, respecting those who disagree, and being willing to change one's mind in light of new evidence. It means recognizing that no one has a monopoly on truth and that democracy depends on the ability of people to work together despite their differences.\n\nCivic virtue cannot be mandated by law; it must be cultivated through education, example, and practice. When citizens take their responsibilities seriously and act with integrity, they strengthen the bonds that hold society together and ensure that self government remains possible.",
-        },
-      ],
-    },
-    {
-      id: "national-identity",
-      title: "National Identity and Global Responsibility",
-      description: "America's role in the world and its relationship to other nations",
-      subsections: [
-        {
-          id: "american-exceptionalism",
-          title: "American Exceptionalism",
-          content:
-            "American exceptionalism is the idea that the United States is unique among nations, with a special role to play in the world. This belief has deep roots in American history, from the Puritan vision of a city on a hill to the 20th century idea of America as the leader of the free world.\n\nSupporters of American exceptionalism argue that the United States has a unique commitment to liberty, democracy, and human rights, and that it has a responsibility to promote these values abroad. They point to America's role in defeating fascism and communism, and to its leadership in international institutions and humanitarian efforts.\n\nCritics argue that American exceptionalism can lead to arrogance, imperialism, and a disregard for the rights and perspectives of other nations. They point to America's history of slavery, segregation, and military interventions as evidence that the United States is not always a force for good. They argue that America should focus on addressing its own problems before trying to reshape the world.\n\nThe debate over American exceptionalism is ultimately a debate about America's role in the world. Should the United States lead, or should it step back? Should it promote its values abroad, or should it respect the sovereignty of other nations? These questions do not have simple answers, but they reflect the ongoing effort to define what it means to be an American in a globalized world.",
-        },
-        {
-          id: "isolationism-interventionism",
-          title: "Isolationism vs. Interventionism",
-          content:
-            "Isolationism and interventionism represent two different approaches to foreign policy. Isolationism emphasizes avoiding entangling alliances, focusing on domestic concerns, and staying out of foreign conflicts. Interventionism emphasizes engaging with the world, promoting American values, and using military and economic power to shape global events.\n\nIsolationists argue that America should focus on its own problems and avoid the costs and risks of foreign entanglements. They point to the failures of interventions in Vietnam, Iraq, and Afghanistan as evidence that trying to reshape other countries often backfires. They believe that America is safer and more prosperous when it minds its own business.\n\nInterventionists argue that America cannot afford to ignore the world. They believe that threats abroad can quickly become threats at home, and that American leadership is necessary to maintain global stability. They point to the success of interventions in World War II and the Cold War as evidence that America can be a force for good.\n\nIn practice, American foreign policy has oscillated between these two poles. The challenge is to find a balance that protects American interests and values without overextending the nation's resources or imposing its will on others. This requires careful judgment, a clear understanding of national interests, and a willingness to learn from past mistakes.",
+    title: "Principles in Practice",
+    icon: "balance",
+    description: "How American principles operate in real world systems and civic life",
+    sections: [
+      {
+        id: "rule-of-law",
+        title: "Rule of Law",
+        description: "The idea that laws apply to everyone",
+        subsections: [
+          {
+            id: "rol-meaning",
+            title: "What It Means",
+            content:
+              "The rule of law means that rules, not personal whims, govern a nation. Presidents, judges, police officers, and ordinary citizens are all supposed to live under the same basic standards. No one is meant to be too important for the law and no one is meant to be too small for its protection.\n\nIn practice this idea shapes everything from how traffic tickets are handled to how elections are run. Laws are written down, procedures are spelled out, and decisions can be reviewed or appealed. This does not guarantee perfection, but it creates a framework where unfair treatment can be challenged instead of simply endured.\n\nThe rule of law also sets limits on what government may do. Officials must tie their actions to an actual law or constitutional power. When they cannot, courts and citizens have grounds to push back. This keeps authority from slowly turning into arbitrary power.\n\nA nation that honors the rule of law does more than punish wrongdoing. It builds habits of fairness, accountability, and predictability that allow people to plan, invest, and raise families with confidence that the rules will not suddenly change at someone's convenience.",
+          },
+          {
+            id: "rol-courts",
+            title: "Courts and Justice",
+            content:
+              "Courts are one of the main tools for enforcing the rule of law. They provide a place where people can bring disputes, present evidence, and have a neutral judge or jury decide what the law requires. This process is slower than rule by decree, but it helps protect individuals from anger, favoritism, or fear.\n\nCriminal courts determine whether someone has broken the law and what punishment is appropriate. Civil courts settle conflicts over contracts, property, family matters, and other disagreements between private parties. In both settings, procedures such as notice, the right to be heard, and the right to appeal are designed to keep the process honest.\n\nCourts also review the actions of government. When a law or policy appears to cross constitutional lines, judges can strike it down or narrow its reach. This power is not meant to make courts the rulers of the country, but to ensure that every branch stays within the limits the people have set.\n\nA healthy justice system requires more than good paper rules. It needs judges who are independent, jurors who take their duty seriously, and citizens who are willing to serve as witnesses, follow the law, and accept outcomes even when they disagree. When these pieces work together, courts become a safeguard for liberty rather than just a place of punishment.",
+          },
+        ],
+      },
+      {
+        id: "checks-balances",
+        title: "Checks and Balances",
+        description:
+          "The system of checks and balances prevents any one branch of government from becoming too powerful",
+        subsections: [
+          {
+            id: "cb-structure",
+            title: "Structure of the System",
+            content:
+              "Checks and balances grow out of the Constitution's decision to separate power among three branches: legislative, executive, and judicial. Each branch is given its own tools and responsibilities, but also specific ways to influence or limit the others. Congress writes the laws and controls taxing and spending. The President carries out the laws and leads the executive agencies. The courts interpret the laws and decide whether they agree with the Constitution.\n\nThese powers overlap on purpose. A President can veto a bill passed by Congress, but Congress can override that veto with a large enough majority. The Senate must confirm many of the President's appointments and treaties, so the executive cannot operate entirely on its own. Courts can strike down actions by either Congress or the President if they violate constitutional limits.\n\nThis constant interaction forms a web of restraint. It slows down sudden swings of power and forces leaders to negotiate, persuade, and build coalitions rather than ruling by decree. While the system can be frustrating when people want fast change, it is designed to protect liberty by making it hard for any person or faction to capture the entire government.\n\nThe structure of checks and balances also encourages each branch to guard its own authority. When one branch pushes too far, the others have both the power and the incentive to push back. This tug of war is not a flaw in the American system; it is one of the ways the Constitution keeps freedom safer over time.",
+          },
+          {
+            id: "cb-gridlock",
+            title: "Why Gridlock Happens",
+            content:
+              "What many people call gridlock is often the visible side effect of checks and balances doing their work. When different branches or parties strongly disagree, the system makes it difficult for one side to impose its will. Bills may stall, appointments may be delayed, and big proposals may be watered down or blocked entirely. This can feel inefficient, especially in moments of crisis, but it is meant to slow decisions that have not earned broad support.\n\nThe United States is a large, diverse country, and citizens do not agree on every issue. Checks and balances force leaders to build enough agreement to move forward. When that agreement does not exist, the default is often inaction. While this can be frustrating, it prevents sudden swings in policy that could destabilize people's lives, businesses, and communities.\n\nOf course, there are times when gridlock reflects more than honest disagreement. Partisan gamesmanship, personal ambition, and media pressure can all encourage politicians to block the other side simply to claim a victory. That kind of stalemate can erode public trust and make citizens feel that government cannot solve real problems.\n\nEven then, the answer is not to abandon checks and balances but to use them wisely. Citizens can reward leaders who compromise in good faith and punish those who treat every issue as a battlefield. The goal is not endless standoff but careful decision making that respects both majority rule and the rights of those who disagree.",
+          },
+        ],
+      },
+      {
+        id: "federalism",
+        title: "Federalism",
+        description:
+          "How authority is divided between the national government and the states",
+        subsections: [
+          {
+            id: "fed-overview",
+            title: "Overview",
+            content:
+              "Federalism reflects the belief that government power should be shared rather than concentrated. The Constitution gives certain authority to the national government, such as defense, currency, and interstate matters. Other powers remain with the states, which govern local issues like schools, police, and many areas of civil life. This division allows the system to balance unity with local control.\n\nThe states act as laboratories of democracy. They can test different approaches to education, transportation, public safety, and economic policy. When a policy works well in one place, other states may adopt it. When it fails, the consequences are contained rather than felt across the entire nation.\n\nFederalism also protects freedom by preventing any single authority from controlling every aspect of life. Citizens can influence government at multiple levels, participate in local decisions, and hold leaders accountable through elections and public engagement.\n\nAt its best, federalism encourages cooperation and experimentation. It allows communities to reflect their own character while still remaining part of a unified nation.",
+          },
+          {
+            id: "fed-tensions",
+            title: "Tensions and Cooperation",
+            content:
+              "Cooperation between states and the federal government is essential, but disagreements are inevitable. Issues related to commerce, environment, transportation, and public health often require coordination across state lines. When responsibilities overlap, debates arise about which level of government should take the lead.\n\nThese tensions are part of the constitutional design. The boundaries between state and federal authority were left flexible in some areas so that the nation could adapt to new circumstances. Throughout American history, courts have played a major role in clarifying these boundaries as cases arise.\n\nDuring crises such as wars, natural disasters, or economic downturns, cooperation often becomes more urgent. States may request federal assistance, and national leaders may rely on state agencies to carry out major programs. This partnership can strengthen resilience when it works well.\n\nHealthy federalism does not eliminate conflict. Instead, it uses structured disagreement as a tool for balance, innovation, and shared responsibility.",
+          },
+        ],
+      },
+      {
+        id: "civil-liberty",
+        title: "Civil Liberties",
+        description:
+          "The rights and freedoms that protect individuals from government overreach",
+        subsections: [
+          {
+            id: "cl-rights",
+            title: "What Rights Protect",
+            content:
+              "Civil liberties are the guarantees that limit government power and protect individual freedom. They include freedom of speech, freedom of religion, due process of law, and the right to assemble. These principles ensure that citizens can think, worship, speak, and gather without fear of government punishment.\n\nMany of these rights are rooted in the Bill of Rights, but they have been interpreted and expanded over time. Courts have refined the meaning of free expression, privacy, and fair procedure in response to new challenges. The result is a framework designed to protect personal freedom while allowing society to address real concerns.\n\nCivil liberties also require public vigilance. Rights can erode gradually if people grow indifferent to them or if officials prioritize convenience over principle. Citizens who understand their rights are better equipped to defend them.\n\nIn daily life, civil liberties create space for dissent, belief, creativity, and private life. They help ensure that America remains a place where ideas can compete without coercion.",
+          },
+          {
+            id: "cl-responsibility",
+            title: "Rights and Responsibility",
+            content:
+              "Civil liberties give citizens broad freedom, but rights work best when paired with responsibility. The freedom of speech protects your right to express your beliefs, but it also implies a duty to use that freedom thoughtfully. The free exercise of religion allows people to worship according to conscience, but it also asks citizens to respect the same freedom for others.\n\nRights place limits on what government can do, but they do not remove the need for communities to maintain order and respect. Exercising liberty requires self control, honesty, and willingness to live peaceably with those who hold different viewpoints.\n\nIn moments of crisis or tension, debates often arise about how to balance freedom with public safety. These debates have occurred throughout American history. When handled with care, they allow society to protect the vulnerable while preserving essential liberties.\n\nCivil liberties are strongest when citizens remember that freedom is not only something to defend from outside threats but also something to practice with courage and integrity every day.",
         },
       ],
     },

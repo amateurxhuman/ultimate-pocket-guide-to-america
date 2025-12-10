@@ -4,6 +4,7 @@ import { civicliteracyData } from './civicliteracyData';
 import { politicallandscapeData } from './politicallandscapeData';
 import { principlespracticeData } from './principlespracticeData';
 import { landlifeData } from './landlifeData';
+import { historyData } from './historyData';
 
 export interface SubSection {
   id: string;
@@ -37,8 +38,13 @@ export const contentData: MainSection[] = [
   landlifeData,
 ];
 
+export const allContentData: MainSection[] = [
+  ...contentData,
+  historyData,
+];
+
 export function getSectionById(sectionId: string): MainSection | undefined {
-  return contentData.find((section) => section.id === sectionId);
+  return allContentData.find((section) => section.id === sectionId);
 }
 
 export function getSubSectionById(

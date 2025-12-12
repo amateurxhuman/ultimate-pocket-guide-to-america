@@ -1,111 +1,199 @@
-
-import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FAVORITES_KEY = 'favorites';
 
 interface FavoritesContextType {
   favorites: string[];
-  addFavorite: (id: string) => void;
-  removeFavorite: (id: string) => void;
-  toggleFavorite: (id: string) => void;
+  addFavorite: (id: string) => Promise<void>;
+  removeFavorite: (id: string) => Promise<void>;
+  toggleFavorite: (id: string) => Promise<void>;
   isFavorite: (id: string) => boolean;
+  clearAllFavorites: () => Promise<void>;
+  getFavoritesCount: () => number;
+  isLoaded: boolean;
 }
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
 
+/**
+ * Favorites Provider Component
+ * Manages user's favorited items with persistence
+ */
 export function FavoritesProvider({ children }: { children: ReactNode }) {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  /**
+   * Load favorites on mount
+   */
   useEffect(() => {
     loadFavorites();
   }, []);
 
+  /**
+   * Load favorites from AsyncStorage
+   */
   const loadFavorites = async () => {
     try {
       const savedFavorites = await AsyncStorage.getItem(FAVORITES_KEY);
+      
       if (savedFavorites) {
         const parsed = JSON.parse(savedFavorites);
+        // Validate it's an array
         setFavorites(Array.isArray(parsed) ? parsed : []);
+      } else {
+        setFavorites([]);
       }
-      setIsLoaded(true);
     } catch (error) {
       if (__DEV__) {
-        console.log('Error loading favorites:', error);
+        console.error('Error loading favorites:', error);
       }
       setFavorites([]);
+    } finally {
       setIsLoaded(true);
     }
   };
 
-  const saveFavorites = async (newFavorites: string[]) => {
+  /**
+   * Save favorites to AsyncStorage
+   * Centralized save function to avoid duplication
+   */
+  const saveFavorites = async (newFavorites: string[]): Promise<void> => {
     try {
       await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites));
-      setFavorites(newFavorites);
     } catch (error) {
       if (__DEV__) {
-        console.log('Error saving favorites:', error);
+        console.error('Error saving favorites:', error);
       }
+      throw error;
     }
   };
 
-  const addFavorite = useCallback((id: string) => {
+  /**
+   * Add item to favorites
+   */
+  const addFavorite = useCallback(async (id: string): Promise<void> => {
     setFavorites((current) => {
+      // Prevent duplicates
       if (current.includes(id)) {
         return current;
       }
+      
       const newFavorites = [...current, id];
-      AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites)).catch((error) => {
+      
+      // Save asynchronously
+      saveFavorites(newFavorites).catch((error) => {
         if (__DEV__) {
-          console.log('Error saving favorites:', error);
+          console.error('Error saving favorites:', error);
         }
       });
+      
       return newFavorites;
     });
   }, []);
 
-  const removeFavorite = useCallback((id: string) => {
+  /**
+   * Remove item from favorites
+   */
+  const removeFavorite = useCallback(async (id: string): Promise<void> => {
     setFavorites((current) => {
       const newFavorites = current.filter((fav) => fav !== id);
-      AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites)).catch((error) => {
+      
+      // Save asynchronously
+      saveFavorites(newFavorites).catch((error) => {
         if (__DEV__) {
-          console.log('Error saving favorites:', error);
+          console.error('Error saving favorites:', error);
         }
       });
+      
       return newFavorites;
     });
   }, []);
 
-  const toggleFavorite = useCallback((id: string) => {
+  /**
+   * Toggle favorite status
+   */
+  const toggleFavorite = useCallback(async (id: string): Promise<void> => {
     setFavorites((current) => {
       const newFavorites = current.includes(id)
         ? current.filter((fav) => fav !== id)
         : [...current, id];
-      AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites)).catch((error) => {
+      
+      // Save asynchronously
+      saveFavorites(newFavorites).catch((error) => {
         if (__DEV__) {
-          console.log('Error saving favorites:', error);
+          console.error('Error saving favorites:', error);
         }
       });
+      
       return newFavorites;
     });
   }, []);
 
-  const isFavorite = useCallback((id: string) => {
+  /**
+   * Check if item is favorited
+   */
+  const isFavorite = useCallback((id: string): boolean => {
     return favorites.includes(id);
   }, [favorites]);
 
+  /**
+   * Clear all favorites
+   */
+  const clearAllFavorites = useCallback(async (): Promise<void> => {
+    try {
+      await AsyncStorage.removeItem(FAVORITES_KEY);
+      setFavorites([]);
+    } catch (error) {
+      if (__DEV__) {
+        console.error('Error clearing favorites:', error);
+      }
+      throw error;
+    }
+  }, []);
+
+  /**
+   * Get total count of favorites
+   */
+  const getFavoritesCount = useCallback((): number => {
+    return favorites.length;
+  }, [favorites]);
+
+  /**
+   * Memoize context value to prevent unnecessary re-renders
+   */
+  const contextValue = useMemo(
+    () => ({
+      favorites,
+      addFavorite,
+      removeFavorite,
+      toggleFavorite,
+      isFavorite,
+      clearAllFavorites,
+      getFavoritesCount,
+      isLoaded,
+    }),
+    [favorites, addFavorite, removeFavorite, toggleFavorite, isFavorite, clearAllFavorites, getFavoritesCount, isLoaded]
+  );
+
   return (
-    <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite, toggleFavorite, isFavorite }}>
+    <FavoritesContext.Provider value={contextValue}>
       {children}
     </FavoritesContext.Provider>
   );
 }
 
-export function useFavorites() {
+/**
+ * Hook to access favorites context
+ * @throws Error if used outside FavoritesProvider
+ */
+export function useFavorites(): FavoritesContextType {
   const context = useContext(FavoritesContext);
+  
   if (!context) {
     throw new Error('useFavorites must be used within FavoritesProvider');
   }
+  
   return context;
 }

@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   ScrollView,
@@ -7,19 +6,22 @@ import {
   Text,
   Pressable,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useTextSize } from "@/contexts/TextSizeContext";
 import { MainSection } from "@/data/contentData";
-import { IconSymbol } from "@/components/IconSymbol";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { AppFooter } from "@/components/AppFooter";
 import * as Haptics from "expo-haptics";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
+  FadeInDown,
 } from "react-native-reanimated";
+import { LinearGradient } from "expo-linear-gradient";
 
 interface SectionListProps {
   mainSection: MainSection;
@@ -34,6 +36,10 @@ const FOUNDING_DOCUMENTS = [
   "federalist-papers",
 ];
 
+/**
+ * SectionList Component
+ * Displays a list of sections and subsections with beautiful animations
+ */
 export function SectionList({
   mainSection,
   showCustomHeader = true,
@@ -48,6 +54,12 @@ export function SectionList({
     return (
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.errorContainer}>
+          <MaterialIcons
+            name="error-outline"
+            size={48}
+            color={colors.textSecondary}
+            style={styles.errorIcon}
+          />
           <Text style={[styles.errorText, { color: colors.text }]}>
             Content not available
           </Text>
@@ -58,7 +70,9 @@ export function SectionList({
 
   const navigateToItem = (subsectionId: string) => {
     try {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      if (Platform.OS !== 'web') {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }
     } catch (error) {
       if (__DEV__) {
         console.log('Haptics error:', error);
@@ -84,9 +98,22 @@ export function SectionList({
         <View
           style={[
             styles.customHeader,
-            { backgroundColor: colors.background, borderBottomColor: colors.card },
+            { 
+              backgroundColor: colors.background,
+            },
           ]}
         >
+          <LinearGradient
+            colors={[
+              colors.primary + '00',
+              colors.primary + '20',
+              colors.primary + '00',
+            ]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.headerBorder}
+          />
+          
           <TouchableOpacity
             onPress={() => {
               try {
@@ -101,19 +128,20 @@ export function SectionList({
             accessibilityLabel="Go back"
             accessibilityRole="button"
           >
-            <IconSymbol
-              ios_icon_name="chevron.left"
-              android_material_icon_name="arrow_back"
+            <MaterialIcons
+              name="arrow-back"
               size={24}
               color={colors.text}
             />
           </TouchableOpacity>
+          
           <Text
             style={[styles.headerTitle, { color: colors.text }]}
             numberOfLines={1}
           >
             {mainSection.title || "Content"}
           </Text>
+          
           <View style={styles.headerSpacer} />
         </View>
       )}
@@ -122,36 +150,70 @@ export function SectionList({
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.header}>
+        {/* Page Header */}
+        <Animated.View 
+          style={styles.header}
+          entering={FadeInDown.duration(400)}
+        >
           <Text
-            style={[styles.title, { color: colors.text, fontSize: 30 * textMultiplier }]}
+            style={[
+              styles.title, 
+              { 
+                color: colors.text, 
+                fontSize: 30 * textMultiplier 
+              }
+            ]}
             accessibilityRole="header"
           >
             {mainSection.title || "Content"}
           </Text>
           {mainSection.description && (
-            <Text style={[styles.description, { color: colors.textSecondary, fontSize: 15 * textMultiplier }]}>
+            <Text 
+              style={[
+                styles.description, 
+                { 
+                  color: colors.textSecondary, 
+                  fontSize: 15 * textMultiplier 
+                }
+              ]}
+            >
               {mainSection.description}
             </Text>
           )}
-        </View>
+        </Animated.View>
 
+        {/* Sections */}
         <View style={styles.sectionsContainer}>
           {mainSection.sections.map((section, sectionIndex) => {
             // Safety checks
             if (!section || !section.subsections) return null;
 
             return (
-              <View key={`section-${sectionIndex}`} style={styles.sectionGroup}>
+              <Animated.View 
+                key={`section-${sectionIndex}`} 
+                style={styles.sectionGroup}
+                entering={FadeInDown.delay((sectionIndex + 1) * 100).springify()}
+              >
                 <View style={styles.sectionHeader}>
-                  <Text style={[styles.sectionTitle, { color: colors.text, fontSize: 19 * textMultiplier }]}>
+                  <Text 
+                    style={[
+                      styles.sectionTitle, 
+                      { 
+                        color: colors.text, 
+                        fontSize: 19 * textMultiplier 
+                      }
+                    ]}
+                  >
                     {section.title || "Section"}
                   </Text>
                   {section.description && (
                     <Text
                       style={[
                         styles.sectionDescription,
-                        { color: colors.textSecondary, fontSize: 13 * textMultiplier },
+                        { 
+                          color: colors.textSecondary, 
+                          fontSize: 13 * textMultiplier 
+                        },
                       ]}
                     >
                       {section.description}
@@ -178,7 +240,7 @@ export function SectionList({
                     );
                   })}
                 </View>
-              </View>
+              </Animated.View>
             );
           })}
         </View>
@@ -189,6 +251,9 @@ export function SectionList({
   );
 }
 
+/**
+ * Subsection Card Component with animations
+ */
 function SubsectionCard({
   subsection,
   isDocument,
@@ -205,21 +270,17 @@ function SubsectionCard({
   onPress: () => void;
 }) {
   const scale = useSharedValue(1);
-  const opacity = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
-    opacity: opacity.value,
   }));
 
   const handlePressIn = () => {
-    scale.value = withSpring(0.97, { damping: 15, stiffness: 300 });
-    opacity.value = withSpring(0.8, { damping: 15, stiffness: 300 });
+    scale.value = withSpring(0.97, { damping: 12, stiffness: 200 });
   };
 
   const handlePressOut = () => {
-    scale.value = withSpring(1, { damping: 15, stiffness: 300 });
-    opacity.value = withSpring(1, { damping: 15, stiffness: 300 });
+    scale.value = withSpring(1, { damping: 12, stiffness: 200 });
   };
 
   return (
@@ -235,37 +296,56 @@ function SubsectionCard({
           styles.subsectionCard,
           {
             backgroundColor: colors.card,
-            borderColor: colors.primary + "20",
             ...shadows.small,
           },
           animatedStyle,
         ]}
       >
+        {/* Left accent */}
+        <LinearGradient
+          colors={[
+            colors.primary + 'E6',
+            colors.goldGradientEnd + 'CC',
+          ]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={styles.cardAccent}
+        />
+
         <View style={styles.subsectionContent}>
           {isDocument && (
             <View
               style={[
                 styles.documentBadge,
-                { backgroundColor: colors.primary + "20" },
+                { backgroundColor: colors.primary + "25" },
               ]}
             >
-              <IconSymbol
-                ios_icon_name="doc.text.fill"
-                android_material_icon_name="description"
-                size={12}
+              <MaterialIcons
+                name="description"
+                size={14}
                 color={colors.primary}
               />
             </View>
           )}
-          <Text style={[styles.subsectionTitle, { color: colors.text, fontSize: 16 * textMultiplier }]}>
+          <Text 
+            style={[
+              styles.subsectionTitle, 
+              { 
+                color: colors.text, 
+                fontSize: 16 * textMultiplier 
+              }
+            ]}
+            numberOfLines={2}
+          >
             {subsection.title || "Untitled"}
           </Text>
         </View>
-        <IconSymbol
-          ios_icon_name="chevron.right"
-          android_material_icon_name="chevron_right"
-          size={20}
+        
+        <MaterialIcons
+          name="chevron-right"
+          size={22}
           color={colors.textSecondary}
+          style={styles.chevron}
         />
       </Animated.View>
     </Pressable>
@@ -281,9 +361,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingTop: 48,
+    paddingTop: Platform.OS === 'android' ? 48 : 56,
     paddingBottom: 12,
-    borderBottomWidth: 1,
+    position: 'relative',
+  },
+  headerBorder: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 1,
   },
   backButton: {
     padding: 8,
@@ -304,7 +391,7 @@ const styles = StyleSheet.create({
     width: 44,
   },
   scrollContent: {
-    paddingTop: 32,
+    paddingTop: 24,
     paddingHorizontal: 16,
     paddingBottom: 120,
   },
@@ -313,16 +400,16 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    fontWeight: "bold",
-    marginBottom: 8,
-    lineHeight: 43.5,
+    fontWeight: "800",
+    marginBottom: 10,
+    letterSpacing: -0.5,
   },
   description: {
     fontSize: 15,
-    lineHeight: 21.75,
+    lineHeight: 22,
   },
   sectionsContainer: {
-    gap: 28,
+    gap: 32,
   },
   sectionGroup: {
     marginBottom: 8,
@@ -332,13 +419,13 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 19,
-    fontWeight: "600",
+    fontWeight: "700",
     marginBottom: 6,
-    lineHeight: 27.55,
+    letterSpacing: 0.2,
   },
   sectionDescription: {
     fontSize: 13,
-    lineHeight: 18.85,
+    lineHeight: 19,
   },
   subsectionsContainer: {
     gap: 12,
@@ -346,29 +433,41 @@ const styles = StyleSheet.create({
   subsectionCard: {
     flexDirection: "row",
     padding: 16,
-    borderRadius: 12,
+    borderRadius: 14,
     alignItems: "center",
-    borderWidth: 1,
-    minHeight: 44,
+    minHeight: 60,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  cardAccent: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 3,
   },
   subsectionContent: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    gap: 12,
   },
   documentBadge: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     justifyContent: "center",
     alignItems: "center",
   },
   subsectionTitle: {
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: "600",
     flex: 1,
-    lineHeight: 23.2,
+    letterSpacing: 0.2,
+  },
+  chevron: {
+    marginLeft: 8,
+    opacity: 0.6,
   },
   errorContainer: {
     flex: 1,
@@ -376,8 +475,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 32,
   },
+  errorIcon: {
+    marginBottom: 16,
+  },
   errorText: {
     fontSize: 18,
     fontWeight: '600',
+    textAlign: 'center',
   },
 });

@@ -1,18 +1,20 @@
-
 import React from "react";
 import { View, StyleSheet, Alert } from "react-native";
-import { IconSymbol } from "@/components/IconSymbol";
-import { useTheme } from "@react-navigation/native";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useTheme } from "@/contexts/ThemeContext";
 
+/**
+ * Header Right Button Component
+ * Displays an action button in the header (right side)
+ */
 export function HeaderRightButton() {
-  const theme = useTheme();
-
+  const { colors } = useTheme();
+  
   return (
     <View style={styles.headerButtonContainer}>
-      <IconSymbol
-        ios_icon_name="plus"
-        android_material_icon_name="add"
-        color={theme.colors.primary}
+      <MaterialIcons
+        name="add"
+        color={colors.primary}
         size={24}
         onPress={() =>
           Alert.alert(
@@ -25,15 +27,18 @@ export function HeaderRightButton() {
   );
 }
 
+/**
+ * Header Left Button Component
+ * Displays a settings button in the header (left side)
+ */
 export function HeaderLeftButton() {
-  const theme = useTheme();
-
+  const { colors } = useTheme();
+  
   return (
     <View style={styles.headerButtonContainer}>
-      <IconSymbol
-        ios_icon_name="gear"
-        android_material_icon_name="settings"
-        color={theme.colors.primary}
+      <MaterialIcons
+        name="settings"
+        color={colors.primary}
         size={24}
         onPress={() =>
           Alert.alert(
@@ -49,5 +54,7 @@ export function HeaderLeftButton() {
 const styles = StyleSheet.create({
   headerButtonContainer: {
     padding: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,30 +7,50 @@ import {
   TouchableOpacity,
   Platform,
   Linking,
+  Switch,
 } from 'react-native';
 import { Stack } from 'expo-router';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useTextSize } from '@/contexts/TextSizeContext';
-import { IconSymbol } from '@/components/IconSymbol';
+import { useFavorites } from '@/contexts/FavoritesContext';
+import { useReadingHistory } from '@/contexts/ReadingHistoryContext';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Constants from 'expo-constants';
 import * as Haptics from 'expo-haptics';
+import { LinearGradient } from 'expo-linear-gradient';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  withSequence,
+  FadeInDown,
+} from 'react-native-reanimated';
 
 type TextSize = 'small' | 'default' | 'large' | 'extra-large';
 
-const TEXT_SIZE_OPTIONS: { value: TextSize; label: string }[] = [
-  { value: 'small', label: 'Small' },
-  { value: 'default', label: 'Default' },
-  { value: 'large', label: 'Large' },
-  { value: 'extra-large', label: 'Extra Large' },
+const TEXT_SIZE_OPTIONS: { value: TextSize; label: string; icon: string }[] = [
+  { value: 'small', label: 'Small', icon: 'A' },
+  { value: 'default', label: 'Default', icon: 'A' },
+  { value: 'large', label: 'Large', icon: 'A' },
+  { value: 'extra-large', label: 'XL', icon: 'A' },
 ];
 
+/**
+ * Premium Settings Screen Component
+ * Beautiful, modern settings with glassmorphism and smooth animations
+ */
 export default function SettingsScreen() {
   const { colors, isDark, theme, setTheme, shadows } = useTheme();
   const { textSize, setTextSize } = useTextSize();
+  const { clearAllFavorites, getFavoritesCount } = useFavorites();
+  const { clearHistory } = useReadingHistory();
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   const handleThemeToggle = async () => {
     try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      if (Platform.OS !== 'web') {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      }
     } catch (error) {
       if (__DEV__) {
         console.log('Haptics error:', error);
@@ -43,7 +62,9 @@ export default function SettingsScreen() {
 
   const handleTextSizeChange = async (size: TextSize) => {
     try {
-      await Haptics.selectionAsync();
+      if (Platform.OS !== 'web') {
+        Haptics.selectionAsync();
+      }
     } catch (error) {
       if (__DEV__) {
         console.log('Haptics error:', error);
@@ -54,7 +75,9 @@ export default function SettingsScreen() {
 
   const handleOpenWebsite = async () => {
     try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      if (Platform.OS !== 'web') {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }
     } catch (error) {
       if (__DEV__) {
         console.log('Haptics error:', error);
@@ -71,7 +94,9 @@ export default function SettingsScreen() {
 
   const handleOpenDeveloperSite = async () => {
     try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      if (Platform.OS !== 'web') {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }
     } catch (error) {
       if (__DEV__) {
         console.log('Haptics error:', error);
@@ -86,210 +111,564 @@ export default function SettingsScreen() {
     }
   };
 
+  const handleClearData = async () => {
+    try {
+      if (Platform.OS !== 'web') {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+      }
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Haptics error:', error);
+      }
+    }
+
+    try {
+      await Promise.all([
+        clearAllFavorites(),
+        clearHistory(),
+      ]);
+      
+      try {
+        if (Platform.OS !== 'web') {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        }
+      } catch (error) {
+        if (__DEV__) {
+          console.log('Haptics error:', error);
+        }
+      }
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Error clearing data:', error);
+      }
+    }
+  };
+
   const appVersion = Constants.expoConfig?.version || '1.0.0';
+  const favoritesCount = getFavoritesCount();
 
   return (
     <>
       <Stack.Screen
         options={{
           title: 'Settings',
-          headerShown: true,
-          headerTintColor: colors.text,
-          headerStyle: { backgroundColor: colors.card },
+          headerShown: false,
         }}
       />
-      <ScrollView
-        style={[styles.container, { backgroundColor: colors.background }]}
-        contentContainerStyle={styles.scrollContent}
-      >
-        {/* THEME SECTION */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-            APPEARANCE
-          </Text>
-          
-          <View style={[styles.card, { backgroundColor: colors.card, ...shadows.small }]}>
-            <View style={styles.settingRow}>
-              <View style={styles.settingLeft}>
-                <IconSymbol
-                  ios_icon_name={isDark ? 'moon.fill' : 'sun.max.fill'}
-                  android_material_icon_name={isDark ? 'dark_mode' : 'light_mode'}
-                  size={24}
-                  color={colors.primary}
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* APPEARANCE SECTION */}
+          <Animated.View 
+            style={styles.section}
+            entering={FadeInDown.delay(0).springify()}
+          >
+            <View style={styles.sectionHeader}>
+              <MaterialIcons
+                name="palette"
+                size={18}
+                color={colors.primary}
+              />
+              <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
+                APPEARANCE
+              </Text>
+            </View>
+            
+            {/* Theme Toggle Card */}
+            <SettingCard delay={50} colors={colors} shadows={shadows}>
+              <View style={styles.settingRow}>
+                <View style={styles.settingLeft}>
+                  <View
+                    style={[
+                      styles.iconContainer,
+                      { backgroundColor: colors.primary + '20' },
+                    ]}
+                  >
+                    <MaterialIcons
+                      name={isDark ? 'dark-mode' : 'light-mode'}
+                      size={22}
+                      color={colors.primary}
+                    />
+                  </View>
+                  <View style={styles.settingTextContainer}>
+                    <Text style={[styles.settingLabel, { color: colors.text }]}>
+                      Dark Mode
+                    </Text>
+                    <Text style={[styles.settingSubtext, { color: colors.textSecondary }]}>
+                      {isDark ? 'Enabled' : 'Disabled'}
+                    </Text>
+                  </View>
+                </View>
+                
+                <AnimatedSwitch
+                  value={isDark}
+                  onValueChange={handleThemeToggle}
+                  colors={colors}
                 />
-                <Text style={[styles.settingLabel, { color: colors.text }]}>
-                  Theme
-                </Text>
               </View>
-              <TouchableOpacity
-                onPress={handleThemeToggle}
-                style={[
-                  styles.themeToggle,
-                  {
-                    backgroundColor: isDark ? colors.primary : colors.highlight,
-                    borderColor: colors.primary,
-                  },
-                ]}
-                activeOpacity={0.8}
-                accessibilityLabel={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-                accessibilityRole="button"
-              >
+            </SettingCard>
+          </Animated.View>
+
+          {/* TEXT SIZE SECTION */}
+          <Animated.View 
+            style={styles.section}
+            entering={FadeInDown.delay(100).springify()}
+          >
+            <View style={styles.sectionHeader}>
+              <MaterialIcons
+                name="format-size"
+                size={18}
+                color={colors.primary}
+              />
+              <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
+                TEXT SIZE
+              </Text>
+            </View>
+            
+            <SettingCard delay={150} colors={colors} shadows={shadows}>
+              <View style={styles.textSizeGrid}>
+                {TEXT_SIZE_OPTIONS.map((option, index) => {
+                  const isSelected = textSize === option.value;
+                  const sizeMultiplier = ['small', 'default', 'large', 'extra-large'].indexOf(option.value) * 0.15 + 0.85;
+                  
+                  return (
+                    <TextSizeButton
+                      key={option.value}
+                      option={option}
+                      isSelected={isSelected}
+                      sizeMultiplier={sizeMultiplier}
+                      colors={colors}
+                      isDark={isDark}
+                      onPress={() => handleTextSizeChange(option.value)}
+                    />
+                  );
+                })}
+              </View>
+              
+              <View style={[styles.previewContainer, { borderTopColor: colors.secondary + '30' }]}>
+                <Text style={[styles.previewLabel, { color: colors.textSecondary }]}>
+                  Preview:
+                </Text>
                 <Text
                   style={[
-                    styles.themeToggleText,
-                    { color: isDark ? colors.background : colors.primary },
+                    styles.previewText,
+                    {
+                      color: colors.text,
+                      fontSize: 16 * (textSize === 'small' ? 0.85 : textSize === 'large' ? 1.15 : textSize === 'extra-large' ? 1.3 : 1.0),
+                    },
                   ]}
                 >
-                  {isDark ? 'Dark' : 'Light'}
+                  The quick brown fox jumps over the lazy dog
                 </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
+              </View>
+            </SettingCard>
+          </Animated.View>
 
-        {/* TEXT SIZE SECTION */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-            TEXT SIZE
-          </Text>
-          
-          <View style={[styles.card, { backgroundColor: colors.card, ...shadows.small }]}>
-            <View style={styles.textSizeContainer}>
-              {TEXT_SIZE_OPTIONS.map((option, index) => {
-                const isSelected = textSize === option.value;
-                return (
-                  <TouchableOpacity
-                    key={option.value}
-                    onPress={() => handleTextSizeChange(option.value)}
-                    style={[
-                      styles.textSizeButton,
-                      {
-                        backgroundColor: isSelected ? colors.primary : colors.highlight,
-                        borderColor: isSelected ? colors.primary : colors.primary + '30',
-                      },
-                      index === 0 && styles.textSizeButtonFirst,
-                      index === TEXT_SIZE_OPTIONS.length - 1 && styles.textSizeButtonLast,
-                    ]}
-                    activeOpacity={0.8}
-                    accessibilityLabel={`Set text size to ${option.label}`}
-                    accessibilityRole="button"
-                  >
-                    <Text
-                      style={[
-                        styles.textSizeButtonText,
-                        {
-                          color: isSelected ? (isDark ? colors.background : '#FFFFFF') : colors.text,
-                        },
-                      ]}
-                    >
-                      {option.label}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-          </View>
-        </View>
-
-        {/* COMPANION SITE SECTION */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-            RESOURCES
-          </Text>
-          
-          <TouchableOpacity
-            onPress={handleOpenWebsite}
-            style={[styles.card, { backgroundColor: colors.card, ...shadows.small }]}
-            activeOpacity={0.8}
-            accessibilityLabel="Open The Human Conservative website"
-            accessibilityRole="button"
+          {/* DATA & PRIVACY SECTION */}
+          <Animated.View 
+            style={styles.section}
+            entering={FadeInDown.delay(200).springify()}
           >
-            <View style={styles.settingRow}>
-              <View style={styles.settingLeft}>
-                <IconSymbol
-                  ios_icon_name="globe"
-                  android_material_icon_name="public"
-                  size={24}
+            <View style={styles.sectionHeader}>
+              <MaterialIcons
+                name="storage"
+                size={18}
+                color={colors.primary}
+              />
+              <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
+                DATA & PRIVACY
+              </Text>
+            </View>
+            
+            <SettingCard delay={250} colors={colors} shadows={shadows}>
+              {/* Favorites Count */}
+              <View style={styles.dataRow}>
+                <View style={styles.dataLeft}>
+                  <MaterialIcons
+                    name="star"
+                    size={20}
+                    color={colors.primary}
+                  />
+                  <Text style={[styles.dataLabel, { color: colors.text }]}>
+                    Favorites
+                  </Text>
+                </View>
+                <Text style={[styles.dataValue, { color: colors.textSecondary }]}>
+                  {favoritesCount} {favoritesCount === 1 ? 'item' : 'items'}
+                </Text>
+              </View>
+
+              {/* Clear Data Button */}
+              <TouchableOpacity
+                onPress={handleClearData}
+                style={[
+                  styles.clearButton,
+                  {
+                    backgroundColor: colors.primary + '15',
+                    borderColor: colors.primary + '30',
+                  },
+                ]}
+                activeOpacity={0.7}
+                accessibilityLabel="Clear all app data"
+                accessibilityRole="button"
+              >
+                <MaterialIcons
+                  name="delete-outline"
+                  size={20}
                   color={colors.primary}
                 />
-                <View>
-                  <Text style={[styles.settingLabel, { color: colors.text }]}>
-                    Companion Website
+                <Text style={[styles.clearButtonText, { color: colors.primary }]}>
+                  Clear All Data
+                </Text>
+              </TouchableOpacity>
+            </SettingCard>
+          </Animated.View>
+
+          {/* RESOURCES SECTION */}
+          <Animated.View 
+            style={styles.section}
+            entering={FadeInDown.delay(300).springify()}
+          >
+            <View style={styles.sectionHeader}>
+              <MaterialIcons
+                name="link"
+                size={18}
+                color={colors.primary}
+              />
+              <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
+                RESOURCES
+              </Text>
+            </View>
+            
+            <LinkCard
+              delay={350}
+              icon="public"
+              title="Companion Website"
+              subtitle="thehumanconservative.com"
+              onPress={handleOpenWebsite}
+              colors={colors}
+              shadows={shadows}
+            />
+          </Animated.View>
+
+          {/* ABOUT SECTION */}
+          <Animated.View 
+            style={styles.section}
+            entering={FadeInDown.delay(400).springify()}
+          >
+            <View style={styles.sectionHeader}>
+              <MaterialIcons
+                name="info-outline"
+                size={18}
+                color={colors.primary}
+              />
+              <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
+                ABOUT
+              </Text>
+            </View>
+            
+            <SettingCard delay={450} colors={colors} shadows={shadows}>
+              {/* App Description */}
+              <View style={styles.aboutHeader}>
+                <LinearGradient
+                  colors={[
+                    colors.primary + '25',
+                    colors.highlight,
+                  ]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={styles.appIconContainer}
+                >
+                  <MaterialIcons
+                    name="flag"
+                    size={32}
+                    color={colors.primary}
+                  />
+                </LinearGradient>
+                <Text style={[styles.appName, { color: colors.text }]}>
+                  Pocket Guide to America
+                </Text>
+              </View>
+
+              <Text style={[styles.aboutBlurb, { color: colors.textSecondary }]}>
+                Your civic companion for understanding how the United States works. Explore founding documents, core principles, key eras of history, and practical tools for better citizenship.
+              </Text>
+
+              {/* Info Rows */}
+              <View style={styles.infoRows}>
+                <View style={[styles.infoRow, { borderTopColor: colors.secondary + '20' }]}>
+                  <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>
+                    Version
                   </Text>
-                  <Text style={[styles.settingSubtext, { color: colors.textSecondary }]}>
-                    thehumanconservative.com
+                  <Text style={[styles.infoValue, { color: colors.text }]}>
+                    {appVersion}
+                  </Text>
+                </View>
+
+                <TouchableOpacity
+                  onPress={handleOpenDeveloperSite}
+                  style={[styles.infoRow, { borderTopColor: colors.secondary + '20' }]}
+                  activeOpacity={0.7}
+                  accessibilityLabel="Open StormLight Foundry website"
+                  accessibilityRole="button"
+                >
+                  <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>
+                    Developer
+                  </Text>
+                  <View style={styles.developerLink}>
+                    <Text style={[styles.infoValue, { color: colors.primary }]}>
+                      StormLight Foundry
+                    </Text>
+                    <MaterialIcons
+                      name="arrow-forward"
+                      size={16}
+                      color={colors.primary}
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                <View style={[styles.infoRow, { borderTopColor: colors.secondary + '20' }]}>
+                  <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>
+                    Copyright
+                  </Text>
+                  <Text style={[styles.infoValue, { color: colors.text }]}>
+                    © 2025 StormLight Foundry
                   </Text>
                 </View>
               </View>
-              <IconSymbol
-                ios_icon_name="chevron.right"
-                android_material_icon_name="chevron_right"
-                size={20}
-                color={colors.textSecondary}
+            </SettingCard>
+          </Animated.View>
+
+          {/* Footer Spacing */}
+          <View style={styles.footerSpacer} />
+        </ScrollView>
+      </View>
+    </>
+  );
+}
+
+/**
+ * Animated Setting Card Component
+ */
+function SettingCard({ children, delay = 0, colors, shadows }: { children: React.ReactNode; delay?: number; colors: any; shadows: any }) {
+  return (
+    <Animated.View
+      style={[
+        styles.card,
+        {
+          backgroundColor: colors.card,
+          ...shadows.medium,
+        },
+      ]}
+      entering={FadeInDown.delay(delay).springify()}
+    >
+      <LinearGradient
+        colors={[
+          colors.primary + '20',
+          colors.primary + '10',
+          colors.primary + '00',
+        ]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.cardGradient}
+      />
+      {children}
+    </Animated.View>
+  );
+}
+
+/**
+ * Animated Switch Component
+ */
+function AnimatedSwitch({ value, onValueChange, colors }: any) {
+  const scale = useSharedValue(1);
+
+  const handlePress = () => {
+    scale.value = withSequence(
+      withSpring(0.9, { damping: 12 }),
+      withSpring(1, { damping: 12 })
+    );
+    onValueChange();
+  };
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  return (
+    <Animated.View style={animatedStyle}>
+      <Switch
+        value={value}
+        onValueChange={handlePress}
+        trackColor={{
+          false: colors.secondary + '50',
+          true: colors.primary + 'CC',
+        }}
+        thumbColor={value ? colors.primary : colors.textSecondary}
+        ios_backgroundColor={colors.secondary + '50'}
+      />
+    </Animated.View>
+  );
+}
+
+/**
+ * Text Size Button Component with animations
+ */
+function TextSizeButton({ option, isSelected, sizeMultiplier, colors, isDark, onPress }: any) {
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  const handlePressIn = () => {
+    scale.value = withSpring(0.92, { damping: 12, stiffness: 200 });
+  };
+
+  const handlePressOut = () => {
+    scale.value = withSpring(1, { damping: 12, stiffness: 200 });
+  };
+
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      activeOpacity={1}
+      style={styles.textSizeButtonWrapper}
+      accessibilityLabel={`Set text size to ${option.label}`}
+      accessibilityRole="button"
+    >
+      <Animated.View
+        style={[
+          styles.textSizeButton,
+          {
+            backgroundColor: isSelected ? colors.primary : colors.highlight,
+            borderColor: isSelected ? colors.primary : colors.secondary + '40',
+          },
+          animatedStyle,
+        ]}
+      >
+        {isSelected && (
+          <LinearGradient
+            colors={[
+              colors.primary,
+              colors.goldGradientEnd,
+            ]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={StyleSheet.absoluteFill}
+          />
+        )}
+        <Text
+          style={[
+            styles.textSizeIcon,
+            {
+              fontSize: 18 * sizeMultiplier,
+              color: isSelected ? (isDark ? colors.background : '#FFFFFF') : colors.text,
+            },
+          ]}
+        >
+          {option.icon}
+        </Text>
+        <Text
+          style={[
+            styles.textSizeLabel,
+            {
+              color: isSelected ? (isDark ? colors.background : '#FFFFFF') : colors.text,
+            },
+          ]}
+        >
+          {option.label}
+        </Text>
+      </Animated.View>
+    </TouchableOpacity>
+  );
+}
+
+/**
+ * Link Card Component with animations
+ */
+function LinkCard({ delay, icon, title, subtitle, onPress, colors, shadows }: any) {
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  const handlePressIn = () => {
+    scale.value = withSpring(0.97, { damping: 12, stiffness: 200 });
+  };
+
+  const handlePressOut = () => {
+    scale.value = withSpring(1, { damping: 12, stiffness: 200 });
+  };
+
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      activeOpacity={1}
+      accessibilityLabel={`Open ${title}`}
+      accessibilityRole="button"
+    >
+      <Animated.View
+        style={[
+          styles.card,
+          styles.linkCard,
+          {
+            backgroundColor: colors.card,
+            ...shadows.medium,
+          },
+          animatedStyle,
+        ]}
+        entering={FadeInDown.delay(delay).springify()}
+      >
+        <LinearGradient
+          colors={[
+            colors.primary + '20',
+            colors.primary + '10',
+            colors.primary + '00',
+          ]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.cardGradient}
+        />
+        
+        <View style={styles.linkContent}>
+          <View style={styles.linkLeft}>
+            <View
+              style={[
+                styles.iconContainer,
+                { backgroundColor: colors.primary + '20' },
+              ]}
+            >
+              <MaterialIcons
+                name={icon}
+                size={22}
+                color={colors.primary}
               />
             </View>
-          </TouchableOpacity>
-        </View>
-
-        {/* ABOUT SECTION */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-            ABOUT
-          </Text>
-          
-          <View style={[styles.card, { backgroundColor: colors.card, ...shadows.small }]}>
-            {/* Blurb */}
-            <Text style={[styles.aboutBlurb, { color: colors.text }]}>
-              Pocket Guide to America is your civic companion for understanding how the United States works. Explore founding documents, core principles, key eras of history, and practical tools for better citizenship.
-            </Text>
-
-            {/* Version Row */}
-            <View style={[styles.aboutRow, { borderTopColor: colors.primary + '20' }]}>
-              <Text style={[styles.aboutLabel, { color: colors.textSecondary }]}>
-                Version
+            <View>
+              <Text style={[styles.linkTitle, { color: colors.text }]}>
+                {title}
               </Text>
-              <Text style={[styles.aboutValue, { color: colors.text }]}>
-                {appVersion}
-              </Text>
-            </View>
-
-            {/* Developer Row */}
-            <TouchableOpacity
-              onPress={handleOpenDeveloperSite}
-              style={[styles.aboutRow, { borderTopColor: colors.primary + '20' }]}
-              activeOpacity={0.7}
-              accessibilityLabel="Open StormLight Foundry website"
-              accessibilityRole="button"
-            >
-              <Text style={[styles.aboutLabel, { color: colors.textSecondary }]}>
-                Developer
-              </Text>
-              <View style={styles.developerLink}>
-                <Text style={[styles.aboutValue, styles.linkText, { color: colors.primary }]}>
-                  StormLight Foundry
-                </Text>
-                <IconSymbol
-                  ios_icon_name="arrow.right"
-                  android_material_icon_name="arrow_forward"
-                  size={16}
-                  color={colors.primary}
-                />
-              </View>
-            </TouchableOpacity>
-
-            {/* Copyright Row */}
-            <View style={[styles.aboutRow, { borderTopColor: colors.primary + '20' }]}>
-              <Text style={[styles.aboutLabel, { color: colors.textSecondary }]}>
-                Copyright
-              </Text>
-              <Text style={[styles.aboutValue, { color: colors.text }]}>
-                © 2025 StormLight Foundry
+              <Text style={[styles.linkSubtitle, { color: colors.textSecondary }]}>
+                {subtitle}
               </Text>
             </View>
           </View>
+          <MaterialIcons
+            name="chevron-right"
+            size={22}
+            color={colors.textSecondary}
+          />
         </View>
-      </ScrollView>
-    </>
+      </Animated.View>
+    </TouchableOpacity>
   );
 }
 
@@ -298,23 +677,37 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingTop: Platform.OS === 'android' ? 24 : 16,
+    paddingTop: Platform.OS === 'android' ? 16 : 8,
     paddingHorizontal: 16,
     paddingBottom: 120,
   },
   section: {
-    marginBottom: 32,
+    marginBottom: 28,
   },
-  sectionTitle: {
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 1.2,
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
     marginBottom: 12,
     paddingHorizontal: 4,
   },
+  sectionTitle: {
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 1.5,
+  },
   card: {
-    borderRadius: 16,
-    padding: 16,
+    borderRadius: 18,
+    padding: 18,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  cardGradient: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 3,
   },
   settingRow: {
     flexDirection: 'row',
@@ -324,55 +717,142 @@ const styles = StyleSheet.create({
   settingLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
+    gap: 14,
+    flex: 1,
+  },
+  iconContainer: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  settingTextContainer: {
     flex: 1,
   },
   settingLabel: {
     fontSize: 16,
     fontWeight: '600',
-    lineHeight: 24,
+    lineHeight: 22,
+    letterSpacing: 0.2,
   },
   settingSubtext: {
     fontSize: 13,
     lineHeight: 18,
     marginTop: 2,
   },
-  themeToggle: {
-    paddingHorizontal: 20,
-    paddingVertical: 8,
-    borderRadius: 20,
-    borderWidth: 2,
-    minWidth: 80,
-    alignItems: 'center',
-  },
-  themeToggleText: {
-    fontSize: 14,
-    fontWeight: '700',
-    letterSpacing: 0.5,
-  },
-  textSizeContainer: {
+  textSizeGrid: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 10,
+    marginBottom: 18,
+  },
+  textSizeButtonWrapper: {
+    flex: 1,
   },
   textSizeButton: {
-    flex: 1,
-    paddingVertical: 12,
+    paddingVertical: 16,
     paddingHorizontal: 8,
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 6,
+    overflow: 'hidden',
   },
-  textSizeButtonFirst: {
-    borderTopLeftRadius: 12,
-    borderBottomLeftRadius: 12,
+  textSizeIcon: {
+    fontWeight: '700',
   },
-  textSizeButtonLast: {
-    borderTopRightRadius: 12,
-    borderBottomRightRadius: 12,
+  textSizeLabel: {
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 0.5,
   },
-  textSizeButtonText: {
+  previewContainer: {
+    paddingTop: 16,
+    borderTopWidth: 1,
+    gap: 8,
+  },
+  previewLabel: {
     fontSize: 12,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+  },
+  previewText: {
+    lineHeight: 24,
+  },
+  dataRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 14,
+  },
+  dataLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  dataLabel: {
+    fontSize: 15,
+    fontWeight: '600',
+    letterSpacing: 0.2,
+  },
+  dataValue: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  clearButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    paddingVertical: 14,
+    borderRadius: 12,
+    borderWidth: 2,
+  },
+  clearButtonText: {
+    fontSize: 15,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
+  linkCard: {
+    paddingVertical: 16,
+  },
+  linkContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  linkLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    flex: 1,
+  },
+  linkTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    lineHeight: 22,
+    letterSpacing: 0.2,
+    marginBottom: 2,
+  },
+  linkSubtitle: {
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  aboutHeader: {
+    alignItems: 'center',
+    marginBottom: 16,
+    gap: 12,
+  },
+  appIconContainer: {
+    width: 72,
+    height: 72,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  appName: {
+    fontSize: 20,
     fontWeight: '700',
     letterSpacing: 0.3,
     textAlign: 'center',
@@ -380,23 +860,27 @@ const styles = StyleSheet.create({
   aboutBlurb: {
     fontSize: 14,
     lineHeight: 22,
-    marginBottom: 16,
+    marginBottom: 20,
+    textAlign: 'center',
   },
-  aboutRow: {
+  infoRows: {
+    gap: 0,
+  },
+  infoRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 16,
+    paddingVertical: 14,
     borderTopWidth: 1,
   },
-  aboutLabel: {
+  infoLabel: {
     fontSize: 14,
     fontWeight: '600',
-    lineHeight: 20,
+    letterSpacing: 0.2,
   },
-  aboutValue: {
+  infoValue: {
     fontSize: 14,
-    lineHeight: 20,
+    fontWeight: '500',
     textAlign: 'right',
   },
   developerLink: {
@@ -404,7 +888,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 6,
   },
-  linkText: {
-    fontWeight: '600',
+  footerSpacer: {
+    height: 20,
   },
 });

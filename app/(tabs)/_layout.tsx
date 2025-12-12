@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { Stack, useRouter, usePathname } from "expo-router";
 import {
   View,
@@ -16,7 +16,11 @@ import { useTheme } from "@/contexts/ThemeContext";
 import FloatingTabBar from "@/components/FloatingTabBar";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import * as Haptics from "expo-haptics";
+import { BlurView } from "expo-blur";
 
+/**
+ * Menu configuration - centralized for easy maintenance
+ */
 const menuItems = [
   { label: "Home", route: "/(tabs)/(home)" },
   { label: "Foundations", route: "/(tabs)/foundations" },
@@ -31,9 +35,12 @@ const menuItems = [
   { label: "Glossary", route: "/(tabs)/glossary" },
   { label: "Favorites", route: "/(tabs)/favorites" },
   { label: "Settings", route: "/(tabs)/settings" },
-];
+] as const;
 
-// ✅ FIX: Updated tab order to Home | Favorites | Search | Glossary | Settings
+/**
+ * Floating tab bar configuration - bottom navigation tabs
+ * Routes match the actual file structure
+ */
 const floatingTabBarTabs = [
   {
     name: "home",
@@ -70,24 +77,32 @@ const floatingTabBarTabs = [
     iosIcon: "gear",
     label: "Settings",
   },
-];
+] as const;
 
+/**
+ * Hamburger menu button component
+ */
 function HamburgerButton({ onPress }: { onPress: () => void }) {
   const { colors } = useTheme();
 
   return (
     <TouchableOpacity
       onPress={onPress}
-      hitSlop={10}
-      accessibilityLabel="Open menu"
+      hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+      accessibilityLabel="Open navigation menu"
       accessibilityRole="button"
-      activeOpacity={0.7}
+      accessibilityHint="Opens the main navigation menu"
+      activeOpacity={0.6}
+      style={styles.hamburgerButton}
     >
       <MaterialIcons name="menu" size={28} color={colors.text} />
     </TouchableOpacity>
   );
 }
 
+/**
+ * Hamburger menu drawer component with glassmorphism effect
+ */
 function HamburgerMenu({
   visible,
   onClose,
@@ -97,7 +112,7 @@ function HamburgerMenu({
   onClose: () => void;
   onNavigate: (route: string) => void;
 }) {
-  const { colors: themeColors, shadows } = useTheme();
+  const { colors: themeColors, shadows, isDark } = useTheme();
   const pathname = usePathname();
 
   return (
@@ -106,6 +121,7 @@ function HamburgerMenu({
       transparent
       animationType="fade"
       onRequestClose={onClose}
+      statusBarTranslucent
     >
       <Pressable style={styles.modalOverlay} onPress={onClose}>
         <Pressable
@@ -118,10 +134,14 @@ function HamburgerMenu({
           ]}
           onPress={(e) => e.stopPropagation()}
         >
+          {/* Header */}
           <View
             style={[
               styles.menuHeader,
-              { borderBottomColor: themeColors.secondary },
+              { 
+                borderBottomColor: themeColors.secondary + '30',
+                backgroundColor: themeColors.cardOverlay,
+              },
             ]}
           >
             <Text
@@ -137,22 +157,25 @@ function HamburgerMenu({
             <TouchableOpacity
               onPress={onClose}
               style={styles.closeButton}
-              activeOpacity={0.7}
-              accessibilityLabel="Close menu"
+              activeOpacity={0.6}
+              accessibilityLabel="Close navigation menu"
               accessibilityRole="button"
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             >
               <IconSymbol
                 ios_icon_name="xmark"
                 android_material_icon_name="close"
                 size={24}
-                color={themeColors.text}
+                color={themeColors.primary}
               />
             </TouchableOpacity>
           </View>
 
+          {/* Menu Items */}
           <ScrollView
             style={styles.menuScrollView}
             showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.menuScrollContent}
           >
             {menuItems.map((item, index) => {
               const isActive = pathname.includes(
@@ -161,16 +184,21 @@ function HamburgerMenu({
 
               return (
                 <TouchableOpacity
-                  key={index}
+                  key={`menu-item-${index}`}
                   style={[
                     styles.menuItem,
-                    { borderBottomColor: themeColors.secondary + "40" },
-                    isActive && { backgroundColor: themeColors.highlight },
+                    { borderBottomColor: themeColors.secondary + "20" },
+                    isActive && { 
+                      backgroundColor: themeColors.highlight,
+                      borderLeftWidth: 3,
+                      borderLeftColor: themeColors.primary,
+                    },
                   ]}
                   onPress={() => onNavigate(item.route)}
                   activeOpacity={0.7}
                   accessibilityLabel={`Navigate to ${item.label}`}
                   accessibilityRole="button"
+                  accessibilityState={{ selected: isActive }}
                 >
                   <Text
                     style={[
@@ -185,12 +213,14 @@ function HamburgerMenu({
                     {item.label}
                   </Text>
                   {isActive && (
-                    <IconSymbol
-                      ios_icon_name="chevron.right"
-                      android_material_icon_name="chevron_right"
-                      size={20}
-                      color={themeColors.primary}
-                    />
+                    <View style={styles.activeIndicator}>
+                      <IconSymbol
+                        ios_icon_name="chevron.right"
+                        android_material_icon_name="chevron_right"
+                        size={20}
+                        color={themeColors.primary}
+                      />
+                    </View>
                   )}
                 </TouchableOpacity>
               );
@@ -202,29 +232,45 @@ function HamburgerMenu({
   );
 }
 
+/**
+ * Main tab layout component
+ */
 export default function TabLayout() {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
-  const { colors: themeColors } = useTheme();
+  const { colors: themeColors, isDark } = useTheme();
   const router = useRouter();
 
-  const openMenu = () => {
+  /**
+   * Open menu with haptic feedback
+   */
+  const openMenu = useCallback(() => {
     try {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      if (Platform.OS !== 'web') {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }
     } catch (error) {
       if (__DEV__) {
         console.log("Haptics error:", error);
       }
     }
     setIsMenuVisible(true);
-  };
+  }, []);
 
-  const closeMenu = () => {
+  /**
+   * Close menu
+   */
+  const closeMenu = useCallback(() => {
     setIsMenuVisible(false);
-  };
+  }, []);
 
-  const navigateTo = (route: string) => {
+  /**
+   * Navigate to a specific route with haptic feedback
+   */
+  const navigateTo = useCallback((route: string) => {
     try {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      if (Platform.OS !== 'web') {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      }
     } catch (error) {
       if (__DEV__) {
         console.log("Haptics error:", error);
@@ -232,22 +278,30 @@ export default function TabLayout() {
     }
     closeMenu();
     router.push(route as any);
-  };
+  }, [closeMenu, router]);
+
+  /**
+   * Memoized screen options for better performance
+   */
+  const screenOptions = useMemo(() => ({
+    headerShown: true,
+    headerLeft: () => <HamburgerButton onPress={openMenu} />,
+    headerTitleAlign: "center" as const,
+    headerStyle: {
+      backgroundColor: themeColors.background,
+    },
+    headerTintColor: themeColors.text,
+    headerShadowVisible: false,
+    headerTitleStyle: {
+      fontWeight: '600' as const,
+      fontSize: 18,
+      color: themeColors.text,
+    },
+  }), [themeColors, openMenu]);
 
   return (
-    <View style={{ flex: 1 }}>
-      <Stack
-        screenOptions={{
-          headerShown: true,
-          headerLeft: () => <HamburgerButton onPress={openMenu} />,
-          headerTitleAlign: "center",
-          headerStyle: {
-            backgroundColor: themeColors.background,
-          },
-          headerTintColor: themeColors.text,
-          headerShadowVisible: true,
-        }}
-      >
+    <View style={styles.container}>
+      <Stack screenOptions={screenOptions}>
         <Stack.Screen
           name="(home)"
           options={{
@@ -340,15 +394,24 @@ export default function TabLayout() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  hamburgerButton: {
+    padding: 4,
+    marginLeft: 8,
+  },
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
     justifyContent: "flex-start",
     alignItems: "flex-start",
   },
   menuContainer: {
     width: 280,
     height: "100%",
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
   },
   menuHeader: {
     flexDirection: "row",
@@ -360,8 +423,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   menuTitle: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "700",
+    letterSpacing: -0.5,
   },
   closeButton: {
     padding: 4,
@@ -373,6 +437,9 @@ const styles = StyleSheet.create({
   menuScrollView: {
     flex: 1,
   },
+  menuScrollContent: {
+    paddingBottom: 100,
+  },
   menuItem: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -380,10 +447,14 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
-    minHeight: 44,
+    minHeight: 56,
   },
   menuItemText: {
     fontSize: 16,
     fontWeight: "500",
+    flex: 1,
+  },
+  activeIndicator: {
+    marginLeft: 8,
   },
 });

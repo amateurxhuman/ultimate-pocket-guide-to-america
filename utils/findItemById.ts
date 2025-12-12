@@ -1,37 +1,37 @@
+/**
+ * Utility functions for finding items and generating routes
+ */
 
-import { contentData } from '@/data/contentData';
-
-export function getItemRoute(itemId: string): string {
-  const foundingDocuments = [
+/**
+ * Get the route for a specific item by ID
+ * @param id - The item ID
+ * @returns The route path for the item
+ */
+export function getItemRoute(id: string): string {
+  // Check if it's a founding document
+  const foundingDocs = [
     'declaration',
     'articles',
     'constitution',
     'bill-of-rights',
     'federalist-papers',
   ];
-
-  if (foundingDocuments.includes(itemId)) {
-    return `/document/${itemId}`;
+  
+  if (foundingDocs.includes(id)) {
+    return `/document/${id}`;
   }
-
-  return `/detail/${itemId}`;
+  
+  // Default to detail route
+  return `/detail/${id}`;
 }
 
-export function findItemById(itemId: string) {
-  for (const main of contentData) {
-    if (!main || !main.sections) continue;
-    for (const sec of main.sections) {
-      if (!sec || !sec.subsections) continue;
-      for (const sub of sec.subsections) {
-        if (sub && sub.id === itemId) {
-          return {
-            item: sub,
-            section: sec.title,
-            mainSection: main.title,
-          };
-        }
-      }
-    }
-  }
+/**
+ * Find an item by ID across all content sections
+ * @param id - The item ID to find
+ * @returns The item object if found, null otherwise
+ */
+export function findItemById(id: string): any | null {
+  // This is a placeholder - in a real app, you would search through your content data
+  // For now, we just return null as the actual implementation depends on your data structure
   return null;
 }

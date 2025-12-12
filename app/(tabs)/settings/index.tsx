@@ -69,6 +69,23 @@ export default function SettingsScreen() {
     }
   };
 
+  const handleOpenDeveloperSite = async () => {
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Haptics error:', error);
+      }
+    }
+    try {
+      await Linking.openURL('https://stormlightfoundry.com');
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Error opening URL:', error);
+      }
+    }
+  };
+
   const appVersion = Constants.expoConfig?.version || '1.0.0';
 
   return (
@@ -214,17 +231,62 @@ export default function SettingsScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* COPYRIGHT SECTION */}
-        <View style={[styles.copyrightSection, { borderTopColor: colors.primary + '20' }]}>
-          <Text style={[styles.copyrightText, { color: colors.textSecondary }]}>
-            © 2025 StormLight Foundry
+        {/* ABOUT SECTION */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
+            ABOUT
           </Text>
-          <Text style={[styles.copyrightText, { color: colors.textSecondary }]}>
-            Pocket Guide to America
-          </Text>
-          <Text style={[styles.versionText, { color: colors.textSecondary }]}>
-            Version {appVersion}
-          </Text>
+          
+          <View style={[styles.card, { backgroundColor: colors.card, ...shadows.small }]}>
+            {/* Blurb */}
+            <Text style={[styles.aboutBlurb, { color: colors.text }]}>
+              Pocket Guide to America is your civic companion for understanding how the United States works. Explore founding documents, core principles, key eras of history, and practical tools for better citizenship.
+            </Text>
+
+            {/* Version Row */}
+            <View style={[styles.aboutRow, { borderTopColor: colors.primary + '20' }]}>
+              <Text style={[styles.aboutLabel, { color: colors.textSecondary }]}>
+                Version
+              </Text>
+              <Text style={[styles.aboutValue, { color: colors.text }]}>
+                {appVersion}
+              </Text>
+            </View>
+
+            {/* Developer Row */}
+            <TouchableOpacity
+              onPress={handleOpenDeveloperSite}
+              style={[styles.aboutRow, { borderTopColor: colors.primary + '20' }]}
+              activeOpacity={0.7}
+              accessibilityLabel="Open StormLight Foundry website"
+              accessibilityRole="button"
+            >
+              <Text style={[styles.aboutLabel, { color: colors.textSecondary }]}>
+                Developer
+              </Text>
+              <View style={styles.developerLink}>
+                <Text style={[styles.aboutValue, styles.linkText, { color: colors.primary }]}>
+                  StormLight Foundry
+                </Text>
+                <IconSymbol
+                  ios_icon_name="arrow.right"
+                  android_material_icon_name="arrow_forward"
+                  size={16}
+                  color={colors.primary}
+                />
+              </View>
+            </TouchableOpacity>
+
+            {/* Copyright Row */}
+            <View style={[styles.aboutRow, { borderTopColor: colors.primary + '20' }]}>
+              <Text style={[styles.aboutLabel, { color: colors.textSecondary }]}>
+                Copyright
+              </Text>
+              <Text style={[styles.aboutValue, { color: colors.text }]}>
+                © 2025 StormLight Foundry
+              </Text>
+            </View>
+          </View>
         </View>
       </ScrollView>
     </>
@@ -315,23 +377,34 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
     textAlign: 'center',
   },
-  copyrightSection: {
-    marginTop: 40,
-    paddingTop: 24,
-    borderTopWidth: 1,
-    alignItems: 'center',
-    gap: 6,
-    marginBottom: 24,
+  aboutBlurb: {
+    fontSize: 14,
+    lineHeight: 22,
+    marginBottom: 16,
   },
-  copyrightText: {
-    fontSize: 13,
-    textAlign: 'center',
+  aboutRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 16,
+    borderTopWidth: 1,
+  },
+  aboutLabel: {
+    fontSize: 14,
+    fontWeight: '600',
     lineHeight: 20,
   },
-  versionText: {
-    fontSize: 12,
-    textAlign: 'center',
-    marginTop: 4,
-    opacity: 0.7,
+  aboutValue: {
+    fontSize: 14,
+    lineHeight: 20,
+    textAlign: 'right',
+  },
+  developerLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  linkText: {
+    fontWeight: '600',
   },
 });
